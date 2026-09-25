@@ -1,0 +1,9 @@
+# NVDA speech/input log for the 'listen' take (take_20260926T001926), extracted verbatim from NVDA's own log (log level: input/output).
+# Clip time 0.00 s = 00:19:49.978 local (2026-09-26). Format: [clip seconds, from NVDA log timestamp] original NVDA log line.
+# Only 'Input:' and 'Speaking' records are listed; LangChangeCommand/CancellableSpeech are NVDA-internal markers, kept verbatim.
+# Note: the timestamp is when NVDA queued the speech; audio can start slightly later if earlier speech is still playing.
+# DOM focus after each key (document.activeElement sampled over CDP ~0.3 s before the next key; not from NVDA):
+#   TAB @ 1.06s -> A "Skip to main content" [page]
+
+[  1.01s] Input: kb(desktop):tab
+[  1.10s] Speaking [LangChangeCommand ('en_US'), 'clickable', 'Skip to main content', 'same page', 'link']
