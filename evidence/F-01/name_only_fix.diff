@@ -1,0 +1,26 @@
+diff --git a/galaxium/booking_system_frontend/src/components/common/Modal.tsx b/galaxium/booking_system_frontend/src/components/common/Modal.tsx
+index 665a0c9..5885f94 100644
+--- a/galaxium/booking_system_frontend/src/components/common/Modal.tsx
++++ b/galaxium/booking_system_frontend/src/components/common/Modal.tsx
+@@ -12,6 +12,7 @@ interface ModalProps {
+ }
+ 
+ export const Modal = ({ isOpen, onClose, title, children, size = 'md' }: ModalProps) => {
++  const titleId = title ? 'modal-title' : undefined;
+   const sizeClasses = {
+     sm: 'max-w-md',
+     md: 'max-w-2xl',
+@@ -57,11 +58,12 @@ export const Modal = ({ isOpen, onClose, title, children, size = 'md' }: ModalPr
+               className={`bg-space-dark/95 backdrop-blur-xl border-2 border-cosmic-purple/30 rounded-2xl shadow-2xl shadow-cosmic-purple/20 w-full ${sizeClasses[size]} my-8 p-6`}
+               role="dialog"
+               aria-modal="true"
++              aria-labelledby={titleId}
+             >
+               {/* Header */}
+               {title && (
+                 <div className="flex items-center justify-between mb-6 pb-4 border-b border-cosmic-purple/20">
+-                  <h2 className="text-2xl font-bold bg-cosmic-gradient bg-clip-text text-transparent">{title}</h2>
++                  <h2 id={titleId} className="text-2xl font-bold bg-cosmic-gradient bg-clip-text text-transparent">{title}</h2>
+                   <button
+                     onClick={onClose}
+                     className="text-star-white/70 hover:text-cosmic-purple transition-colors p-1 hover:bg-white/5 rounded-lg"

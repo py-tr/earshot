@@ -1,0 +1,11 @@
+# NVDA speech/input log for the 'name_only_fix' take (take_20260925T194129), extracted verbatim from NVDA's own log (log level: input/output).
+# Clip time 0.00 s = 19:41:55.740 local (2026-09-25). Format: [clip seconds, from NVDA log timestamp] original NVDA log line.
+# Only 'Input:' and 'Speaking' records are listed; LangChangeCommand/CancellableSpeech are NVDA-internal markers, kept verbatim.
+# Note: the timestamp is when NVDA queued the speech; audio can start slightly later if earlier speech is still playing.
+# DOM focus after each key (document.activeElement sampled over CDP ~0.3 s before the next key; not from NVDA):
+#   ENTER @ 1.06s -> BUTTON "Select Seat Class" [page behind dialog]
+#   TAB @ 3.06s -> A "Moon" [page behind dialog]
+
+[  1.01s] Input: kb(desktop):enter
+[  3.01s] Input: kb(desktop):tab
+[  3.09s] Speaking [LangChangeCommand ('en_US'), 'Moon', 'link', 'heading', 'level 3']

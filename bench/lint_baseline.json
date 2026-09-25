@@ -1,0 +1,325 @@
+[
+ {
+  "filePath": "galaxium/booking_system_frontend/src/App.tsx",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "galaxium/booking_system_frontend/src/components/bookings/BookingCard.tsx",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "galaxium/booking_system_frontend/src/components/bookings/BookingModal.tsx",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "galaxium/booking_system_frontend/src/components/bookings/HoldCard.tsx",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "galaxium/booking_system_frontend/src/components/common/Button.tsx",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "galaxium/booking_system_frontend/src/components/common/Card.tsx",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "galaxium/booking_system_frontend/src/components/common/Input.tsx",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "galaxium/booking_system_frontend/src/components/common/LoadingSpinner.tsx",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "galaxium/booking_system_frontend/src/components/common/Modal.tsx",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "galaxium/booking_system_frontend/src/components/common/Starfield.tsx",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "galaxium/booking_system_frontend/src/components/flights/FlightCard.tsx",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "galaxium/booking_system_frontend/src/components/flights/FlightFilters.tsx",
+  "messages": [
+   {
+    "ruleId": "jsx-a11y/label-has-associated-control",
+    "severity": 2,
+    "message": "A form label must be associated with a control.",
+    "line": 67,
+    "column": 15,
+    "nodeType": "JSXOpeningElement",
+    "endLine": 67,
+    "endColumn": 70
+   },
+   {
+    "ruleId": "jsx-a11y/label-has-associated-control",
+    "severity": 2,
+    "message": "A form label must be associated with a control.",
+    "line": 92,
+    "column": 15,
+    "nodeType": "JSXOpeningElement",
+    "endLine": 92,
+    "endColumn": 70
+   },
+   {
+    "ruleId": "jsx-a11y/label-has-associated-control",
+    "severity": 2,
+    "message": "A form label must be associated with a control.",
+    "line": 117,
+    "column": 15,
+    "nodeType": "JSXOpeningElement",
+    "endLine": 117,
+    "endColumn": 70
+   },
+   {
+    "ruleId": "jsx-a11y/label-has-associated-control",
+    "severity": 2,
+    "message": "A form label must be associated with a control.",
+    "line": 138,
+    "column": 15,
+    "nodeType": "JSXOpeningElement",
+    "endLine": 138,
+    "endColumn": 70
+   },
+   {
+    "ruleId": "jsx-a11y/label-has-associated-control",
+    "severity": 2,
+    "message": "A form label must be associated with a control.",
+    "line": 158,
+    "column": 15,
+    "nodeType": "JSXOpeningElement",
+    "endLine": 158,
+    "endColumn": 70
+   },
+   {
+    "ruleId": "jsx-a11y/label-has-associated-control",
+    "severity": 2,
+    "message": "A form label must be associated with a control.",
+    "line": 188,
+    "column": 15,
+    "nodeType": "JSXOpeningElement",
+    "endLine": 188,
+    "endColumn": 70
+   },
+   {
+    "ruleId": "jsx-a11y/label-has-associated-control",
+    "severity": 2,
+    "message": "A form label must be associated with a control.",
+    "line": 209,
+    "column": 15,
+    "nodeType": "JSXOpeningElement",
+    "endLine": 209,
+    "endColumn": 70
+   },
+   {
+    "ruleId": "jsx-a11y/label-has-associated-control",
+    "severity": 2,
+    "message": "A form label must be associated with a control.",
+    "line": 223,
+    "column": 15,
+    "nodeType": "JSXOpeningElement",
+    "endLine": 223,
+    "endColumn": 70
+   }
+  ],
+  "suppressedMessages": [],
+  "errorCount": 8,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "galaxium/booking_system_frontend/src/components/layout/Footer.tsx",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "galaxium/booking_system_frontend/src/components/layout/Header.tsx",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "galaxium/booking_system_frontend/src/components/layout/Layout.tsx",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "galaxium/booking_system_frontend/src/components/user/UserIdentification.tsx",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "galaxium/booking_system_frontend/src/hooks/useUser.tsx",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "galaxium/booking_system_frontend/src/main.tsx",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "galaxium/booking_system_frontend/src/pages/DestinationDetail.tsx",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "galaxium/booking_system_frontend/src/pages/Flights.tsx",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "galaxium/booking_system_frontend/src/pages/Home.tsx",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "galaxium/booking_system_frontend/src/pages/MyBookings.tsx",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ }
+]

@@ -1,0 +1,94 @@
+[
+ {
+  "state": "flights page",
+  "rule": "color-contrast",
+  "impact": "serious",
+  "help": "Elements must meet minimum color contrast ratio thresholds",
+  "targets": [
+   "div:nth-child(4) > .h-full.p-6.flex-col > .mb-6.space-y-4.flex-1 > .grid-cols-2.grid.gap-4 > div:nth-child(1) > .text-cosmic-purple.text-lg.font-bold",
+   "div:nth-child(4) > .h-full.p-6.flex-col > .mb-6.space-y-4.flex-1 > .grid-cols-2.grid.gap-4 > div:nth-child(2) > .text-cosmic-purple.text-lg.font-bold",
+   "div:nth-child(5) > .h-full.p-6.flex-col > .mb-6.space-y-4.flex-1 > .grid-cols-2.grid.gap-4 > div:nth-child(1) > .text-cosmic-purple.text-lg.font-bold",
+   "div:nth-child(5) > .h-full.p-6.flex-col > .mb-6.space-y-4.flex-1 > .grid-cols-2.grid.gap-4 > div:nth-child(2) > .text-cosmic-purple.text-lg.font-bold",
+   "div:nth-child(6) > .h-full.p-6.flex-col > .mb-6.space-y-4.flex-1 > .grid-cols-2.grid.gap-4 > div:nth-child(1) > .text-cosmic-purple.text-lg.font-bold",
+   "div:nth-child(6) > .h-full.p-6.flex-col > .mb-6.space-y-4.flex-1 > .grid-cols-2.grid.gap-4 > div:nth-child(2) > .text-cosmic-purple.text-lg.font-bold",
+   "div:nth-child(7) > .h-full.p-6.flex-col > .mb-6.space-y-4.flex-1 > .grid-cols-2.grid.gap-4 > div:nth-child(1) > .text-cosmic-purple.text-lg.font-bold",
+   "div:nth-child(7) > .h-full.p-6.flex-col > .mb-6.space-y-4.flex-1 > .grid-cols-2.grid.gap-4 > div:nth-child(2) > .text-cosmic-purple.text-lg.font-bold",
+   "div:nth-child(8) > .h-full.p-6.flex-col > .mb-6.space-y-4.flex-1 > .grid-cols-2.grid.gap-4 > div:nth-child(1) > .text-cosmic-purple.text-lg.font-bold",
+   "div:nth-child(8) > .h-full.p-6.flex-col > .mb-6.space-y-4.flex-1 > .grid-cols-2.grid.gap-4 > div:nth-child(2) > .text-cosmic-purple.text-lg.font-bold",
+   "div:nth-child(9) > .h-full.p-6.flex-col > .mb-6.space-y-4.flex-1 > .grid-cols-2.grid.gap-4 > div:nth-child(1) > .text-cosmic-purple.text-lg.font-bold",
+   "div:nth-child(9) > .h-full.p-6.flex-col > .mb-6.space-y-4.flex-1 > .grid-cols-2.grid.gap-4 > div:nth-child(2) > .text-cosmic-purple.text-lg.font-bold",
+   "div:nth-child(10) > .h-full.p-6.flex-col > .mb-6.space-y-4.flex-1 > .grid-cols-2.grid.gap-4 > div:nth-child(1) > .text-cosmic-purple.text-lg.font-bold",
+   "div:nth-child(10) > .h-full.p-6.flex-col > .mb-6.space-y-4.flex-1 > .grid-cols-2.grid.gap-4 > div:nth-child(2) > .text-cosmic-purple.text-lg.font-bold"
+  ]
+ },
+ {
+  "state": "flights page",
+  "rule": "heading-order",
+  "impact": "moderate",
+  "help": "Heading levels should only increase by one",
+  "targets": [
+   "div:nth-child(1) > .h-full.p-6.flex-col > .pb-4.mb-4.border-b > .gap-3.items-center.flex > div:nth-child(2) > h3"
+  ]
+ },
+ {
+  "state": "flights page",
+  "rule": "link-name",
+  "impact": "serious",
+  "help": "Links must have discernible text",
+  "targets": [
+   "a[href$=\"github.com\"]"
+  ]
+ },
+ {
+  "state": "flights page",
+  "rule": "region",
+  "impact": "moderate",
+  "help": "All page content should be contained by landmarks",
+  "targets": [
+   "canvas"
+  ]
+ },
+ {
+  "state": "Sign In dialog open",
+  "rule": "color-contrast",
+  "impact": "serious",
+  "help": "Elements must meet minimum color contrast ratio thresholds",
+  "targets": [
+   "div:nth-child(7) > .h-full.glass-card.p-6 > .mb-6.flex-1.space-y-4 > .grid-cols-2.grid.gap-4 > div:nth-child(1) > .text-cosmic-purple.text-lg.font-bold",
+   "div:nth-child(7) > .h-full.glass-card.p-6 > .mb-6.flex-1.space-y-4 > .grid-cols-2.grid.gap-4 > div:nth-child(2) > .text-cosmic-purple.text-lg.font-bold",
+   "div:nth-child(8) > .h-full.glass-card.p-6 > .mb-6.flex-1.space-y-4 > .grid-cols-2.grid.gap-4 > div:nth-child(1) > .text-cosmic-purple.text-lg.font-bold",
+   "div:nth-child(8) > .h-full.glass-card.p-6 > .mb-6.flex-1.space-y-4 > .grid-cols-2.grid.gap-4 > div:nth-child(2) > .text-cosmic-purple.text-lg.font-bold",
+   "div:nth-child(9) > .h-full.glass-card.p-6 > .mb-6.flex-1.space-y-4 > .grid-cols-2.grid.gap-4 > div:nth-child(1) > .text-cosmic-purple.text-lg.font-bold",
+   "div:nth-child(9) > .h-full.glass-card.p-6 > .mb-6.flex-1.space-y-4 > .grid-cols-2.grid.gap-4 > div:nth-child(2) > .text-cosmic-purple.text-lg.font-bold",
+   "div:nth-child(10) > .h-full.glass-card.p-6 > .mb-6.flex-1.space-y-4 > .grid-cols-2.grid.gap-4 > div:nth-child(1) > .text-cosmic-purple.text-lg.font-bold",
+   "div:nth-child(10) > .h-full.glass-card.p-6 > .mb-6.flex-1.space-y-4 > .grid-cols-2.grid.gap-4 > div:nth-child(2) > .text-cosmic-purple.text-lg.font-bold"
+  ]
+ },
+ {
+  "state": "Sign In dialog open",
+  "rule": "heading-order",
+  "impact": "moderate",
+  "help": "Heading levels should only increase by one",
+  "targets": [
+   "div:nth-child(1) > .h-full.glass-card.p-6 > .pb-4.mb-4.border-b > .gap-3.items-center.flex > div:nth-child(2) > h3"
+  ]
+ },
+ {
+  "state": "Sign In dialog open",
+  "rule": "link-name",
+  "impact": "serious",
+  "help": "Links must have discernible text",
+  "targets": [
+   "a[href$=\"github.com\"]"
+  ]
+ },
+ {
+  "state": "Sign In dialog open",
+  "rule": "region",
+  "impact": "moderate",
+  "help": "All page content should be contained by landmarks",
+  "targets": [
+   "canvas"
+  ]
+ }
+]
