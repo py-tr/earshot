@@ -66,3 +66,39 @@ Always run this checklist:
 ---
 
 **Remember:** Security is everyone's responsibility. When in doubt, ask for help!
+
+---
+
+## Earshot gate
+
+The Earshot gate is a pre-commit hook that replays verified accessibility findings against a live NVDA instance and blocks commits that break what a screen reader hears.
+
+### One-time setup
+
+```bash
+git config core.hooksPath .githooks
+```
+
+### What it runs
+
+On every commit the hook executes:
+
+```sh
+.venv/Scripts/python.exe earshot_mcp/hear_tests.py --staged
+```
+
+`--staged` is a fast-path guard: if no file under `galaxium/booking_system_frontend/src/` is staged the script prints `earshot gate: no UI changes` and exits 0 immediately without touching the browser or NVDA.
+
+When frontend files **are** staged it runs the tests defined in [`hear-tests.json`](hear-tests.json). Each test drives the browser with a key script from [`findings.md`](findings.md), captures NVDA speech via `earshot_mcp/driver.py` + `earshot_mcp/extract.py`, and asserts that every expected phrase appears (in order) and no forbidden phrase appears.
+
+If any assertion fails the hook prints:
+
+```
+BLOCKED by Earshot: this change breaks what a screen reader hears.
+```
+
+and exits 1, preventing the commit.
+
+### Timing
+
+Each test takes **30–60 seconds** because a real screen reader (NVDA) must speak and be recorded. Plan accordingly when staging frontend changes.

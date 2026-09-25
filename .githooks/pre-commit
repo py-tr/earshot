@@ -1,0 +1,7 @@
+#!/bin/sh
+.venv/Scripts/python.exe earshot_mcp/hear_tests.py --staged
+status=$?
+if [ $status -ne 0 ]; then
+  echo "BLOCKED by Earshot: this change breaks what a screen reader hears."
+  exit 1
+fi
