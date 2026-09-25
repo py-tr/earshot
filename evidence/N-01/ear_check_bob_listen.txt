@@ -1,0 +1,40 @@
+# NVDA speech/input log for the 'listen' take (take_20260925T211322), extracted verbatim from NVDA's own log (log level: input/output).
+# Clip time 0.00 s = 21:13:48.800 local (2026-09-25). Format: [clip seconds, from NVDA log timestamp] original NVDA log line.
+# Only 'Input:' and 'Speaking' records are listed; LangChangeCommand/CancellableSpeech are NVDA-internal markers, kept verbatim.
+# Note: the timestamp is when NVDA queued the speech; audio can start slightly later if earlier speech is still playing.
+# DOM focus after each key (document.activeElement sampled over CDP ~0.3 s before the next key; not from NVDA):
+#   ESC @ 1.05s -> BUTTON "Select Seat Class" [page behind dialog]
+#   STAB @ 3.16s -> A "Mars" [page behind dialog]
+#   STAB @ 5.16s -> BUTTON "Filters" [page behind dialog]
+#   STAB @ 7.16s -> INPUT "Search by origin or destination..." [page behind dialog]
+#   STAB @ 9.16s -> BUTTON "Login" [page behind dialog]
+#   STAB @ 11.16s -> A "Flights" [page behind dialog]
+#   STAB @ 13.16s -> A "Home" [page behind dialog]
+#   STAB @ 15.16s -> A "Galaxium Travels" [page behind dialog]
+#   STAB @ 17.16s -> BUTTON "Pause animation" [page behind dialog]
+#   STAB @ 19.16s -> BODY
+#   STAB @ 21.16s -> BODY
+
+[  1.00s] Input: kb(desktop):escape
+[  3.06s] Input: kb(desktop):shift+tab
+[  3.14s] Speaking [LangChangeCommand ('en_US'), 'Mars', 'link', 'heading', 'level 3']
+[  5.06s] Input: kb(desktop):shift+tab
+[  5.11s] Speaking [LangChangeCommand ('en_US'), 'Filters', 'button']
+[  7.06s] Input: kb(desktop):shift+tab
+[  7.11s] Speaking [LangChangeCommand ('en_US'), 'Search by origin or destination...', 'edit', CancellableSpeech (still valid), 'blank']
+[  9.05s] Input: kb(desktop):shift+tab
+[  9.10s] Speaking [LangChangeCommand ('en_US'), 'banner landmark', 'Login', 'button']
+[ 11.05s] Input: kb(desktop):shift+tab
+[ 11.16s] Speaking [LangChangeCommand ('en_US'), 'navigation landmark', 'Flights', 'same page', 'link']
+[ 13.06s] Input: kb(desktop):shift+tab
+[ 13.11s] Speaking [LangChangeCommand ('en_US'), 'Home', 'link']
+[ 15.05s] Input: kb(desktop):shift+tab
+[ 15.08s] Speaking [LangChangeCommand ('en_US'), 'Galaxium Travels', 'link']
+[ 17.05s] Input: kb(desktop):shift+tab
+[ 17.08s] Speaking [LangChangeCommand ('en_US'), 'Pause animation', 'button']
+[ 19.06s] Input: kb(desktop):shift+tab
+[ 19.09s] Speaking [LangChangeCommand ('en_US'), 'booking_system_frontend - Google Chrome', 'region', CancellableSpeech (still valid)]
+[ 19.11s] Speaking [LangChangeCommand ('en_US'), 'tool bar', CancellableSpeech (still valid)]
+[ 19.12s] Speaking [LangChangeCommand ('en_US'), 'Bookmark this tab', 'button', CancellableSpeech (still valid)]
+[ 21.06s] Input: kb(desktop):shift+tab
+[ 21.08s] Speaking [LangChangeCommand ('en_US'), 'Address and search bar', 'edit', 'Press tab then enter to ask AI Mode', 'Ctrl+', CharacterModeCommand(True), 'L', CharacterModeCommand(False), CancellableSpeech (still valid), 'selected localhost:5173/flights']
