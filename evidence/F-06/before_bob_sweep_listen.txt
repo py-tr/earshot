@@ -1,0 +1,82 @@
+# NVDA speech/input log for the 'listen' take (take_20260925T233943), extracted verbatim from NVDA's own log (log level: input/output).
+# Clip time 0.00 s = 23:40:06.053 local (2026-09-25). Format: [clip seconds, from NVDA log timestamp] original NVDA log line.
+# Only 'Input:' and 'Speaking' records are listed; LangChangeCommand/CancellableSpeech are NVDA-internal markers, kept verbatim.
+# Note: the timestamp is when NVDA queued the speech; audio can start slightly later if earlier speech is still playing.
+# DOM focus after each key (document.activeElement sampled over CDP ~0.3 s before the next key; not from NVDA):
+#   TAB @ 1.06s -> BUTTON "Pause animation" [page]
+#   TAB @ 2.56s -> A "Galaxium Travels" [page]
+#   TAB @ 4.05s -> A "Home" [page]
+#   TAB @ 5.55s -> A "Flights" [page]
+#   TAB @ 7.06s -> BUTTON "Login" [page]
+#   TAB @ 8.56s -> INPUT "Search by origin or destination..." [page]
+#   TAB @ 10.05s -> BUTTON "Filters" [page]
+#   TAB @ 11.55s -> A "Mars" [page]
+#   TAB @ 13.05s -> BUTTON "Select Seat Class" [page]
+#   TAB @ 14.55s -> A "Moon" [page]
+#   TAB @ 16.05s -> BUTTON "Select Seat Class" [page]
+#   TAB @ 17.56s -> A "Earth" [page]
+#   TAB @ 19.05s -> BUTTON "Select Seat Class" [page]
+#   TAB @ 20.56s -> A "Earth" [page]
+#   TAB @ 22.06s -> BUTTON "Select Seat Class" [page]
+#   TAB @ 23.55s -> A "Europa" [page]
+#   TAB @ 25.06s -> BUTTON "Select Seat Class" [page]
+#   TAB @ 26.56s -> A "Venus" [page]
+#   TAB @ 28.06s -> BUTTON "Select Seat Class" [page]
+#   TAB @ 29.56s -> A "Mars" [page]
+#   TAB @ 31.06s -> BUTTON "Select Seat Class" [page]
+#   TAB @ 32.55s -> A "Jupiter" [page]
+#   TAB @ 34.06s -> BUTTON "Select Seat Class" [page]
+#   TAB @ 35.56s -> A "Earth" [page]
+#   TAB @ 37.06s -> BUTTON "Select Seat Class" [page]
+
+[  1.01s] Input: kb(desktop):tab
+[  1.06s] Speaking [LangChangeCommand ('en_US'), 'clickable', 'Pause animation', 'button']
+[  2.51s] Input: kb(desktop):tab
+[  2.56s] Speaking [LangChangeCommand ('en_US'), 'banner landmark', 'Galaxium Travels', 'link']
+[  4.00s] Input: kb(desktop):tab
+[  4.05s] Speaking [LangChangeCommand ('en_US'), 'navigation landmark', 'Home', 'link']
+[  5.50s] Input: kb(desktop):tab
+[  5.55s] Speaking [LangChangeCommand ('en_US'), 'Flights', 'same page', 'link']
+[  7.01s] Input: kb(desktop):tab
+[  7.06s] Speaking [LangChangeCommand ('en_US'), 'Login', 'button']
+[  8.51s] Input: kb(desktop):tab
+[  8.55s] Speaking [LangChangeCommand ('en_US'), 'main landmark', CancellableSpeech (still valid)]
+[  8.56s] Speaking [LangChangeCommand ('en_US'), 'Search by origin or destination...', 'edit', CancellableSpeech (still valid), 'blank']
+[ 10.00s] Input: kb(desktop):tab
+[ 10.04s] Speaking [LangChangeCommand ('en_US'), 'Filters', 'button']
+[ 11.50s] Input: kb(desktop):tab
+[ 11.56s] Speaking [LangChangeCommand ('en_US'), 'Mars', 'link', 'heading', 'level 3']
+[ 13.00s] Input: kb(desktop):tab
+[ 13.05s] Speaking [LangChangeCommand ('en_US'), 'Select Seat Class', 'button']
+[ 14.50s] Input: kb(desktop):tab
+[ 14.56s] Speaking [LangChangeCommand ('en_US'), 'Moon', 'link', 'heading', 'level 3']
+[ 16.00s] Input: kb(desktop):tab
+[ 16.04s] Speaking [LangChangeCommand ('en_US'), 'Select Seat Class', 'button']
+[ 17.51s] Input: kb(desktop):tab
+[ 17.56s] Speaking [LangChangeCommand ('en_US'), 'Earth', 'link', 'heading', 'level 3']
+[ 19.00s] Input: kb(desktop):tab
+[ 19.03s] Speaking [LangChangeCommand ('en_US'), 'Select Seat Class', 'button']
+[ 20.51s] Input: kb(desktop):tab
+[ 20.56s] Speaking [LangChangeCommand ('en_US'), 'Earth', 'link', 'heading', 'level 3']
+[ 22.01s] Input: kb(desktop):tab
+[ 22.04s] Speaking [LangChangeCommand ('en_US'), 'Select Seat Class', 'button']
+[ 23.50s] Input: kb(desktop):tab
+[ 23.56s] Speaking [LangChangeCommand ('en_US'), 'Europa', 'link', 'heading', 'level 3']
+[ 25.01s] Input: kb(desktop):tab
+[ 25.04s] Speaking [LangChangeCommand ('en_US'), 'Select Seat Class', 'button']
+[ 26.50s] Input: kb(desktop):tab
+[ 26.56s] Speaking [LangChangeCommand ('en_US'), 'Venus', 'link', 'heading', 'level 3']
+[ 28.01s] Input: kb(desktop):tab
+[ 28.04s] Speaking [LangChangeCommand ('en_US'), 'Select Seat Class', 'button']
+[ 29.51s] Input: kb(desktop):tab
+[ 29.56s] Speaking [LangChangeCommand ('en_US'), 'Mars', 'link', 'heading', 'level 3']
+[ 31.01s] Input: kb(desktop):tab
+[ 31.04s] Speaking [LangChangeCommand ('en_US'), 'Select Seat Class', 'button']
+[ 32.50s] Input: kb(desktop):tab
+[ 32.55s] Speaking [LangChangeCommand ('en_US'), 'Jupiter', 'link', 'heading', 'level 3']
+[ 34.01s] Input: kb(desktop):tab
+[ 34.04s] Speaking [LangChangeCommand ('en_US'), 'Select Seat Class', 'button']
+[ 35.51s] Input: kb(desktop):tab
+[ 35.57s] Speaking [LangChangeCommand ('en_US'), 'Earth', 'link', 'heading', 'level 3']
+[ 37.01s] Input: kb(desktop):tab
+[ 37.05s] Speaking [LangChangeCommand ('en_US'), 'Select Seat Class', 'button']
