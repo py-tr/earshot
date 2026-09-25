@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes } from 'react';
+import { useId, type InputHTMLAttributes } from 'react';
 import clsx from 'clsx';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -6,15 +6,18 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string;
 }
 
-export const Input = ({ label, error, className, ...props }: InputProps) => {
+export const Input = ({ label, error, className, id, ...props }: InputProps) => {
+  const generatedId = useId();
+  const inputId = id ?? generatedId;
   return (
     <div className="w-full">
       {label && (
-        <label className="block text-sm font-medium text-star-white mb-2">
+        <label htmlFor={inputId} className="block text-sm font-medium text-star-white mb-2">
           {label}
         </label>
       )}
       <input
+        id={inputId}
         className={clsx(
           'input-field',
           error && 'border-red-500 focus:ring-red-500',
