@@ -32,5 +32,29 @@
     "forbid": [
       "John Doe, edit"
     ]
+  },
+  {
+    "id": "F-04",
+    "path": "/flights",
+    "start": "TOP",
+    "key_script": "Tab ×10",
+    "expect": ["Select Seat Class, Earth to Mars"],
+    "forbid": []
+  },
+  {
+    "id": "F-05",
+    "path": "/",
+    "start": "TOP",
+    "key_script": "Tab",
+    "expect": ["Skip to main content"],
+    "forbid": []
+  },
+  {
+    "id": "F-06",
+    "path": "/flights",
+    "start": "TOP",
+    "key_script": "Tab ×7",
+    "expect": ["Search flights, edit"],
+    "forbid": []
   }
 ]
