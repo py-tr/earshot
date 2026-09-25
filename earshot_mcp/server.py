@@ -17,15 +17,6 @@ server = MCPServer("earshot")
 _HERE = os.path.dirname(os.path.abspath(__file__))
 
 
-def _strip_markers(line: str) -> str:
-    """Remove NVDA-internal speech markers, keeping the human-readable parts."""
-    # Strip LangChangeCommand and CancellableSpeech wrappers
-    line = re.sub(r"LangChangeCommand\([^)]*\),?\s*", "", line)
-    line = re.sub(r"CancellableSpeech\([^)]*\),?\s*", "", line)
-    line = line.strip().rstrip(",")
-    return line
-
-
 def _format_output(txt_path: str, meta_label: str) -> str:
     """Parse the extract.py output file into short human-readable lines."""
     with open(txt_path, encoding="utf-8") as f:
@@ -35,23 +26,25 @@ def _format_output(txt_path: str, meta_label: str) -> str:
     for line in raw_lines:
         if line.startswith("#") or not line.strip():
             continue
-        # Format: [  5.21s] Input: key ENTER  OR  [  5.21s] Speaking: ...
+        # Format: [  5.21s] Input: kb(desktop):enter
+        #      OR [  5.21s] Speaking [LangChangeCommand(...), 'Sign In', 'dialog', ...]
         m = re.match(r"\[\s*(\d+\.\d+)s\]\s+(Input:|Speaking)\s+(.*)", line)
         if not m:
             continue
         ts, kind, rest = m.group(1), m.group(2), m.group(3).strip()
-        rest = _strip_markers(rest)
-        if not rest:
-            continue
         if kind == "Input:":
-            # e.g. "Input: key ENTER" -> "5.21s  ENTER"
-            key_m = re.search(r"key\s+(\S+)", rest)
-            key = key_m.group(1) if key_m else rest
+            # e.g. "kb(desktop):enter" -> "ENTER"
+            kb_m = re.match(r"kb\([^)]*\):(.*)", rest)
+            key = kb_m.group(1).upper() if kb_m else rest.upper()
             results.append(f"{ts}s  {key}")
         else:
-            # Speaking: "Sign In, dialog"  -> "5.21s  said: Sign In, dialog"
-            phrase = rest.strip('"').strip("'")
-            results.append(f"{ts}s  said: {phrase}")
+            # Speaking [...] — drop LangChangeCommand/CancellableSpeech markers, then
+            # pull out remaining single/double-quoted strings
+            cleaned = re.sub(r"\b(?:LangChangeCommand|CancellableSpeech)\s*\([^)]*\),?\s*", "", rest)
+            parts = re.findall(r"['\"]([^'\"]+)['\"]", cleaned)
+            phrase = ", ".join(parts)
+            if phrase:
+                results.append(f"{ts}s  said: {phrase}")
 
     wav_rel = f"takes/{meta_label}.nvdaonly.wav"
     results.append(f"audio: {wav_rel}")
@@ -72,20 +65,27 @@ def listen(key_script: str, start: str = "Select Seat Class", gap: float = 2.0) 
     txt_path = os.path.join(takes_dir, f"{label}.txt")
 
     # Run driver.py
+    import json as _json
     driver_result = subprocess.run(
         [sys.executable, driver, label, key_script, str(gap), f"--start={start}"],
         capture_output=True, text=True, timeout=120,
     )
-    if driver_result.returncode != 0:
-        # Check for aborted message in stdout (driver prints JSON with aborted key)
-        import json as _json
-        try:
-            meta = _json.loads(driver_result.stdout)
-            if meta.get("aborted"):
-                return f"aborted: {meta['aborted']}"
-        except Exception:
-            pass
-        return f"aborted: driver exited with code {driver_result.returncode}"
+    # driver.py always exits 0; detect abort via the first JSON line in stdout
+    meta = {}
+    for _line in driver_result.stdout.splitlines():
+        if _line.startswith("{"):
+            try:
+                meta = _json.loads(_line)
+            except Exception:
+                pass
+            break
+    if meta.get("aborted"):
+        aborted_text = meta["aborted"]
+        # Extract "before key N" fragment; strip any window title context
+        n_m = re.search(r"before key (\d+)", aborted_text)
+        if n_m:
+            return f"aborted: focus left the test window before key {n_m.group(1)}"
+        return f"aborted: {aborted_text}"
 
     # Run extract.py
     extract_result = subprocess.run(
@@ -98,4 +98,5 @@ def listen(key_script: str, start: str = "Select Seat Class", gap: float = 2.0) 
     return _format_output(txt_path, label)
 
 
-server.run("stdio")
+if __name__ == "__main__":
+    server.run("stdio")
