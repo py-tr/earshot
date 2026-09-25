@@ -16,6 +16,62 @@ server = MCPServer("earshot")
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 
+# Mapping from human-readable key names to driver format
+_KEY_MAP = {
+    "enter": "ENTER",
+    "tab": "TAB",
+    "shift+tab": "STAB",
+    "escape": "ESC",
+    "esc": "ESC",
+}
+# Tokens already in driver format (pass-through)
+_DRIVER_TOKENS = {"ENTER", "TAB", "STAB", "ESC"}
+
+
+def _normalize_keys(text: str) -> str:
+    """Convert findings.md key_script format to the driver's format."""
+    # If already fully in driver format, pass through unchanged
+    driver_tokens = set(_DRIVER_TOKENS)
+    # Check if it's already driver format: tokens are DRIVER_TOKENS optionally followed by *N
+    already_driver = True
+    for tok in text.split(","):
+        tok = tok.strip()
+        if not tok:
+            continue
+        base, _, repeat = tok.partition("*")
+        if base in driver_tokens and (not repeat or repeat.isdigit()):
+            continue
+        already_driver = False
+        break
+    if already_driver and text.strip():
+        return text.strip()
+
+    # Parse findings.md format: comma-separated tokens, each optionally followed by ×N, xN, or *N
+    result = []
+    for raw in text.split(","):
+        raw = raw.strip()
+        if not raw:
+            continue
+        # Detect repeat suffix: ×N, xN, or *N (at the end)
+        repeat_m = re.search(r"[×x\*](\d+)$", raw)
+        if repeat_m:
+            repeat = repeat_m.group(1)
+            key_part = raw[:repeat_m.start()].strip()
+        else:
+            repeat = None
+            key_part = raw
+
+        key_lower = key_part.lower()
+        if key_lower not in _KEY_MAP:
+            raise ValueError(key_part)
+        driver_key = _KEY_MAP[key_lower]
+        if repeat:
+            result.append(f"{driver_key}*{repeat}")
+        else:
+            result.append(driver_key)
+
+    return ",".join(result)
+
 
 def _format_output(txt_path: str, meta_label: str) -> str:
     """Parse the extract.py output file into short human-readable lines."""
@@ -59,7 +115,14 @@ def _format_output(txt_path: str, meta_label: str) -> str:
 
 @server.tool(structured_output=False)
 def listen(key_script: str, start: str = "Select Seat Class", gap: float = 2.0) -> str:
-    """Run driver.py then extract.py and return a short human-readable transcript."""
+    """key_script uses findings.md format, e.g. "Enter, Tab ×5, Shift+Tab, Escape".
+    Returns what NVDA said, one line per key and per phrase."""
+    try:
+        key_script = _normalize_keys(key_script)
+    except ValueError as exc:
+        token = str(exc)
+        return f"error: unknown key '{token}'; allowed: Enter, Tab, Shift+Tab, Escape (optional ×N)"
+
     label = "take_" + time.strftime("%Y%m%dT%H%M%S")
     driver = os.path.join(_HERE, "driver.py")
     extract = os.path.join(_HERE, "extract.py")
@@ -76,8 +139,9 @@ def listen(key_script: str, start: str = "Select Seat Class", gap: float = 2.0) 
         [sys.executable, driver, label, key_script, str(gap), f"--start={start}"],
         capture_output=True, text=True, timeout=120,
     )
-    # driver.py always exits 0; detect abort via the first JSON line in stdout
-    meta = {}
+
+    # Detect abort via exit code or missing JSON meta line
+    meta = None
     for _line in driver_result.stdout.splitlines():
         if _line.startswith("{"):
             try:
@@ -85,6 +149,10 @@ def listen(key_script: str, start: str = "Select Seat Class", gap: float = 2.0) 
             except Exception:
                 pass
             break
+
+    if driver_result.returncode != 0 or meta is None:
+        return f"aborted: driver failed (exit code {driver_result.returncode})"
+
     if meta.get("aborted"):
         aborted_text = meta["aborted"]
         # Extract "before key N" fragment; strip any window title context

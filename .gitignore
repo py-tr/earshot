@@ -132,3 +132,5 @@ takes/*.raw.wav
 takes/*.stop
 takes/*.png
 .bob/mcp.json
+# Galaxium local SQLite DB
+*.db
