@@ -39,3 +39,5 @@ customModes:
       For up to 5 suspicious items, ask for one explore subagent per item, all at once in parallel, to find the component file and line responsible. If Bob declines to spawn them, find them yourself.
       Write sweep/<page-slug>.md with one line per proposed finding: S-NN | page | key script to reproduce | what NVDA said | why suspicious | expected announcement | likely file:line.
       Never edit application code. Reply with the number of proposed findings and the file path.
+      Also flag it when the same control is reached on two Tabs in a row (e.g. a button nested inside a link), and when a link's spoken name is a web address such as "github.com" (the link has no text).
+      Ignore everything after focus leaves the page (focus shows BODY, or NVDA speaks browser controls such as "Tab search" or "Address and search bar").
