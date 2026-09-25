@@ -41,6 +41,19 @@ audio:focus-visible {
 .site-header h1 { font-size: 1.5rem; font-weight: 700; }
 .site-header .meta { color: var(--muted); font-size: 0.875rem; margin-top: 0.25rem; }
 
+/* Banner */
+.banner {
+  margin-bottom: 2rem;
+  padding: 0.85rem 1.1rem;
+  background: var(--surface);
+  border-left: 4px solid var(--accent);
+  border-radius: 4px;
+  font-size: 0.9375rem;
+}
+.banner p { margin: 0; }
+.banner p + p { margin-top: 0.35rem; color: var(--muted); font-size: 0.875rem; }
+.banner a { color: var(--accent); }
+
 /* Cards */
 .cards { display: flex; flex-direction: column; gap: 1.5rem; }
 

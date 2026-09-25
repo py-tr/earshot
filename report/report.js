@@ -3,9 +3,10 @@
   "use strict";
 
   var BADGE = {
-    "verified":   ["VERIFIED",      "badge-verified"],
-    "pending":    ["PENDING FIX",   "badge-pending"],
-    "needs-human":["NEEDS HUMAN",   "badge-human"]
+    "verified":              ["VERIFIED",           "badge-verified"],
+    "pending":               ["PENDING FIX",        "badge-pending"],
+    "needs-human":           ["NEEDS HUMAN",        "badge-human"],
+    "fixed \u2014 confirmed by ear + human": ["FIXED + HUMAN",  "badge-verified"]
   };
 
   function esc(str) {
@@ -48,19 +49,24 @@
     } else {
       var audioHtml = "";
       if (finding.audio && finding.transcript) {
-        audioHtml =
-          "<div class=\"audio-section\">" +
-            renderAudioBlock("Before", finding.audio.before, finding.transcript.before) +
-            renderAudioBlock("After",  finding.audio.after,  finding.transcript.after) +
-          "</div>";
+        var blocks = [];
+        if (finding.audio.before)   blocks.push(renderAudioBlock("Before",          finding.audio.before,   finding.transcript.before));
+        if (finding.audio.rejected) blocks.push(renderAudioBlock("Rejected first fix", finding.audio.rejected, finding.transcript.rejected));
+        if (finding.audio.after)    blocks.push(renderAudioBlock("After",           finding.audio.after,    finding.transcript.after));
+        if (finding.audio.ear)      blocks.push(renderAudioBlock("By ear",          finding.audio.ear,      finding.transcript.ear));
+        audioHtml = "<div class=\"audio-section\">" + blocks.join("") + "</div>";
       }
-      bodyHtml =
+      var humanHtml = finding.humanCheck
+        ? "<div class=\"reason-note\" role=\"note\"><strong>Human check:</strong> " + esc(finding.humanCheck) + "</div>"
+        : "";
+      var dlHtml =
         "<dl>" +
           "<dt>WCAG</dt><dd>" + esc(finding.wcag) + "</dd>" +
           "<dt>Component</dt><dd>" + esc(finding.component) + "</dd>" +
-          "<dt>Script</dt><dd><code>" + esc(finding.script) + "</code></dd>" +
-          "<dt>Expected</dt><dd>" + esc(finding.expected) + "</dd>" +
-        "</dl>" + audioHtml;
+          (finding.script   ? "<dt>Script</dt><dd><code>" + esc(finding.script) + "</code></dd>" : "") +
+          (finding.expected ? "<dt>Expected</dt><dd>" + esc(finding.expected) + "</dd>" : "") +
+        "</dl>";
+      bodyHtml = dlHtml + audioHtml + humanHtml;
     }
 
     return (
