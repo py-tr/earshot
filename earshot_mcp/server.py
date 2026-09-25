@@ -1,5 +1,5 @@
 """Earshot MCP server — wraps driver.py + extract.py for NVDA-assisted accessibility testing."""
-import ast, os, sys, subprocess, time, re
+import ast, os, sys, subprocess, time, re, threading
 
 # Load local.env into environment before anything else
 _env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "local.env")
@@ -26,6 +26,12 @@ _KEY_MAP = {
 }
 # Tokens already in driver format (pass-through)
 _DRIVER_TOKENS = {"ENTER", "TAB", "STAB", "ESC"}
+
+# State for background takes
+_results: dict = {}           # label -> result text (or None while running)
+_events: dict = {}            # label -> threading.Event set when done
+_current_label: str | None = None  # label of the currently running take
+_state_lock = threading.Lock()
 
 
 def _normalize_keys(text: str) -> str:
@@ -113,17 +119,11 @@ def _format_output(txt_path: str, meta_label: str) -> str:
     return "\n".join(results)
 
 
-@server.tool(structured_output=False)
-def listen(key_script: str, start: str = "Select Seat Class", gap: float = 2.0) -> str:
-    """key_script uses findings.md format, e.g. "Enter, Tab ×5, Shift+Tab, Escape".
-    Returns what NVDA said, one line per key and per phrase."""
-    try:
-        key_script = _normalize_keys(key_script)
-    except ValueError as exc:
-        token = str(exc)
-        return f"error: unknown key '{token}'; allowed: Enter, Tab, Shift+Tab, Escape (optional ×N)"
+def _run_take(label: str, keys: str, start: str, gap: float) -> None:
+    """Run driver.py then extract.py and store the result text in _results[label]."""
+    global _current_label
+    import json as _json
 
-    label = "take_" + time.strftime("%Y%m%dT%H%M%S")
     driver = os.path.join(_HERE, "driver.py")
     extract = os.path.join(_HERE, "extract.py")
 
@@ -133,43 +133,92 @@ def listen(key_script: str, start: str = "Select Seat Class", gap: float = 2.0) 
     )
     txt_path = os.path.join(takes_dir, f"{label}.txt")
 
-    # Run driver.py
-    import json as _json
-    driver_result = subprocess.run(
-        [sys.executable, driver, label, key_script, str(gap), f"--start={start}"],
-        capture_output=True, text=True, timeout=120,
-    )
+    try:
+        # Run driver.py
+        driver_result = subprocess.run(
+            [sys.executable, driver, label, keys, str(gap), f"--start={start}"],
+            capture_output=True, text=True, timeout=120,
+        )
 
-    # Detect abort via exit code or missing JSON meta line
-    meta = None
-    for _line in driver_result.stdout.splitlines():
-        if _line.startswith("{"):
-            try:
-                meta = _json.loads(_line)
-            except Exception:
-                pass
-            break
+        # Detect abort via exit code or missing JSON meta line
+        meta = None
+        for _line in driver_result.stdout.splitlines():
+            if _line.startswith("{"):
+                try:
+                    meta = _json.loads(_line)
+                except Exception:
+                    pass
+                break
 
-    if driver_result.returncode != 0 or meta is None:
-        return f"aborted: driver failed (exit code {driver_result.returncode})"
+        if driver_result.returncode != 0 or meta is None:
+            result = f"aborted: driver failed (exit code {driver_result.returncode})"
+        elif meta.get("aborted"):
+            aborted_text = meta["aborted"]
+            n_m = re.search(r"before key (\d+)", aborted_text)
+            if n_m:
+                result = f"aborted: focus left the test window before key {n_m.group(1)}"
+            else:
+                result = "aborted: driver reported an abort"
+        else:
+            # Run extract.py
+            extract_result = subprocess.run(
+                [sys.executable, extract, label, "listen", txt_path],
+                capture_output=True, text=True, timeout=120,
+            )
+            if extract_result.returncode != 0:
+                result = f"aborted: extract failed: {extract_result.stderr.strip()}"
+            else:
+                result = _format_output(txt_path, label)
+    except Exception as exc:
+        result = f"aborted: unexpected error: {exc}"
+    finally:
+        with _state_lock:
+            _results[label] = result
+            _current_label = None
+        _events[label].set()
 
-    if meta.get("aborted"):
-        aborted_text = meta["aborted"]
-        # Extract "before key N" fragment; strip any window title context
-        n_m = re.search(r"before key (\d+)", aborted_text)
-        if n_m:
-            return f"aborted: focus left the test window before key {n_m.group(1)}"
-        return "aborted: driver reported an abort"
 
-    # Run extract.py
-    extract_result = subprocess.run(
-        [sys.executable, extract, label, "listen", txt_path],
-        capture_output=True, text=True, timeout=120,
-    )
-    if extract_result.returncode != 0:
-        return f"aborted: extract failed: {extract_result.stderr.strip()}"
+@server.tool(structured_output=False)
+def listen(key_script: str, start: str = "Select Seat Class", gap: float = 2.0) -> str:
+    """key_script uses findings.md format, e.g. "Enter, Tab ×5, Shift+Tab, Escape".
+    Returns what NVDA said, one line per key and per phrase."""
+    global _current_label
 
-    return _format_output(txt_path, label)
+    try:
+        key_script = _normalize_keys(key_script)
+    except ValueError as exc:
+        token = str(exc)
+        return f"error: unknown key '{token}'; allowed: Enter, Tab, Shift+Tab, Escape (optional ×N)"
+
+    with _state_lock:
+        if _current_label is not None:
+            busy_label = _current_label
+            return f'busy: take {busy_label} is still running; call listen_result("{busy_label}")'
+
+        label = "take_" + time.strftime("%Y%m%dT%H%M%S")
+        _results[label] = None
+        _events[label] = threading.Event()
+        _current_label = label
+
+    t = threading.Thread(target=_run_take, args=(label, key_script, start, gap), daemon=True)
+    t.start()
+
+    done = _events[label].wait(timeout=20.0)
+    if done:
+        return _results[label]
+    return f'running: take {label}; call listen_result("{label}") to get the transcript'
+
+
+@server.tool(structured_output=False)
+def listen_result(label: str) -> str:
+    """Waits up to 20 s for the named take and returns its transcript."""
+    if label not in _events:
+        return "error: unknown take"
+
+    done = _events[label].wait(timeout=20.0)
+    if done:
+        return _results[label]
+    return f'running: take {label}; call listen_result("{label}") to get the transcript'
 
 
 if __name__ == "__main__":
