@@ -8,7 +8,12 @@ Measured 2026-09-25 on IBM's Galaxium Travels sample app. The "original" code is
 | **F-02** Tab escapes the open dialog; focus lost on close | not flagged | not flagged | heard ("github.com, link"), first fix rejected, fixed, re-heard |
 | **F-03** fields announced by placeholder ("John Doe, edit") | not flagged (the label text is a variable, so the rule cannot see it) | not flagged (axe accepts a placeholder as the field name) | heard, fixed, re-heard: "Name, edit" |
 
-**Automated checks: 1 of 3 findings flagged, and only half of that one. Earshot: 3 of 3 verified by ear.**
+| **F-04** 9 booking buttons all "Select Seat Class" (found by Bob's /sweep) | not flagged | not flagged (no rule for identical button names) | heard, first fix rejected (Button dropped aria-label), fixed, re-heard: "Select Seat Class, Earth to Mars" |
+| **F-05** no skip link (found by Bob's /sweep) | not flagged | not flagged (`bypass` passes because the page has headings and landmarks) | heard, fixed, re-heard: "Skip to main content, same page, link" |
+| **F-06** search field named only by its placeholder (found by Bob's /sweep) | not flagged | not flagged (`label` accepts a placeholder as the name) | heard, fixed, re-heard: "Search flights, edit" |
+
+**Automated checks: 1 of 6 findings flagged, and only half of that one. Earshot: 6 of 6 verified by ear, 3 of them discovered by Bob's own /sweep.**
+(F-04..F-06 were measured on the same original-code scans, `axe_baseline.json` and `lint_baseline.json`, of /flights.)
 
 ## The name-only fix passes axe and still fails blind users
 

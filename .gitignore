@@ -134,3 +134,6 @@ takes/*.png
 .bob/mcp.json
 # Galaxium local SQLite DB
 *.db
+# Earshot takes: raw NVDA recordings stay local; curated copies live in evidence/
+takes/*
+!takes/.gitkeep
