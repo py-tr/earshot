@@ -78,7 +78,8 @@ def _run_take(keys: str, start: str = "Select Seat Class", gap: float = 2.0) -> 
     if driver_result.returncode == 3:
         return "aborted: the take stalled and was stopped after 95 s"
     if driver_result.returncode != 0 or meta is None:
-        return f"aborted: driver failed (exit code {driver_result.returncode})"
+        err = (driver_result.stderr or "").strip().splitlines()[-1:] or ["no error output"]
+        return f"aborted: driver failed (exit code {driver_result.returncode}): {err[0][:200]}"
     if meta.get("aborted"):
         return f"aborted: {meta['aborted']}"
 
@@ -154,6 +155,7 @@ def main():
             sys.exit(1)
 
     any_failed = False
+    could_not_listen = 0
     for test in tests:
         tid = test["id"]
         keys = _normalize_keys(test["key_script"])
@@ -165,11 +167,15 @@ def main():
         else:
             any_failed = True
             said = _said_lines(output)
+            if output.startswith("aborted"):
+                reason = "could not listen (" + output + ")"
+                could_not_listen += 1
             print(f"FAIL {tid}: {reason}")
             for line in said:
                 print(f"  said: {line}")
 
-    sys.exit(1 if any_failed else 0)
+    # exit 2: nothing could be heard (app down, focus stolen); exit 1: a real screen-reader regression
+    sys.exit((2 if could_not_listen == len(tests) else 1) if any_failed else 0)
 
 
 if __name__ == "__main__":

@@ -67,6 +67,8 @@ if os.path.exists(LOG): os.remove(LOG)
 meta = {'label': label, 'keyscript': keyscript, 'gap': gap, 'start': start_name, 'aborted': None}
 
 with sync_playwright() as p:
+    TITLE_RE = '.*booking_system_frontend.*Chrome.*'
+    _before = {h.handle for h in Desktop(backend='win32').windows(title_re=TITLE_RE)}  # the user's own tabs
     br = p.chromium.launch(channel='chrome', headless=False,
                            args=['--start-maximized', '--force-renderer-accessibility'])
     ctx = br.new_context(no_viewport=True)
@@ -74,7 +76,10 @@ with sync_playwright() as p:
     page.goto(URL)
     page.wait_for_selector('text=/Showing [0-9]+ flights/')
     page.wait_for_timeout(1500)
-    w = Desktop(backend='win32').window(title_re='.*booking_system_frontend.*Chrome.*')
+    _ours = [h for h in Desktop(backend='win32').windows(title_re=TITLE_RE) if h.handle not in _before]
+    if not _ours:
+        meta['aborted'] = 'test window not found'; print(json.dumps(meta)); br.close(); sys.exit(0)
+    w = Desktop(backend='win32').window(handle=_ours[0].handle)  # the window this take opened, never the user's
     w.set_focus(); time.sleep(1)
     hwnd = w.handle
     subprocess.Popen([NVDA, f'--log-file={LOG}', f'--config-path={CFG}'])

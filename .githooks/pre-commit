@@ -1,7 +1,10 @@
 #!/bin/sh
 .venv/Scripts/python.exe earshot_mcp/hear_tests.py --staged
 status=$?
-if [ $status -ne 0 ]; then
+if [ $status -eq 2 ]; then
+  echo "BLOCKED by Earshot: could not listen (is the app running on :5173 and the desktop free?). Nothing was verified."
+  exit 1
+elif [ $status -ne 0 ]; then
   echo "BLOCKED by Earshot: this change breaks what a screen reader hears."
   exit 1
 fi
