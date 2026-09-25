@@ -27,8 +27,8 @@ var EARSHOT_DATA = [
     status: "pending",
     wcag: "2.4.3 Focus Order (A)",
     component: "Sign In dialog",
-    script: "ENTER, TAB 00d76, SHIFT+TAB, ESCAPE",
-    expected: "Tab after 201cRegister201d wraps to 201cClose modal, button201d. After Escape: 201cSelect Seat Class, button201d."
+    script: "ENTER, TAB ×6, SHIFT+TAB, ESCAPE",
+    expected: "Tab after “Register” wraps to “Close modal, button”. After Escape: “Select Seat Class, button”."
   },
   {
     id: "F-03",
@@ -36,7 +36,7 @@ var EARSHOT_DATA = [
     wcag: "1.3.1 Info and Relationships (A); 4.1.2 Name, Role, Value (A)",
     component: "Sign In form fields",
     script: "ENTER, TAB, TAB, TAB",
-    expected: "201cClose modal, button201d, then 201cName, edit201d, then 201cEmail, edit201d"
+    expected: "“Close modal, button”, then “Name, edit”, then “Email, edit”"
   },
   {
     id: "N-01",
