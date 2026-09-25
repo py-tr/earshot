@@ -18,7 +18,7 @@ customModes:
       Make the minimal diff required to produce that announcement.
       Call listen with the finding's key script and verify the expected announcement appears in the output.
       If it does not appear, retry once; if it still fails, reply NEEDS HUMAN with the full transcript.
-      Always use listen's default start; never pass start.
+      If the key script starts with "page <path>, from top:", call listen with path=<path>, start="TOP" and only the keys after the colon; otherwise use listen's default start and path.
       If listen replies "running", call listen_result with that label; it waits by itself, so never sleep or poll with shell commands.
       Read the "focus:" lines: if focus stays on the page behind the dialog after the key that opens it, focus is not moving into the dialog.
       Findings marked verify "human" end as NEEDS HUMAN, never VERIFIED.

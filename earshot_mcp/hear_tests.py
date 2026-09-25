@@ -46,7 +46,7 @@ def _staged_touches_frontend() -> bool:
     return False
 
 
-def _run_take(keys: str, start: str = "Select Seat Class", gap: float = 2.0) -> str:
+def _run_take(keys: str, start: str = "Select Seat Class", gap: float = 2.0, path: str | None = None) -> str:
     """Run a single take (driver + extract) and return formatted output."""
     label = "take_" + time.strftime("%Y%m%dT%H%M%S")
 
@@ -59,8 +59,11 @@ def _run_take(keys: str, start: str = "Select Seat Class", gap: float = 2.0) -> 
     driver = os.path.join(_HERE, "driver.py")
     extract = os.path.join(_HERE, "extract.py")
 
+    cmd = [sys.executable, driver, label, keys, str(gap), f"--start={start}"]
+    if path is not None:
+        cmd.append(f"--path={path}")
     driver_result = subprocess.run(
-        [sys.executable, driver, label, keys, str(gap), f"--start={start}"],
+        cmd,
         capture_output=True, text=True, timeout=120,
     )
 
@@ -159,7 +162,9 @@ def main():
     for test in tests:
         tid = test["id"]
         keys = _normalize_keys(test["key_script"])
-        output = _run_take(keys)
+        test_path = test.get("path")
+        test_start = test.get("start", "Select Seat Class")
+        output = _run_take(keys, start=test_start, path=test_path)
 
         passed, reason = _check(test, output)
         if passed:
