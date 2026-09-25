@@ -14,8 +14,11 @@ from pywinauto.keyboard import send_keys
 
 label, keyscript, gap = sys.argv[1], sys.argv[2], float(sys.argv[3])
 start_name = 'Filters'
+page_path = None
 for a in sys.argv:
     if a.startswith('--start='): start_name = a[8:]
+    if a.startswith('--path='): page_path = a[7:]
+FROM_TOP = start_name.strip().upper() in ('', 'TOP')  # sweep: start before the first focusable element
 KEYMAP = {'TAB': '{TAB}', 'STAB': '+{TAB}', 'ENTER': '{ENTER}', 'ESC': '{ESC}'}
 keys = []
 for tok in keyscript.split(','):
@@ -26,6 +29,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 NVDA = os.environ['EARSHOT_NVDA']                      # path to a portable nvda.exe
 CFG = os.environ['EARSHOT_NVDA_CONFIG']                # its userConfig dir (log level input/output)
 URL = os.environ.get('EARSHOT_URL', 'http://localhost:5173/flights')
+if page_path:  # any page of the app, e.g. --path=/ or --path=/destinations/mars
+    from urllib.parse import urlsplit
+    _u = urlsplit(URL); URL = f"{_u.scheme}://{_u.netloc}{page_path if page_path.startswith('/') else '/' + page_path}"
 SCR = os.environ.get('EARSHOT_TAKES', os.path.join(os.path.dirname(HERE), 'takes'))
 os.makedirs(SCR, exist_ok=True)
 LOG = os.path.join(SCR, f"nvda_{label}.log")
@@ -64,7 +70,7 @@ _wd = threading.Timer(95, _watchdog); _wd.daemon = True; _wd.start()
 
 quit_nvda(); time.sleep(2)
 if os.path.exists(LOG): os.remove(LOG)
-meta = {'label': label, 'keyscript': keyscript, 'gap': gap, 'start': start_name, 'aborted': None}
+meta = {'label': label, 'keyscript': keyscript, 'gap': gap, 'start': start_name, 'path': page_path, 'aborted': None}
 
 with sync_playwright() as p:
     TITLE_RE = '.*booking_system_frontend.*Chrome.*'
@@ -74,7 +80,11 @@ with sync_playwright() as p:
     ctx = br.new_context(no_viewport=True)
     page = ctx.new_page()
     page.goto(URL)
-    page.wait_for_selector('text=/Showing [0-9]+ flights/')
+    if '/flights' in URL:
+        page.wait_for_selector('text=/Showing [0-9]+ flights/')
+    else:
+        page.wait_for_load_state('networkidle')
+        page.wait_for_function('document.body && document.body.innerText.trim().length > 0', timeout=15000)
     page.wait_for_timeout(1500)
     _ours = [h for h in Desktop(backend='win32').windows(title_re=TITLE_RE) if h.handle not in _before]
     if not _ours:
@@ -94,13 +104,20 @@ with sync_playwright() as p:
     if user32.GetForegroundWindow() != hwnd:
         w.set_focus(); time.sleep(2)
     off = len(logtext())
-    try:
-        page.get_by_role('button', name=start_name).first.focus(timeout=5000)
-    except Exception:
-        meta['aborted'] = f'start control {start_name!r} not found'
-        print(json.dumps(meta)); br.close(); sys.exit(0)
-    meta['start_announced'] = wait_log(re.escape(start_name) + r"'?, 'button'|'button', '" + re.escape(start_name), off, 8)
-    time.sleep(7)
+    if FROM_TOP:
+        page.evaluate("""() => { window.scrollTo(0, 0); const s = document.createElement('span');
+            s.id = 'earshot-top'; s.tabIndex = -1; s.setAttribute('aria-hidden', 'true');
+            document.body.prepend(s); s.focus(); }""")
+        meta['start_announced'] = None
+        time.sleep(4)
+    else:
+        try:
+            page.get_by_role('button', name=start_name).first.focus(timeout=5000)
+        except Exception:
+            meta['aborted'] = f'start control {start_name!r} not found'
+            print(json.dumps(meta)); br.close(); sys.exit(0)
+        meta['start_announced'] = wait_log(re.escape(start_name) + r"'?, 'button'|'button', '" + re.escape(start_name), off, 8)
+        time.sleep(7)
     meta['fg_start'] = title_of(user32.GetForegroundWindow())
     meta['active_start'] = page.evaluate(ACTIVE_JS)
     log_off = len(logtext())
