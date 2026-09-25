@@ -122,3 +122,13 @@ build/
 *_CONTAMINATED.wav
 MENTOR.md
 .tutor/
+# Earshot: local build output and raw take files (NVDA logs and meta can hold local window titles)
+earshot_mcp/proccap/out/
+earshot_mcp/proccap/bin/
+earshot_mcp/proccap/obj/
+takes/*.log
+takes/*.meta.json
+takes/*.raw.wav
+takes/*.stop
+takes/*.png
+.bob/mcp.json
