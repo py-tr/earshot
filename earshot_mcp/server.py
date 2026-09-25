@@ -84,7 +84,18 @@ def _format_output(txt_path: str, meta_label: str) -> str:
     with open(txt_path, encoding="utf-8") as f:
         raw_lines = f.read().splitlines()
 
+    # Parse focus lines from header comments:
+    # #   ENTER @ 1.06s -> BUTTON "Select Seat Class" [page behind dialog]
+    focus_lines = []
+    for line in raw_lines:
+        if not line.startswith("#"):
+            break
+        fm = re.match(r"#\s+(\w+)\s+@\s+[\d.]+s\s+->\s+(.*)", line)
+        if fm:
+            focus_lines.append((fm.group(1).upper(), fm.group(2).strip()))
+
     results = []
+    key_index = 0  # tracks which focus entry to attach next
     for line in raw_lines:
         if line.startswith("#") or not line.strip():
             continue
@@ -99,6 +110,10 @@ def _format_output(txt_path: str, meta_label: str) -> str:
             kb_m = re.match(r"kb\([^)]*\):(.*)", rest)
             key = kb_m.group(1).upper() if kb_m else rest.upper()
             results.append(f"{ts}s  {key}")
+            if key_index < len(focus_lines):
+                _fkey, _felem = focus_lines[key_index]
+                results.append(f"       focus: {_felem}")
+                key_index += 1
         else:
             # Speaking [...] — drop LangChangeCommand/CancellableSpeech markers, then
             # parse remaining bracket text as a Python list.
@@ -150,15 +165,20 @@ def _run_take(label: str, keys: str, start: str, gap: float) -> None:
                     pass
                 break
 
-        if driver_result.returncode != 0 or meta is None:
+        if driver_result.returncode == 3:
+            result = "aborted: the take stalled and was stopped after 95 s"
+        elif driver_result.returncode != 0 or meta is None:
             result = f"aborted: driver failed (exit code {driver_result.returncode})"
         elif meta.get("aborted"):
             aborted_text = meta["aborted"]
-            n_m = re.search(r"before key (\d+)", aborted_text)
-            if n_m:
-                result = f"aborted: focus left the test window before key {n_m.group(1)}"
+            if "not found" in aborted_text:
+                result = "aborted: start control not found (use the default start)"
             else:
-                result = "aborted: driver reported an abort"
+                n_m = re.search(r"before key (\d+)", aborted_text)
+                if n_m:
+                    result = f"aborted: focus left the test window before key {n_m.group(1)}"
+                else:
+                    result = "aborted: driver reported an abort"
         else:
             # Run extract.py
             extract_result = subprocess.run(
