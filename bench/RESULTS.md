@@ -7,7 +7,6 @@ Measured 2026-09-25 on IBM's Galaxium Travels sample app. The "original" code is
 | **F-01** Sign In dialog silent: no name, focus not moved in | not flagged | **half**: `aria-dialog-name` (the name only; focus is not checked) | heard, fixed, re-heard: "Sign In, dialog" |
 | **F-02** Tab escapes the open dialog; focus lost on close | not flagged | not flagged | heard ("github.com, link"), first fix rejected, fixed, re-heard |
 | **F-03** fields announced by placeholder ("John Doe, edit") | not flagged (the label text is a variable, so the rule cannot see it) | not flagged (axe accepts a placeholder as the field name) | heard, fixed, re-heard: "Name, edit" |
-
 | **F-04** 9 booking buttons all "Select Seat Class" (found by Bob's /sweep) | not flagged | not flagged (no rule for identical button names) | heard, first fix rejected (Button dropped aria-label), fixed, re-heard: "Select Seat Class, Earth to Mars" |
 | **F-05** no skip link (found by Bob's /sweep) | not flagged | not flagged (`bypass` passes because the page has headings and landmarks) | heard, fixed, re-heard: "Skip to main content, same page, link" |
 | **F-06** search field named only by its placeholder (found by Bob's /sweep) | not flagged | not flagged (`label` accepts a placeholder as the name) | heard, fixed, re-heard: "Search flights, edit" |
