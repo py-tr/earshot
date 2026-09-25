@@ -134,7 +134,7 @@ def _format_output(txt_path: str, meta_label: str) -> str:
     return "\n".join(results)
 
 
-def _run_take(label: str, keys: str, start: str, gap: float) -> None:
+def _run_take(label: str, keys: str, start: str, gap: float, path: str = "/flights") -> None:
     """Run driver.py then extract.py and store the result text in _results[label]."""
     global _current_label
     import json as _json
@@ -151,7 +151,7 @@ def _run_take(label: str, keys: str, start: str, gap: float) -> None:
     try:
         # Run driver.py
         driver_result = subprocess.run(
-            [sys.executable, driver, label, keys, str(gap), f"--start={start}"],
+            [sys.executable, driver, label, keys, str(gap), f"--start={start}", f"--path={path}"],
             capture_output=True, text=True, timeout=120,
         )
 
@@ -199,8 +199,8 @@ def _run_take(label: str, keys: str, start: str, gap: float) -> None:
 
 
 @server.tool(structured_output=False)
-def listen(key_script: str, start: str = "Select Seat Class", gap: float = 2.0) -> str:
-    """key_script uses findings.md format, e.g. "Enter, Tab ×5, Shift+Tab, Escape".
+def listen(key_script: str, start: str = "Select Seat Class", gap: float = 2.0, path: str = "/flights") -> str:
+    """key_script uses findings.md format e.g. "Tab ×5"; path is the page URL path to load.
     Returns what NVDA said, one line per key and per phrase."""
     global _current_label
 
@@ -220,7 +220,7 @@ def listen(key_script: str, start: str = "Select Seat Class", gap: float = 2.0) 
         _events[label] = threading.Event()
         _current_label = label
 
-    t = threading.Thread(target=_run_take, args=(label, key_script, start, gap), daemon=True)
+    t = threading.Thread(target=_run_take, args=(label, key_script, start, gap, path), daemon=True)
     t.start()
 
     done = _events[label].wait(timeout=20.0)
