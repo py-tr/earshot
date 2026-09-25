@@ -1,0 +1,31 @@
+# NVDA speech/input log for the 'listen' take (take_20260925T225714), extracted verbatim from NVDA's own log (log level: input/output).
+# Clip time 0.00 s = 22:57:41.326 local (2026-09-25). Format: [clip seconds, from NVDA log timestamp] original NVDA log line.
+# Only 'Input:' and 'Speaking' records are listed; LangChangeCommand/CancellableSpeech are NVDA-internal markers, kept verbatim.
+# Note: the timestamp is when NVDA queued the speech; audio can start slightly later if earlier speech is still playing.
+# DOM focus after each key (document.activeElement sampled over CDP ~0.3 s before the next key; not from NVDA):
+#   ENTER @ 1.06s -> BUTTON "Select Seat Class" [page behind dialog]
+#   TAB @ 3.05s -> A "Moon" [page behind dialog]
+#   TAB @ 5.06s -> BUTTON "Select Seat Class" [page behind dialog]
+#   TAB @ 7.06s -> A "Earth" [page behind dialog]
+#   TAB @ 9.06s -> BUTTON "Select Seat Class" [page behind dialog]
+#   TAB @ 11.06s -> A "Earth" [page behind dialog]
+#   TAB @ 13.06s -> BUTTON "Select Seat Class" [page behind dialog]
+#   STAB @ 15.17s -> A "Earth" [page behind dialog]
+#   ESC @ 17.05s -> A "Earth" [page]
+
+[  1.01s] Input: kb(desktop):enter
+[  3.00s] Input: kb(desktop):tab
+[  3.09s] Speaking [LangChangeCommand ('en_US'), 'Moon', 'link', 'heading', 'level 3']
+[  5.00s] Input: kb(desktop):tab
+[  5.05s] Speaking [LangChangeCommand ('en_US'), 'Select Seat Class', 'button']
+[  7.01s] Input: kb(desktop):tab
+[  7.07s] Speaking [LangChangeCommand ('en_US'), 'Earth', 'link', 'heading', 'level 3']
+[  9.00s] Input: kb(desktop):tab
+[  9.04s] Speaking [LangChangeCommand ('en_US'), 'Select Seat Class', 'button']
+[ 11.01s] Input: kb(desktop):tab
+[ 11.06s] Speaking [LangChangeCommand ('en_US'), 'Earth', 'link', 'heading', 'level 3']
+[ 13.01s] Input: kb(desktop):tab
+[ 13.04s] Speaking [LangChangeCommand ('en_US'), 'Select Seat Class', 'button']
+[ 15.06s] Input: kb(desktop):shift+tab
+[ 15.14s] Speaking [LangChangeCommand ('en_US'), 'Earth', 'link', 'heading', 'level 3']
+[ 17.00s] Input: kb(desktop):escape
