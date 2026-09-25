@@ -1,0 +1,26 @@
+# NVDA 2026.2 speech/input log for the 'after' take (after_t2), extracted verbatim from NVDA's own log (log level: input/output).
+# Clip time 0.00 s = 14:13:58.850 local (2026-09-25). Format: [clip seconds, from NVDA log timestamp] original NVDA log line.
+# Only 'Input:' and 'Speaking' records are listed; LangChangeCommand/CancellableSpeech are NVDA-internal markers, kept verbatim.
+# Note: the timestamp is when NVDA queued the speech; audio can start slightly later if earlier speech is still playing.
+
+[  1.00s] Input: kb(desktop):tab
+[  1.13s] Speaking [LangChangeCommand ('en_US'), 'Mars', 'link', 'heading', 'level 3']
+[  3.05s] Input: kb(desktop):tab
+[  3.12s] Speaking [LangChangeCommand ('en_US'), 'Select Seat Class', 'button']
+[  5.11s] Input: kb(desktop):enter
+[  5.21s] Speaking [LangChangeCommand ('en_US'), 'Sign In', 'dialog', CancellableSpeech (still valid)]
+[  5.21s] Speaking [LangChangeCommand ('en_US'), 'Close modal', 'button']
+[  5.22s] Speaking [LangChangeCommand ('en_US'), 'Sign In', 'dialog', CancellableSpeech (still valid)]
+[  5.22s] Speaking [LangChangeCommand ('en_US'), 'button', 'Close modal']
+[  7.16s] Input: kb(desktop):tab
+[  7.20s] Speaking [LangChangeCommand ('en_US'), 'form landmark', CancellableSpeech (still valid)]
+[  7.21s] Speaking [LangChangeCommand ('en_US'), 'John Doe', 'edit', 'required', CancellableSpeech (still valid), 'blank']
+[  9.21s] Input: kb(desktop):tab
+[  9.25s] Speaking [LangChangeCommand ('en_US'), 'john@example.com', 'edit', 'required', CancellableSpeech (still valid), 'blank']
+[ 11.26s] Input: kb(desktop):tab
+[ 11.29s] Speaking [LangChangeCommand ('en_US'), 'Continue', 'button']
+[ 13.31s] Input: kb(desktop):tab
+[ 13.34s] Speaking [LangChangeCommand ('en_US'), "Don't have an account? Register", 'button']
+[ 15.37s] Input: kb(desktop):tab
+[ 15.45s] Speaking [LangChangeCommand ('en_US'), 'button', 'Select Seat Class']
+[ 15.47s] Speaking [LangChangeCommand ('en_US'), 'content info landmark', 'github.com', 'link']

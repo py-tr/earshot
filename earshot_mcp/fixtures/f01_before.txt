@@ -1,0 +1,20 @@
+# NVDA 2026.2 speech/input log for the 'before' take (before_t1), extracted verbatim from NVDA's own log (log level: input/output).
+# Clip time 0.00 s = 14:11:34.805 local (2026-09-25). Format: [clip seconds, from NVDA log timestamp] original NVDA log line.
+# Only 'Input:' and 'Speaking' records are listed; LangChangeCommand/CancellableSpeech are NVDA-internal markers, kept verbatim.
+# Note: the timestamp is when NVDA queued the speech; audio can start slightly later if earlier speech is still playing.
+
+[  1.00s] Input: kb(desktop):tab
+[  1.13s] Speaking [LangChangeCommand ('en_US'), 'Mars', 'link', 'heading', 'level 3']
+[  3.05s] Input: kb(desktop):tab
+[  3.10s] Speaking [LangChangeCommand ('en_US'), 'Select Seat Class', 'button']
+[  5.10s] Input: kb(desktop):enter
+[  7.16s] Input: kb(desktop):tab
+[  7.23s] Speaking [LangChangeCommand ('en_US'), 'Moon', 'link', 'heading', 'level 3']
+[  9.21s] Input: kb(desktop):tab
+[  9.27s] Speaking [LangChangeCommand ('en_US'), 'Select Seat Class', 'button']
+[ 11.26s] Input: kb(desktop):tab
+[ 11.33s] Speaking [LangChangeCommand ('en_US'), 'Earth', 'link', 'heading', 'level 3']
+[ 13.31s] Input: kb(desktop):tab
+[ 13.36s] Speaking [LangChangeCommand ('en_US'), 'Select Seat Class', 'button']
+[ 15.36s] Input: kb(desktop):tab
+[ 15.43s] Speaking [LangChangeCommand ('en_US'), 'Earth', 'link', 'heading', 'level 3']
