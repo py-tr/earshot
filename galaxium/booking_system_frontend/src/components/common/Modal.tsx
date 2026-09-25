@@ -14,6 +14,7 @@ interface ModalProps {
 export const Modal = ({ isOpen, onClose, title, children, size = 'md' }: ModalProps) => {
   const dialogRef = useRef<HTMLDivElement>(null);
   const titleId = useRef(`modal-title-${Math.random().toString(36).slice(2)}`).current;
+  const returnFocusRef = useRef<HTMLElement | null>(null);
 
   const sizeClasses = {
     sm: 'max-w-md',
@@ -21,21 +22,41 @@ export const Modal = ({ isOpen, onClose, title, children, size = 'md' }: ModalPr
     lg: 'max-w-4xl',
   };
 
-  // Close on escape key
+  // Close on escape key; trap focus inside dialog
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+    const FOCUSABLE = 'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { onClose(); return; }
+      if (e.key !== 'Tab') return;
+
+      const el = dialogRef.current;
+      if (!el) return;
+      const focusable = Array.from(el.querySelectorAll<HTMLElement>(FOCUSABLE)).filter(n => n.tabIndex !== -1 || n === el);
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
     };
     
     if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
+      returnFocusRef.current = document.activeElement as HTMLElement;
+      document.addEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'hidden';
       // Defer focus so the motion.div is in the DOM before we focus it
       setTimeout(() => dialogRef.current?.focus(), 0);
+    } else {
+      returnFocusRef.current?.focus();
+      returnFocusRef.current = null;
     }
     
     return () => {
-      document.removeEventListener('keydown', handleEscape);
+      document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'unset';
     };
   }, [isOpen, onClose]);
