@@ -3,9 +3,15 @@
     "earshot": {
       "type": "stdio",
       "command": "<workspace>\\.venv\\Scripts\\python.exe",
-      "args": ["earshot_mcp/server.py"],
+      "args": [
+        "earshot_mcp/server.py"
+      ],
       "cwd": "<workspace>",
-      "timeout": 180
+      "timeout": 300000,
+      "alwaysAllow": [
+        "listen",
+        "listen_result"
+      ]
     }
   }
 }
