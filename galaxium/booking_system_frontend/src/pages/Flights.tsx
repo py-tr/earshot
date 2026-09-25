@@ -118,6 +118,7 @@ export const Flights = () => {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-star-white/50" size={20} />
           <input
             type="text"
+            aria-label="Search flights"
             placeholder="Search by origin or destination..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
