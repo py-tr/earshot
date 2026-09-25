@@ -3,3 +3,6 @@ F-02 | 2.4.3 Focus Order (A) | Sign In dialog | Enter, Tab ×6, Shift+Tab, Escap
 F-03 | 1.3.1 Info and Relationships (A); 4.1.2 Name, Role, Value (A) | Sign In form fields | Enter, Tab, Tab, Tab | "Close modal, button", then "Name, edit", then "Email, edit" | ear
 N-01 | 2.2.2 Pause, Stop, Hide (A) | Animated starfield background, every page | N/A | N/A | human
 N-02 | 4.1.3 Status Messages (AA) | /flights results count | Move focus to the search box, type "Mars" | The new count is announced politely, without interrupting typing. | human
+F-04 | 2.4.6 Headings and Labels (AA); 1.3.1 Info and Relationships (A) | /flights "Select Seat Class" buttons (source: Bob sweep S-01, human-accepted) | page /flights, from top: Tab ×9 | "Select Seat Class, Earth to Mars, button" (each button names its route) | ear
+F-05 | 2.4.1 Bypass Blocks (A) | every page: no skip link (source: Bob sweep S-05, human-accepted) | page /, from top: Tab | "Skip to main content, link" as the first Tab stop | ear
+F-06 | 1.3.1 Info and Relationships (A); 4.1.2 Name, Role, Value (A); 3.3.2 Labels or Instructions (A) | /flights search field named only by its placeholder (source: Bob sweep run 2 S-02, human-accepted) | page /flights, from top: Tab ×6 | "Search flights, edit" (a real label, not the placeholder) | ear
