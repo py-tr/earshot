@@ -10,6 +10,7 @@ interface ButtonProps {
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
   className?: string;
+  'aria-label'?: string;
 }
 
 export const Button = ({
@@ -21,6 +22,7 @@ export const Button = ({
   disabled,
   type = 'button',
   onClick,
+  'aria-label': ariaLabel,
 }: ButtonProps) => {
   const baseClasses = 'font-semibold rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2';
   
@@ -49,6 +51,7 @@ export const Button = ({
       disabled={disabled || isLoading}
       type={type}
       onClick={onClick}
+      aria-label={ariaLabel}
     >
       {isLoading ? (
         <>

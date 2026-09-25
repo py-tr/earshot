@@ -2,19 +2,35 @@
   {
     "id": "F-01",
     "key_script": "Enter, Tab",
-    "expect": ["Sign In, dialog", "Close modal, button"],
+    "expect": [
+      "Sign In, dialog",
+      "Close modal, button"
+    ],
     "forbid": []
   },
   {
     "id": "F-02",
     "key_script": "Enter, Tab ×6, Shift+Tab, Escape",
-    "expect": ["Register, button", "Close modal, button", "Register", "Select Seat Class, button"],
-    "forbid": ["github.com"]
+    "expect": [
+      "Register, button",
+      "Close modal, button",
+      "Register",
+      "Select Seat Class"
+    ],
+    "forbid": [
+      "github.com"
+    ]
   },
   {
     "id": "F-03",
     "key_script": "Enter, Tab, Tab, Tab",
-    "expect": ["Close modal, button", "Name, edit", "Email, edit"],
-    "forbid": ["John Doe, edit"]
+    "expect": [
+      "Close modal, button",
+      "Name, edit",
+      "Email, edit"
+    ],
+    "forbid": [
+      "John Doe, edit"
+    ]
   }
 ]

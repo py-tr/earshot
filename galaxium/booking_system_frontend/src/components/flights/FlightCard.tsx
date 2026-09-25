@@ -160,6 +160,7 @@ export const FlightCard = ({ flight, onBook }: FlightCardProps) => {
           onClick={() => onBook(flight)}
           disabled={isSoldOut}
           className="w-full"
+          aria-label={isSoldOut ? `All Classes Sold Out, ${flight.origin} to ${flight.destination}` : `Select Seat Class, ${flight.origin} to ${flight.destination}`}
         >
           {isSoldOut ? 'All Classes Sold Out' : 'Select Seat Class'}
         </Button>
