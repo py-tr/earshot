@@ -34,7 +34,7 @@ META = os.path.join(SCR, f"{label}.meta.json")
 user32 = ctypes.windll.user32
 ACTIVE_JS = """() => { const a = document.activeElement; if (!a || a === document.body) return 'BODY';
   const n = (a.getAttribute('aria-label') || a.textContent || a.getAttribute('placeholder') || '').trim().slice(0, 50);
-  return a.tagName + ' "' + n + '"' + (a.closest('[role=dialog]') ? ' [inside dialog]' : ' [page behind dialog]'); }"""
+  return a.tagName + ' "' + n + '"' + (a.closest('[role=dialog]') ? ' [inside dialog]' : (document.querySelector('[role=dialog]') ? ' [page behind dialog]' : ' [page]')); }"""
 
 def title_of(h):
     buf = ctypes.create_unicode_buffer(512); user32.GetWindowTextW(h, buf, 512); return buf.value
