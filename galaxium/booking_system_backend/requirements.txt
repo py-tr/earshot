@@ -1,5 +1,5 @@
 fastapi
-fastmcp
+fastmcp==2.14.7  # pinned by Earshot: fastmcp 4.x / mcp 2.x break FastApiMCP
 fastapi-mcp
 uvicorn
 sqlalchemy
@@ -10,3 +10,4 @@ pytest-asyncio
 pytest-cov
 httpx
 psycopg2-binary
+mcp==1.30.0  # pinned by Earshot (see galaxium/MODIFICATIONS.md)
