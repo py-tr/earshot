@@ -1,0 +1,12 @@
+fastapi
+fastmcp
+fastapi-mcp
+uvicorn
+sqlalchemy
+pydantic
+python-dotenv
+pytest
+pytest-asyncio
+pytest-cov
+httpx
+psycopg2-binary
