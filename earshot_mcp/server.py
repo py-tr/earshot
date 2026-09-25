@@ -1,5 +1,5 @@
 """Earshot MCP server — wraps driver.py + extract.py for NVDA-assisted accessibility testing."""
-import os, sys, subprocess, time, re
+import ast, os, sys, subprocess, time, re
 
 # Load local.env into environment before anything else
 _env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "local.env")
@@ -39,9 +39,15 @@ def _format_output(txt_path: str, meta_label: str) -> str:
             results.append(f"{ts}s  {key}")
         else:
             # Speaking [...] — drop LangChangeCommand/CancellableSpeech markers, then
-            # pull out remaining single/double-quoted strings
+            # parse remaining bracket text as a Python list.
             cleaned = re.sub(r"\b(?:LangChangeCommand|CancellableSpeech)\s*\([^)]*\),?\s*", "", rest)
-            parts = re.findall(r"['\"]([^'\"]+)['\"]", cleaned)
+            # Remove trailing commas/spaces inside brackets before eval
+            cleaned_eval = re.sub(r",\s*(\])", r"\1", cleaned.strip())
+            try:
+                items = ast.literal_eval(cleaned_eval)
+                parts = [s for s in items if isinstance(s, str)]
+            except Exception:
+                parts = re.findall(r"['\"]([^'\"]+)['\"]", cleaned)
             phrase = ", ".join(parts)
             if phrase:
                 results.append(f"{ts}s  said: {phrase}")
@@ -85,7 +91,7 @@ def listen(key_script: str, start: str = "Select Seat Class", gap: float = 2.0) 
         n_m = re.search(r"before key (\d+)", aborted_text)
         if n_m:
             return f"aborted: focus left the test window before key {n_m.group(1)}"
-        return f"aborted: {aborted_text}"
+        return "aborted: driver reported an abort"
 
     # Run extract.py
     extract_result = subprocess.run(
