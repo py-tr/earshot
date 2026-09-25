@@ -1,0 +1,13 @@
+# NVDA speech/input log for the 'listen' take (take_20260925T203712), extracted verbatim from NVDA's own log (log level: input/output).
+# Clip time 0.00 s = 20:37:39.088 local (2026-09-25). Format: [clip seconds, from NVDA log timestamp] original NVDA log line.
+# Only 'Input:' and 'Speaking' records are listed; LangChangeCommand/CancellableSpeech are NVDA-internal markers, kept verbatim.
+# Note: the timestamp is when NVDA queued the speech; audio can start slightly later if earlier speech is still playing.
+# DOM focus after each key (document.activeElement sampled over CDP ~0.3 s before the next key; not from NVDA):
+#   ENTER @ 1.06s -> DIV "Sign InEnter your name and email to continueNameEm" [inside dialog]
+#   TAB @ 3.06s -> BUTTON "Close modal" [inside dialog]
+
+[  1.01s] Input: kb(desktop):enter
+[  1.17s] Speaking [LangChangeCommand ('en_US'), 'Sign In', 'dialog', CancellableSpeech (still valid)]
+[  1.18s] Speaking [LangChangeCommand ('en_US'), 'heading', 'level 2', 'Sign In']
+[  3.01s] Input: kb(desktop):tab
+[  3.05s] Speaking [LangChangeCommand ('en_US'), 'Close modal', 'button']
