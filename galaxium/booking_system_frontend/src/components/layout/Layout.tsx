@@ -11,6 +11,14 @@ interface LayoutProps {
 export const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="min-h-screen flex flex-col relative">
+      {/* Skip navigation link */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-2 focus:left-2 focus:px-4 focus:py-2 focus:bg-white focus:text-black focus:rounded"
+      >
+        Skip to main content
+      </a>
+
       {/* Animated starfield background */}
       <Starfield />
       
@@ -44,7 +52,7 @@ export const Layout = ({ children }: LayoutProps) => {
       <Header />
       
       {/* Main content */}
-      <main className="relative z-10 flex-1 pt-24 pb-8">
+      <main id="main-content" className="relative z-10 flex-1 pt-24 pb-8">
         <div className="container mx-auto px-4">
           {children}
         </div>
