@@ -50,7 +50,19 @@ def wait_log(pattern, since, timeout=10):
         time.sleep(0.2)
     return False
 
-subprocess.run([NVDA, '-q'], timeout=30); time.sleep(2)
+def quit_nvda():
+    try: subprocess.run([NVDA, '-q'], timeout=30)
+    except Exception: pass
+    subprocess.run(['taskkill', '/F', '/IM', 'proccap.exe'], capture_output=True, creationflags=0x08000000)
+
+import atexit, threading
+atexit.register(quit_nvda)  # normal exit and uncaught exceptions: NVDA never keeps talking
+
+def _watchdog():  # a stalled take (e.g. a hung audio capture) ends here instead of hanging Bob's tool call
+    quit_nvda(); os._exit(3)
+_wd = threading.Timer(95, _watchdog); _wd.daemon = True; _wd.start()
+
+quit_nvda(); time.sleep(2)
 if os.path.exists(LOG): os.remove(LOG)
 meta = {'label': label, 'keyscript': keyscript, 'gap': gap, 'start': start_name, 'aborted': None}
 
@@ -77,7 +89,11 @@ with sync_playwright() as p:
     if user32.GetForegroundWindow() != hwnd:
         w.set_focus(); time.sleep(2)
     off = len(logtext())
-    page.get_by_role('button', name=start_name).first.focus()
+    try:
+        page.get_by_role('button', name=start_name).first.focus(timeout=5000)
+    except Exception:
+        meta['aborted'] = f'start control {start_name!r} not found'
+        print(json.dumps(meta)); br.close(); sys.exit(0)
     meta['start_announced'] = wait_log(re.escape(start_name) + r"'?, 'button'|'button', '" + re.escape(start_name), off, 8)
     time.sleep(7)
     meta['fg_start'] = title_of(user32.GetForegroundWindow())
@@ -103,7 +119,7 @@ with sync_playwright() as p:
     open(os.path.join(SCR, f'{label}.segment.log'), 'w', encoding='utf-8').write(logtext()[log_off:])
     page.screenshot(path=os.path.join(SCR, f'{label}.png'))
     br.close()
-subprocess.run([NVDA, '-q'], timeout=30)
+quit_nvda(); _wd.cancel()
 json.dump(meta, open(META, 'w'), indent=1)
 print(json.dumps(meta))
 if 'proccap_start_line' in meta and meta['proccap_start_line'].startswith('STARTED'):
