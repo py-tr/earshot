@@ -1,0 +1,36 @@
+# NVDA speech/input log for the 'listen' take (take_20260925T205534), extracted verbatim from NVDA's own log (log level: input/output).
+# Clip time 0.00 s = 20:56:00.454 local (2026-09-25). Format: [clip seconds, from NVDA log timestamp] original NVDA log line.
+# Only 'Input:' and 'Speaking' records are listed; LangChangeCommand/CancellableSpeech are NVDA-internal markers, kept verbatim.
+# Note: the timestamp is when NVDA queued the speech; audio can start slightly later if earlier speech is still playing.
+# DOM focus after each key (document.activeElement sampled over CDP ~0.3 s before the next key; not from NVDA):
+#   ENTER @ 1.06s -> DIV "Sign InEnter your name and email to continueNameEm" [inside dialog]
+#   TAB @ 3.06s -> BUTTON "Close modal" [inside dialog]
+#   TAB @ 5.06s -> INPUT "John Doe" [inside dialog]
+#   TAB @ 7.06s -> INPUT "john@example.com" [inside dialog]
+#   TAB @ 9.06s -> BUTTON "Continue" [inside dialog]
+#   TAB @ 11.06s -> BUTTON "Don't have an account? Register" [inside dialog]
+#   TAB @ 13.05s -> BUTTON "Close modal" [inside dialog]
+#   STAB @ 15.16s -> BUTTON "Don't have an account? Register" [inside dialog]
+#   ESC @ 17.05s -> BUTTON "Select Seat Class" [page behind dialog]
+
+[  1.01s] Input: kb(desktop):enter
+[  1.14s] Speaking [LangChangeCommand ('en_US'), 'Sign In', 'dialog', CancellableSpeech (still valid)]
+[  1.14s] Speaking [LangChangeCommand ('en_US'), 'heading', 'level 2', 'Sign In']
+[  3.01s] Input: kb(desktop):tab
+[  3.04s] Speaking [LangChangeCommand ('en_US'), 'Close modal', 'button']
+[  5.01s] Input: kb(desktop):tab
+[  5.05s] Speaking [LangChangeCommand ('en_US'), 'form landmark', CancellableSpeech (still valid)]
+[  5.06s] Speaking [LangChangeCommand ('en_US'), 'John Doe', 'edit', 'required', CancellableSpeech (still valid), 'blank']
+[  7.01s] Input: kb(desktop):tab
+[  7.05s] Speaking [LangChangeCommand ('en_US'), 'john@example.com', 'edit', 'required', CancellableSpeech (still valid), 'blank']
+[  9.01s] Input: kb(desktop):tab
+[  9.04s] Speaking [LangChangeCommand ('en_US'), 'Continue', 'button']
+[ 11.01s] Input: kb(desktop):tab
+[ 11.03s] Speaking [LangChangeCommand ('en_US'), "Don't have an account? Register", 'button']
+[ 13.00s] Input: kb(desktop):tab
+[ 13.02s] Speaking [LangChangeCommand ('en_US'), 'Close modal', 'button']
+[ 15.06s] Input: kb(desktop):shift+tab
+[ 15.09s] Speaking [LangChangeCommand ('en_US'), 'section', "Don't have an account? Register", 'button']
+[ 17.00s] Input: kb(desktop):escape
+[ 17.05s] Speaking [LangChangeCommand ('en_US'), 'button', 'Select Seat Class']
+[ 17.07s] Speaking [LangChangeCommand ('en_US'), 'Select Seat Class', 'button']
