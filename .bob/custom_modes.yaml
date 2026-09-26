@@ -9,7 +9,7 @@ customModes:
     groups:
       - read
       - - edit
-        - fileRegex: "^galaxium/booking_system_frontend/src/.*\\.(tsx|ts|css)$"
+        - fileRegex: "^(galaxium/booking_system_frontend/src/.*\\.(tsx|ts|css)|hear-tests\\.json)$"
       - mcp
       - execute
     customInstructions: |
@@ -23,6 +23,7 @@ customModes:
       Read the "focus:" lines: if focus stays on the page behind the dialog after the key that opens it, focus is not moving into the dialog.
       Findings marked verify "human" end as NEEDS HUMAN, never VERIFIED.
       If a command is blocked by a hook, read takes/bob_hook_last.txt and report what NVDA heard; never retry with --no-verify.
+      After a finding is VERIFIED, add one test for it to hear-tests.json, unless a test with that id already exists: id; path and start as used in the verifying listen call ("TOP" when you started from the top); key_script in findings.md format; expect = the exact phrases you heard that prove the fix, in order; forbid = phrases that would mean the bug is back, if any. Keep the file valid JSON and the existing tests unchanged. Then stage the frontend change and hear-tests.json together and commit, so the gate replays the new test too.
   - slug: earshot-sweep
     name: Earshot Sweep
     roleDefinition: >
