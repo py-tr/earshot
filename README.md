@@ -46,7 +46,7 @@ Machine-readable: [`evidence/index.json`](evidence/index.json) links every findi
 
 The three numbers: **13 of 13 fixed and verified by ear · 2½ of 13 flagged by lint and axe · 4 of Bob's fixes rejected by ear, and 2 prompted regressions refused at commit (we asked Bob to delete the dialog's focus code as a "tidy-up"; the git hook refused it, and the Bob hook refused it again despite `--no-verify`).** (The gate also refused one of Bob's own over-strict tests in task34; that was a bad test, not a regression.)
 
-## Check it yourself (any OS, one minute, no screen reader)
+## Check it yourself (any OS, one minute, no screen reader; CI runs this on Linux)
 
 ```
 git clone https://github.com/py-tr/earshot && cd earshot
@@ -55,7 +55,7 @@ python earshot_mcp/hear_tests.py --replay
 python -m unittest discover -s earshot_mcp/tests
 ```
 
-The first command replays every gate test against the NVDA transcripts stored in `evidence/`. Each test must **pass on the fixed transcript and fail on every broken one** (the original bug and Bob's rejected fixes), so you can see that each test tells broken from fixed. Expected output: 13 lines of `PASS`, in under a second. The second runs 72 unit tests of the key parser, the pass/fail logic, the affected-tests selection, `hear-tests.json` and the Bob hook (written by Bob in Bob Shell, tasks 42 and 43). The live run with real NVDA needs Windows (see [Setup](#setup-windows-only)).
+The first command replays every gate test against the NVDA transcripts stored in `evidence/`. Each test must **pass on the fixed transcript and fail on every broken one** (the original bug and Bob's rejected fixes), so you can see that each test tells broken from fixed. Expected output: 13 lines of `PASS`, in under a second. The second runs 72 unit tests of the key parser, the pass/fail logic, the affected-tests selection, `hear-tests.json` and the Bob hook (written by Bob in Bob Shell, tasks 42 and 43). The live run with real NVDA needs Windows (see [Setup](#setup-for-live-listening-windows-only-because-nvda-runs-only-on-windows)).
 
 ## Result
 
@@ -153,7 +153,7 @@ Every transcript is extracted verbatim from NVDA's own log. The `.wav` next to i
 | Gate | Bob's "tidy-up" of `Modal.tsx` | F-01, F-02 and F-03 all failed: silence, then "Moon, link, heading, level 3" | commit refused, nothing committed | [README](evidence/gate/README.md) · [Bob's diff](evidence/gate/bob_refactor_blocked.diff) |
 | Sweep | Six sweeps that wrote proposals (three more runs hit the wrong page or mode, or could not write their file), on five pages of two apps: two on /flights, one on /, two inside `/earshot` (/destinations/mars, TodoMVC) with triage inside Bob, and one headless (/destinations/earth) | 19 proposals | a human accepted 10 as 7 findings: 3 on /flights (F-04..F-06), all 4 on / as F-07 (3 instances) and F-08, 1 on /destinations/mars (F-10), 2 on TodoMVC as F-11; rejected: 6 on /flights, a cosmetic "❯" on TodoMVC and the headless run's GitHub-name proposal; 1 duplicate | [run 1](sweep/flights.md) · [run 2](sweep/flights-run2.md) · [/flights triage](sweep/flights.triage.md) · [/ run](sweep/home.md) · [/ triage](sweep/home.triage.md) · [/destinations/mars](sweep/destinations-mars.md) · [TodoMVC](sweep/todomvc.md) · [headless /destinations/earth](sweep/destinations-earth.md) |
 
-## Setup (Windows only)
+## Setup for live listening (Windows only, because NVDA runs only on Windows)
 
 Requirements: Windows 10/11, Google Chrome, Python 3.13 (tested), Node.js 18+, the .NET SDK (to build the audio-capture helper), and NVDA portable.
 
@@ -221,7 +221,7 @@ Found or seen during the build, listed so nobody mistakes them for fixed:
 
 ## Limitations
 
-- **Windows and NVDA only.** JAWS, VoiceOver and TalkBack are not covered yet.
+- **Live listening needs Windows and NVDA.** The replay check and unit tests also run on Linux (CI runs them on Ubuntu). JAWS, VoiceOver and TalkBack are not covered yet.
 - **Takes over the desktop.** `listen()` needs Chrome in the foreground and aborts if the foreground window changes. It runs one take at a time, and each test takes 30–60 s. Run it on a dedicated machine or VM, not on the machine you are typing on.
 - **Typing is basic.** `listen()` can type plain text (letters, digits, spaces, `.`, `-`, `'`), but not special keys such as arrows or Backspace.
 - **The gate is slow for a pre-commit hook, less so now.** All 13 tests take about 9 minutes. The git hook replays only the tests a commit can affect: a change to `Modal.tsx` replays the 4 dialog tests (about 2½ minutes), a TodoMVC change only TodoMVC's tests, and a change to a file no test watches falls back to all tests of that app. `hear_tests.py --staged --plan` shows the selection without listening. The Bob hook still replays everything. The next step is to run the gate on push or in CI on a dedicated listening machine (not built).
