@@ -237,6 +237,445 @@ VERIFIED
 
 ===
 
+# @findings.md /hear F-12
+
+---
+
+**Status:** active  **Date:** 2026-09-26
+
+---
+
+### 👤 User
+
+@findings.md /hear F-12
+
+---
+
+### 🤖 Assistant
+
+> 🔧 called: read_file
+
+
+
+> 🔧 **read_file** — findings.md
+
+### 🤖 Assistant
+
+> 🔧 called: list_files
+
+F-12 is on `http://localhost:7002/` — the TodoMVC app. 
+
+**Expected announcement:** After the "Buy milk" checkbox, the next Tab says `"Delete Buy milk, button"` (reachable by keyboard and named after its todo).
+
+The bug is: Delete buttons are hidden via `display: none` on hover CSS, and they all share the same accessible name "Delete todo". I need to:
+1. Make Delete buttons always visible (or at least focusable) by removing the hover-only `display: none`
+2. Give each button a unique name that includes the todo item text
+
+Let me find the relevant source files.
+
+> 🔧 **list_files** — .
+
+### 🤖 Assistant
+
+> 🔧 called: list_files
+
+
+
+> 🔧 **list_files** — todomvc
+
+### 🤖 Assistant
+
+> 🔧 called: list_files
+
+
+
+> 🔧 **list_files** — todomvc/src
+
+### 🤖 Assistant
+
+> 🔧 called: read_file, read_file
+
+
+
+> 🔧 **read_file** — todomvc/src/todo/app.css
+
+> 🔧 **read_file** — todomvc/src/todo/components/item.jsx
+
+### 🤖 Assistant
+
+> 🔧 called: list_files
+
+The Delete button styles must be in the TodoMVC base CSS. Let me find it:
+
+> 🔧 **list_files** — todomvc/public
+
+### 🤖 Assistant
+
+> 🔧 called: grep
+
+
+
+> 🔧 **grep** — destroy
+
+### 🤖 Assistant
+
+> 🔧 called: grep
+
+
+
+> 🔧 **grep** — *.css
+
+### 🤖 Assistant
+
+> 🔧 called: read_file
+
+
+
+> 🔧 **read_file** — todomvc/node_modules/todomvc-app-css/index.css
+
+### 🤖 Assistant
+
+> 🔧 called: apply_diff
+
+The CSS is in node_modules (third-party). The fix must be in `app.css` — override `.destroy` to be always visible and reachable. I also need to fix the `aria-label` on the Delete button to include the todo title.
+
+Two changes needed:
+1. **[`item.jsx`](todomvc/src/todo/components/item.jsx:50)** — change `aria-label="Delete todo"` → `aria-label={\`Delete ${title}\`}`
+2. **[`app.css`](todomvc/src/todo/app.css)** — override the hover-only display of `.destroy` so it's always visible/reachable
+
+> 🔧 **apply_diff** — todomvc/src/todo/components/item.jsx
+
+### 🤖 Assistant
+
+> 🔧 called: apply_diff
+
+Now add the CSS override to make `.destroy` always visible (not only on hover):
+
+> 🔧 **apply_diff** — todomvc/src/todo/app.css
+
+### 🤖 Assistant
+
+> 🔧 called: mcp__earshot__listen
+
+Now let me verify with NVDA — key script: `Tab, Type "Buy milk", Enter, Tab ×3`. Path is `http://localhost:7002/`, starting from TOP.
+
+> 🔧 **mcp__earshot__listen** — Tab, Type "Buy milk", Enter, Tab ×3
+
+### 🤖 Assistant
+
+> 🔧 called: mcp__earshot__listen_result
+
+
+
+> 🔧 **mcp__earshot__listen_result** — take_20260926T201249
+
+### 🤖 Assistant
+
+> 🔧 called: execute_command
+
+The focus jumped out of the input while typing (focus moved to the `All` link). The Delete button was not reached — it went straight to "All, link". This is the same focus-jumping issue as F-09 regression but here it's in the new todo input. Also the third Tab lands on "All, link" — so the destroy button is still not being reached.
+
+Wait — looking more carefully, after `Enter` (submitting the todo), I do `Tab ×3`:
+1. Tab 1 → "Toggle All" checkbox
+2. Tab 2 → "Buy milk" checkbox  
+3. Tab 3 → should be "Delete Buy milk, button" but instead jumps to "All, link"
+
+The CSS override with `display: block; opacity: 0` might not be enough if the base CSS still overrides it. Let me check if the focus is even getting the button in focus. The issue might be that `display: none` in the base CSS needs a stronger override, or `visibility: hidden` is also being used.
+
+Let me check what the base CSS actually does by looking at the node_modules package more carefully via grep:
+
+> 🔧 **execute_command** — Select-String -Path "todomvc\node_modules\todomvc-app-css\index.css" -Pattern "destroy" | Select-Object LineNumber, Line
+
+### 🤖 Assistant
+
+> 🔧 called: execute_command
+
+
+
+> 🔧 **execute_command** — Get-Content "todomvc\node_modules\todomvc-app-css\index.css" | Select-Object -Index (226..258)
+
+### 🤖 Assistant
+
+> 🔧 called: execute_command
+
+The base CSS uses `display: none` by default. My override sets `display: block` which should work. But the `display: block; opacity: 0` approach means the button is visually hidden but should still be keyboard-focusable.
+
+Wait — looking at the transcript again, after `Enter` the todo is added. The three `Tab` presses give:
+1. "Toggle All Input, check box, not checked"
+2. "list, with 1 item, Buy milk, check box, not checked"  
+3. "list, with 3 items, All, link"
+
+So Tab 3 goes to "All, link" not the Delete button. This suggests the override might not have been picked up yet. Let me check if the webpack dev server rebuilt:
+
+> 🔧 **execute_command** — Get-Content "todomvc\src\todo\app.css"
+
+### 🤖 Assistant
+
+> 🔧 called: read_file
+
+The CSS looks correct. But the transcript shows Tab 3 is going to "All, link" still. Let me check if the build is actually running and serving changes. Let me look at how the todomvc is served:
+
+> 🔧 **read_file** — todomvc/package.json
+
+### 🤖 Assistant
+
+> 🔧 called: execute_command
+
+The `serve` script serves from `./dist`, which requires a build. Let me build it and then re-test:
+
+> 🔧 **execute_command** — npm run build
+
+### 🤖 Assistant
+
+> 🔧 called: mcp__earshot__listen
+
+Build successful. Now re-run the NVDA test:
+
+> 🔧 **mcp__earshot__listen** — Tab, Type "Buy milk", Enter, Tab ×3
+
+### 🤖 Assistant
+
+> 🔧 called: mcp__earshot__listen_result
+
+
+
+> 🔧 **mcp__earshot__listen_result** — take_20260926T201424
+
+### 🤖 Assistant
+
+> 🔧 called: execute_command
+
+Still "All, link" on the third Tab. The Delete button is still not in the Tab order. There's also the focus-jumping issue while typing (focus moves to `A "All"` during typing) — but that is the pre-existing F-09 regression, not part of this finding.
+
+The issue with Tab 3 going to "All, link" instead of the Delete button means the button with `display: block` in app.css isn't overriding the `display: none` from `todomvc-app-css/index.css`. In the bundled CSS, the order matters — `todomvc-app-css` comes first, then `app.css`. Let me verify the override is strong enough. The base rule is `.todo-list li .destroy { display: none; }` and my override is `.todo-list li .destroy { display: block; }` — same specificity, so the last one wins. 
+
+But wait — looking at the build output:
+```
+css ./node_modules/css-loader/dist/cjs.js!./node_modules/todomvc-app-css/index.css 7.11 KiB
+...
+css ./node_modules/css-loader/dist/cjs.js!./src/todo/app.css 685 bytes
+```
+
+`app.css` comes last in the bundle, so it should override. Let me check the built CSS to confirm:
+
+> 🔧 **execute_command** — Select-String -Path "todomvc\dist\app.css" -Pattern "destroy" | Select-Object LineNumber, Line
+
+### 🤖 Assistant
+
+> 🔧 called: execute_command
+
+
+
+> 🔧 **execute_command** — $css = Get-Content "todomvc\dist\app.css" -Raw; $idx = $css.IndexOf('.todo-list li .destroy{'); Write-Host "Position: $idx"; Write-Host $css.Substring($idx, [Math]::Min(500, $css.Length - $idx))
+
+### 🤖 Assistant
+
+> 🔧 called: execute_command
+
+Good — `display:block` and `opacity:0` for `.todo-list li .destroy` appear at position 293. But wait, the base CSS `.todo-list li .destroy { display: none; }` might come AFTER my override in the minified output! Let me check:
+
+> 🔧 **execute_command** — $css = Get-Content "todomvc\dist\app.css" -Raw; $all = [System.Collections.Generic.List[int]]::new(); $idx = 0; while (($pos = $css.IndexOf('.todo-list li .destroy', $idx)) -ge 0) { $all.Add($pos); $idx = $pos + 1 }; $all | ForEach-Object { Write-Host "Position $_`: " + $css.Substring($_, [Math]::Min(100, $css.Length - $_)) }
+
+### 🤖 Assistant
+
+> 🔧 called: read_file
+
+The problem is clear: my override at position 293 comes **before** the base CSS rule at position 4114 which sets `display:none`. The app.css is being bundled **before** the node_modules CSS, so the base CSS wins.
+
+Looking at the import order in the source:
+
+> 🔧 **read_file** — todomvc/src/index.js
+
+### 🤖 Assistant
+
+> 🔧 called: read_file
+
+
+
+> 🔧 **read_file** — todomvc/src/todo/app.jsx
+
+### 🤖 Assistant
+
+> 🔧 called: apply_diff
+
+`app.jsx` imports `./app.css`, but `index.js` imports `todomvc-app-css` **after** importing `App`. The webpack CSS extraction order means `app.css` gets bundled first (since app.jsx's CSS is encountered when processing the app module tree), then the node_modules CSS comes last.
+
+The fix is to move the `app.css` import to **after** the `todomvc-app-css` import in `index.js`, so it gets processed last and overrides correctly. Or alternatively, increase specificity in `app.css`.
+
+The simplest fix that doesn't touch import order: increase the CSS specificity. The base rule is `.todo-list li .destroy` (specificity 0,0,2,1). I can add an extra class or use `!important`:
+
+> 🔧 **apply_diff** — todomvc/src/todo/app.css
+
+### 🤖 Assistant
+
+> 🔧 called: execute_command
+
+
+
+> 🔧 **execute_command** — npm run build
+
+### 🤖 Assistant
+
+> 🔧 called: mcp__earshot__listen
+
+
+
+> 🔧 **mcp__earshot__listen** — Tab, Type "Buy milk", Enter, Tab ×3
+
+### 🤖 Assistant
+
+> 🔧 called: mcp__earshot__listen_result
+
+
+
+> 🔧 **mcp__earshot__listen_result** — take_20260926T201554
+
+### 🤖 Assistant
+
+> 🔧 called: read_file
+
+The third Tab now says **"Delete Buy milk, button"** — the fix is working. The button is keyboard-reachable and named after its todo item.
+
+Now let me add the test to [`hear-tests.json`](hear-tests.json) and commit:
+
+> 🔧 **read_file** — hear-tests.json
+
+### 🤖 Assistant
+
+> 🔧 called: apply_diff
+
+
+
+> 🔧 **apply_diff** — hear-tests.json
+
+### 🤖 Assistant
+
+> 🔧 called: execute_command
+
+Now commit both changes:
+
+> 🔧 **execute_command** — git add todomvc/src/todo/components/item.jsx todomvc/src/todo/app.css todomvc/dist/app.css todomvc/dist/app.bundle.js hear-tests.json; git commit -m "fix(F-12): make Delete buttons keyboard-reachable and name each after its todo
+
+- item.jsx: aria-label uses template literal 'Delete \${title}' so each button
+  has a unique name (e.g. 'Delete Buy milk')
+- app.css: override the third-party hover-only display:none with
+  display:block !important so buttons are always in the tab order;
+  opacity:0 keeps them visually hidden at rest, opacity:1 on :focus
+  makes them visible when focused
+- rebuilt dist
+- hear-tests.json: add F-12 test"
+
+### 🤖 Assistant
+
+> 🔧 called: mcp__earshot__listen
+
+F-12 passes. F-11 is now failing because the Delete button is now in the Tab order (our fix), so Tab ×3 from the start reaches "Delete Buy milk, button" instead of "Walk dog, check box, not checked". F-11 needs 1 more Tab to reach the second checkbox now. Let me check the current F-11 test's key script:
+
+F-11 script: `Tab, Type "Buy milk", Enter, Type "Walk dog", Enter, Tab ×3`
+
+With the fix, Tab 3 is now "Delete Buy milk, button" — the Walk dog checkbox would require Tab ×5 (toggle-all → buy milk checkbox → delete buy milk → walk dog checkbox). Let me verify:
+
+> 🔧 **mcp__earshot__listen** — Tab, Type "Buy milk", Enter, Type "Walk dog", Enter, Tab ×5
+
+### 🤖 Assistant
+
+> 🔧 called: mcp__earshot__listen_result
+
+
+
+> 🔧 **mcp__earshot__listen_result** — take_20260926T202532
+
+### 🤖 Assistant
+
+> 🔧 called: mcp__earshot__listen_result
+
+
+
+> 🔧 **mcp__earshot__listen_result** — take_20260926T202532
+
+### 🤖 Assistant
+
+> 🔧 called: apply_diff
+
+With Tab ×5 after the two todos are added:
+- Tab 1: Toggle All
+- Tab 2: "Buy milk, check box, not checked"
+- Tab 3: "Delete Buy milk, button"
+- Tab 4: "Walk dog, check box, not checked"
+- Tab 5: "Delete Walk dog, button"
+
+The F-11 test needs updating to use `Tab ×5` to reach "Walk dog, check box, not checked" (Tab 4). Let me update the F-11 test to `Tab ×4` (which stops at Walk dog) and also update the key script in the test:
+
+> 🔧 **apply_diff** — <<<<<<< SEARCH
+:start_line:131
+-------
+  {
+    "id": "F-11",
+    "path": "http://localhost:7002/",
+    "start": "TOP",
+    "key_script": "Tab, Type \"Buy milk\", Enter, Type \"Walk dog\", Enter, Tab ×3",
+    "expect": [
+      "Buy milk, check box, not checked",
+      "Walk dog, check box, not checked"
+    ],
+    "forbid": [
+      "list, with 2 items, check box, not checked"
+    ]
+  },
+=======
+  {
+    "id": "F-11",
+    "path": "http://localhost:7002/",
+    "start": "TOP",
+    "key_script": "Tab, Type \"Buy milk\", Enter, Type \"Walk dog\", Enter, Tab ×4",
+    "expect": [
+      "Buy milk, check box, not checked",
+      "Walk dog, check box, not checked"
+    ],
+    "forbid": [
+      "list, with 2 items, check box, not checked"
+    ]
+  },
+>>>>>>> REPLACE
+
+
+### 🤖 Assistant
+
+> 🔧 called: execute_command
+
+
+
+> 🔧 **execute_command** — git add hear-tests.json; git commit -m "fix(F-11): update Tab count in F-11 test after F-12 adds Delete buttons to tab order
+
+F-12 makes Delete buttons keyboard-reachable, so each todo now has two
+Tab stops (checkbox + delete). F-11 needed Tab x3 before; now needs Tab x4
+to reach the Walk dog checkbox."
+
+### 🤖 Assistant
+
+Both commits landed cleanly. Here's a summary of what was done for F-12:
+
+---
+
+## F-12 — VERIFIED
+
+**Root cause:** Two independent bugs:
+1. The `.destroy` button CSS from `todomvc-app-css` used `display: none` by default and only `display: block` on `:hover`, making it completely unreachable by keyboard.
+2. Every Delete button had the same `aria-label="Delete todo"`, giving no differentiation between items.
+
+**Fixes:**
+
+| File | Change |
+|---|---|
+| [`item.jsx`](todomvc/src/todo/components/item.jsx:50) | `aria-label={`Delete ${title}`}` — each button named after its todo |
+| [`app.css`](todomvc/src/todo/app.css:28) | `.todo-list li .destroy { display: block !important; opacity: 0; }` — overrides the third-party hover-only rule; button is always in the tab order and gets `opacity: 1` on `:focus` |
+
+**NVDA heard:** `"Delete Buy milk, button"` on the third Tab after the checkbox — exactly the expected announcement.
+
+**Side effect fixed:** F-11's hear-test `Tab ×3` updated to `Tab ×4` because the new Delete button is now a Tab stop between the two checkboxes.
+
+===
+
 # /earshot http://localhost:7002/
 
 ---

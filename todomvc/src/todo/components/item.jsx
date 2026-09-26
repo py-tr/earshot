@@ -47,7 +47,7 @@ export const Item = memo(function Item({ todo, dispatch }) {
                 <button
                     className="destroy"
                     data-testid="todo-item-button"
-                    aria-label="Delete todo"
+                    aria-label={`Delete ${title}`}
                     onClick={removeItem}
                 />
             </div>

@@ -7,6 +7,6 @@ If finding $1's verify column is "human": you may make the minimal fix and use l
 
 For finding $1 in findings.md, follow the Earshot mode instructions: read the finding, state the expected announcement, make the minimal fix, call listen with the finding's key script, and check the transcript.
 
-On pass, add the hear-test for $1 to hear-tests.json exactly as the Earshot mode instructions say, then stage the changed frontend file AND hear-tests.json together and run `git commit` with the message "$1: <one-line summary> (verified by NVDA)". Your todo list must include "Write hear-test". Never reply VERIFIED without it.
+On pass, add the hear-test for $1 to hear-tests.json exactly as the Earshot mode instructions say, then run `git add <each src file you edited> hear-tests.json` (never dist/, build output or other generated files), run `git commit` with the message "$1: <one-line summary> (verified by NVDA)" (on Windows PowerShell, use ";" not "&&"), then run `git show --stat HEAD`. Reply VERIFIED with the commit id only if that output lists every file you edited plus hear-tests.json. Your todo list must include "Write hear-test". Never reply VERIFIED without it.
 
 Reply VERIFIED plus the relevant transcript lines, or NEEDS HUMAN plus the full transcript if the expected announcement is absent after one retry.

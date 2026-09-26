@@ -160,6 +160,8 @@ def _replay() -> int:
 
 
 def main():
+    # window titles and NVDA speech can contain any character; never crash on the Windows console encoding
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     parser = argparse.ArgumentParser(description="Earshot regression gate")
     parser.add_argument("--replay", action="store_true",
                         help="Offline, any OS: check the tests against the stored NVDA transcripts in evidence/")

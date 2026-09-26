@@ -22,3 +22,18 @@ but useful for people who use screen readers */
 .toggle-all-label {
     pointer-events: none;
 }
+
+/* F-12: Make Delete buttons always visible so keyboard/screen-reader users can reach them */
+.todo-list li .destroy {
+    display: block !important;
+    opacity: 0;
+}
+
+.todo-list li .destroy:focus {
+    opacity: 1;
+}
+
+/* F-12 follow-up: keep the delete button visible on mouse hover too (opacity 0 above had hidden it) */
+.todo-list li:hover .destroy {
+    opacity: 1;
+}
