@@ -84,6 +84,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     var container = document.getElementById("findings-list");
     if (!container || !window.EARSHOT_DATA) return;
+    if (container.querySelector(".card")) return; // already baked into index.html (report/bake.py)
     container.innerHTML = EARSHOT_DATA.map(renderCard).join("");
   });
 }());

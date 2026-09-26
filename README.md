@@ -5,6 +5,17 @@ Tested on IBM's own Galaxium Travels sample app. Nothing was planted: the bugs a
 
 **Report page:** https://py-tr.github.io/earshot/ · **Video (3 min):** [VIDEO URL]
 
+## For reviewers: where to check each claim
+
+| Judging criterion | Claim | Check it here |
+|---|---|---|
+| Application of Technology: "complete and well thought-out, with a clear application of IBM Bob 2.0" | Bob fixes UI, verifies each fix with a real screen reader through our MCP tool, rejects its own wrong fixes, discovers bugs with parallel subagents, and is blocked by the gate it built | [How it was built](#how-it-was-built) · `bob_sessions/` (one screenshot per task) · [`.bob/custom_modes.yaml`](.bob/custom_modes.yaml) · [`earshot_mcp/server.py`](earshot_mcp/server.py) |
+| Business Value: "how effectively the solution addresses a high priority issue" | 9 of 9 findings fixed and verified by ear on IBM's own sample app; strict lint flagged 0 of 9 and axe-core 1½ of 9 | [bench/RESULTS.md](bench/RESULTS.md) · [Why it matters](#why-it-matters) |
+| Originality: "the approach in applying IBM Bob 2.0" | The agent's test oracle is what a blind user hears: Bob must hear its fix before it counts, and every commit replays the screen-reader tests | [How it works](#how-it-works-60-seconds) · [evidence/gate/](evidence/gate/README.md) |
+| Presentation: "clarity and effectiveness" | Every claim links to a verbatim NVDA transcript and the NVDA audio | [Evidence](#evidence) · [report page](https://py-tr.github.io/earshot/) |
+
+The three numbers: **9 of 9 fixed and verified by ear · 1½ of 9 flagged by lint and axe · 4 of Bob's fixes rejected by ear and 1 commit blocked.**
+
 ## Result
 
 | | Strict React lint (eslint-plugin-jsx-a11y 6.10.2) | axe-core 4.13.0 | Earshot (NVDA 2026.2 via `listen()`) |
@@ -113,7 +124,7 @@ In Bob, open `findings.md` and type `/hear F-01`, or type `/sweep /flights`.
 | `evidence/` | Before/after transcripts and audio per finding, and the gate demo |
 | `sweep/` | Bob's sweep proposals and the human triage |
 | `bench/` | lint and axe benchmark: scripts, raw JSON, [RESULTS.md](bench/RESULTS.md) |
-| `report/` | Static report page |
+| `report/` | Static report page; the cards are baked into `index.html` by `report/bake.py`, so it reads without JavaScript |
 | `bob_sessions/` | Screenshots of every Bob task's consumption summary (`pytr_taskNN_*`) |
 | `galaxium/` | IBM Galaxium Travels @ `e4e18ae` (Apache-2.0); only `booking_system_frontend/src` was changed |
 
