@@ -26,7 +26,7 @@ _HERE = _server_mod._HERE
 
 _TESTS_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "hear-tests.json")
 
-_FRONTEND_PREFIX = "galaxium/booking_system_frontend/src/"
+_FRONTEND_PREFIX = ("galaxium/booking_system_frontend/src/", "todomvc/src/")  # both apps under test
 
 
 def _load_tests():

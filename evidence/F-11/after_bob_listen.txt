@@ -1,0 +1,62 @@
+# NVDA speech/input log for the 'listen' take (take_20260926T195721), extracted verbatim from NVDA's own log (log level: input/output).
+# Clip time 0.00 s = 19:57:37.593 local (2026-09-26). Format: [clip seconds, from NVDA log timestamp] original NVDA log line.
+# Only 'Input:' and 'Speaking' records are listed; LangChangeCommand/CancellableSpeech are NVDA-internal markers, kept verbatim.
+# Note: the timestamp is when NVDA queued the speech; audio can start slightly later if earlier speech is still playing.
+# DOM focus after each key (document.activeElement sampled over CDP ~0.3 s before the next key; not from NVDA):
+#   TAB @ 1.06s -> INPUT "New Todo Input" [page]
+#   TYPE @ 3.67s -> INPUT "New Todo Input" [page]
+#   ENTER @ 5.05s -> INPUT "New Todo Input" [page]
+#   TYPE @ 7.66s -> INPUT "New Todo Input" [page]
+#   ENTER @ 9.05s -> INPUT "New Todo Input" [page]
+#   TAB @ 11.05s -> INPUT "" [page]
+#   TAB @ 13.06s -> INPUT "Buy milk" [page]
+#   TAB @ 15.05s -> INPUT "Walk dog" [page]
+#   TAB @ 17.06s -> A "All" [page]
+#   TAB @ 19.06s -> A "Active" [page]
+
+[  1.01s] Input: kb(desktop):tab
+[  1.06s] Speaking [LangChangeCommand ('en_US'), 'New Todo Input', 'edit', CancellableSpeech (still valid), 'What needs to be done?', CancellableSpeech (still valid), 'blank']
+[  3.01s] Input: kb(desktop):B
+[  3.02s] Speaking [PitchCommand(offset=30), CharacterModeCommand(True), LangChangeCommand ('en_US'), 'B', PitchCommand(), EndUtteranceCommand(), CharacterModeCommand(False)]
+[  3.09s] Input: kb(desktop):u
+[  3.10s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'u', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  3.17s] Input: kb(desktop):y
+[  3.20s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'y', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  3.25s] Input: kb(desktop): 
+[  3.28s] Speaking [LangChangeCommand ('en_US'), 'space', EndUtteranceCommand()]
+[  3.34s] Input: kb(desktop):m
+[  3.36s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'm', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  3.42s] Input: kb(desktop):i
+[  3.43s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'i', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  3.50s] Input: kb(desktop):l
+[  3.53s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'l', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  3.59s] Input: kb(desktop):k
+[  3.60s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'k', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  5.00s] Input: kb(desktop):enter
+[  7.00s] Input: kb(desktop):W
+[  7.02s] Speaking [PitchCommand(offset=30), CharacterModeCommand(True), LangChangeCommand ('en_US'), 'W', PitchCommand(), EndUtteranceCommand(), CharacterModeCommand(False)]
+[  7.09s] Input: kb(desktop):a
+[  7.10s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'a', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  7.17s] Input: kb(desktop):l
+[  7.18s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'l', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  7.25s] Input: kb(desktop):k
+[  7.26s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'k', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  7.33s] Input: kb(desktop): 
+[  7.36s] Speaking [LangChangeCommand ('en_US'), 'space', EndUtteranceCommand()]
+[  7.41s] Input: kb(desktop):d
+[  7.43s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'd', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  7.50s] Input: kb(desktop):o
+[  7.51s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'o', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  7.58s] Input: kb(desktop):g
+[  7.58s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'g', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  9.00s] Input: kb(desktop):enter
+[ 11.00s] Input: kb(desktop):tab
+[ 11.04s] Speaking [LangChangeCommand ('en_US'), 'main landmark', '❯ Toggle All Input', 'check box', 'not checked']
+[ 13.01s] Input: kb(desktop):tab
+[ 13.05s] Speaking [LangChangeCommand ('en_US'), 'list', 'with 2 items', 'Buy milk', 'check box', 'not checked']
+[ 15.00s] Input: kb(desktop):tab
+[ 15.04s] Speaking [LangChangeCommand ('en_US'), 'Walk dog', 'check box', 'not checked']
+[ 17.01s] Input: kb(desktop):tab
+[ 17.10s] Speaking [LangChangeCommand ('en_US'), 'list', 'with 3 items', 'All', 'link']
+[ 19.01s] Input: kb(desktop):tab
+[ 19.05s] Speaking [LangChangeCommand ('en_US'), 'Active', 'link']

@@ -1,0 +1,112 @@
+# NVDA speech/input log for the 'listen' take (take_20260926T195204), extracted verbatim from NVDA's own log (log level: input/output).
+# Clip time 0.00 s = 19:52:20.716 local (2026-09-26). Format: [clip seconds, from NVDA log timestamp] original NVDA log line.
+# Only 'Input:' and 'Speaking' records are listed; LangChangeCommand/CancellableSpeech are NVDA-internal markers, kept verbatim.
+# Note: the timestamp is when NVDA queued the speech; audio can start slightly later if earlier speech is still playing.
+# DOM focus after each key (document.activeElement sampled over CDP ~0.3 s before the next key; not from NVDA):
+#   TAB @ 1.06s -> INPUT "New Todo Input" [page]
+#   TYPE @ 3.16s -> INPUT "New Todo Input" [page]
+#   ENTER @ 4.06s -> INPUT "New Todo Input" [page]
+#   TYPE @ 6.16s -> INPUT "New Todo Input" [page]
+#   ENTER @ 7.06s -> INPUT "New Todo Input" [page]
+#   TAB @ 8.56s -> INPUT "" [page]
+#   TAB @ 10.06s -> INPUT "" [page]
+#   TAB @ 11.56s -> INPUT "" [page]
+#   TAB @ 13.06s -> A "All" [page]
+#   TAB @ 14.56s -> A "Active" [page]
+#   TAB @ 16.06s -> A "Completed" [page]
+#   TAB @ 17.55s -> A "TodoMVC" [page]
+#   TAB @ 19.06s -> BODY
+#   TAB @ 20.55s -> BODY
+#   TAB @ 22.06s -> BODY
+#   TAB @ 23.55s -> BODY
+#   TAB @ 25.05s -> INPUT "New Todo Input" [page]
+#   TAB @ 26.55s -> INPUT "" [page]
+#   TAB @ 28.05s -> INPUT "" [page]
+#   TAB @ 29.56s -> INPUT "" [page]
+#   TAB @ 31.05s -> A "All" [page]
+#   TAB @ 32.56s -> A "Active" [page]
+#   TAB @ 34.05s -> A "Completed" [page]
+#   TAB @ 35.56s -> A "TodoMVC" [page]
+#   TAB @ 37.06s -> BODY
+
+[  1.01s] Input: kb(desktop):tab
+[  1.06s] Speaking [LangChangeCommand ('en_US'), 'New Todo Input', 'edit', CancellableSpeech (still valid), 'What needs to be done?', CancellableSpeech (still valid), 'blank']
+[  2.51s] Input: kb(desktop):B
+[  2.52s] Speaking [PitchCommand(offset=30), CharacterModeCommand(True), LangChangeCommand ('en_US'), 'B', PitchCommand(), EndUtteranceCommand(), CharacterModeCommand(False)]
+[  2.59s] Input: kb(desktop):u
+[  2.60s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'u', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  2.67s] Input: kb(desktop):y
+[  2.68s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'y', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  2.75s] Input: kb(desktop): 
+[  2.76s] Speaking [LangChangeCommand ('en_US'), 'space', EndUtteranceCommand()]
+[  2.83s] Input: kb(desktop):m
+[  2.86s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'm', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  2.92s] Input: kb(desktop):i
+[  2.93s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'i', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  3.00s] Input: kb(desktop):l
+[  3.01s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'l', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  3.08s] Input: kb(desktop):k
+[  3.10s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'k', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  4.01s] Input: kb(desktop):enter
+[  5.50s] Input: kb(desktop):W
+[  5.51s] Speaking [PitchCommand(offset=30), CharacterModeCommand(True), LangChangeCommand ('en_US'), 'W', PitchCommand(), EndUtteranceCommand(), CharacterModeCommand(False)]
+[  5.58s] Input: kb(desktop):a
+[  5.60s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'a', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  5.67s] Input: kb(desktop):l
+[  5.68s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'l', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  5.75s] Input: kb(desktop):k
+[  5.76s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'k', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  5.83s] Input: kb(desktop): 
+[  5.84s] Speaking [LangChangeCommand ('en_US'), 'space', EndUtteranceCommand()]
+[  5.91s] Input: kb(desktop):d
+[  5.93s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'd', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  6.00s] Input: kb(desktop):o
+[  6.01s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'o', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  6.08s] Input: kb(desktop):g
+[  6.08s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'g', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  7.01s] Input: kb(desktop):enter
+[  8.50s] Input: kb(desktop):tab
+[  8.54s] Speaking [LangChangeCommand ('en_US'), 'main landmark', '❯ Toggle All Input', 'check box', 'not checked']
+[ 10.01s] Input: kb(desktop):tab
+[ 10.05s] Speaking [LangChangeCommand ('en_US'), 'list', 'with 2 items', 'check box', 'not checked']
+[ 11.51s] Input: kb(desktop):tab
+[ 11.55s] Speaking [LangChangeCommand ('en_US'), 'check box', 'not checked']
+[ 13.01s] Input: kb(desktop):tab
+[ 13.07s] Speaking [LangChangeCommand ('en_US'), 'list', 'with 3 items', 'All', 'link']
+[ 14.50s] Input: kb(desktop):tab
+[ 14.55s] Speaking [LangChangeCommand ('en_US'), 'Active', 'link']
+[ 16.00s] Input: kb(desktop):tab
+[ 16.04s] Speaking [LangChangeCommand ('en_US'), 'Completed', 'link']
+[ 17.50s] Input: kb(desktop):tab
+[ 17.54s] Speaking [LangChangeCommand ('en_US'), 'content info landmark', 'TodoMVC', 'link']
+[ 19.01s] Input: kb(desktop):tab
+[ 19.04s] Speaking [LangChangeCommand ('en_US'), 'TodoMVC: React - Google Chrome', 'region', CancellableSpeech (still valid)]
+[ 19.05s] Speaking [LangChangeCommand ('en_US'), 'Tab search', 'button', 'collapsed', CancellableSpeech (still valid)]
+[ 20.50s] Input: kb(desktop):tab
+[ 20.53s] Speaking [LangChangeCommand ('en_US'), 'tool bar', CancellableSpeech (still valid)]
+[ 20.54s] Speaking [LangChangeCommand ('en_US'), 'View site information', 'button', CancellableSpeech (still valid)]
+[ 22.01s] Input: kb(desktop):tab
+[ 22.03s] Speaking [LangChangeCommand ('en_US'), 'Address and search bar', 'edit', 'Press tab then enter to ask AI Mode', 'Ctrl+', CharacterModeCommand(True), 'L', CharacterModeCommand(False), CancellableSpeech (still valid), 'selected localhost:7002']
+[ 23.50s] Input: kb(desktop):tab
+[ 23.52s] Speaking [LangChangeCommand ('en_US'), 'Bookmark this tab', 'button', CancellableSpeech (still valid)]
+[ 25.00s] Input: kb(desktop):tab
+[ 25.04s] Speaking [LangChangeCommand ('en_US'), 'TodoMVC: React', 'document', CancellableSpeech (still valid)]
+[ 25.04s] Speaking [LangChangeCommand ('en_US'), 'Part of ', 'link', 'TodoMVC']
+[ 25.08s] Speaking [LangChangeCommand ('en_US'), 'New Todo Input', 'edit', CancellableSpeech (still valid), 'What needs to be done?', CancellableSpeech (still valid), 'blank']
+[ 26.50s] Input: kb(desktop):tab
+[ 26.55s] Speaking [LangChangeCommand ('en_US'), 'main landmark', '❯ Toggle All Input', 'check box', 'not checked']
+[ 28.00s] Input: kb(desktop):tab
+[ 28.05s] Speaking [LangChangeCommand ('en_US'), 'list', 'with 2 items', 'check box', 'not checked']
+[ 29.50s] Input: kb(desktop):tab
+[ 29.55s] Speaking [LangChangeCommand ('en_US'), 'check box', 'not checked']
+[ 31.00s] Input: kb(desktop):tab
+[ 31.06s] Speaking [LangChangeCommand ('en_US'), 'list', 'with 3 items', 'All', 'link']
+[ 32.51s] Input: kb(desktop):tab
+[ 32.55s] Speaking [LangChangeCommand ('en_US'), 'Active', 'link']
+[ 34.00s] Input: kb(desktop):tab
+[ 34.04s] Speaking [LangChangeCommand ('en_US'), 'Completed', 'link']
+[ 35.51s] Input: kb(desktop):tab
+[ 35.54s] Speaking [LangChangeCommand ('en_US'), 'content info landmark', 'TodoMVC', 'link']
+[ 37.00s] Input: kb(desktop):tab
+[ 37.03s] Speaking [LangChangeCommand ('en_US'), 'TodoMVC: React - Google Chrome', 'region', CancellableSpeech (still valid)]
+[ 37.04s] Speaking [LangChangeCommand ('en_US'), 'Tab search', 'button', 'collapsed', CancellableSpeech (still valid)]

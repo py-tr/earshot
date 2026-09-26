@@ -132,7 +132,7 @@
     "id": "F-11",
     "path": "http://localhost:7002/",
     "start": "TOP",
-    "key_script": "Tab, Type \"Buy milk\", Enter, Type \"Walk dog\", Enter, Tab ×2, Tab ×3",
+    "key_script": "Tab, Type \"Buy milk\", Enter, Type \"Walk dog\", Enter, Tab ×3",
     "expect": [
       "Buy milk, check box, not checked",
       "Walk dog, check box, not checked"

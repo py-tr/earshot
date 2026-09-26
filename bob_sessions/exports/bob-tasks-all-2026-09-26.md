@@ -1,3 +1,546 @@
+# /hear F-11
+
+---
+
+**Status:** active  **Date:** 2026-09-26
+
+---
+
+### 👤 User
+
+---
+name: hear
+description: >-
+  Before anything else, if the current mode is not "earshot", switch to the
+  earshot mode, then continue.
+metadata:
+  user-invocable: true
+  disable-model-invocation: true
+  argument-hint: <finding-id>
+---
+
+Before anything else, if the current mode is not "earshot", switch to the earshot mode, then continue.
+If finding $1's verify column is "human": you may make the minimal fix and use listen only for what can be heard (e.g. that a new control is announced), but never reply VERIFIED. Reply NEEDS HUMAN, list what the screen reader confirmed, and state exactly what a person must check by eye or by judgement.
+
+For finding $1 in findings.md, follow the Earshot mode instructions: read the finding, state the expected announcement, make the minimal fix, call listen with the finding's key script, and check the transcript.
+
+On pass, run `git commit` on the changed file with the message "$1: <one-line summary> (verified by NVDA)".
+
+Reply VERIFIED plus the relevant transcript lines, or NEEDS HUMAN plus the full transcript if the expected announcement is absent after one retry.
+
+
+F-11
+
+---
+
+### 🤖 Assistant
+
+> 🔧 called: read_file
+
+I'll start by reading the findings.md file to find finding F-11.
+
+> 🔧 **read_file** — findings.md
+
+### 🤖 Assistant
+
+> 🔧 called: list_files
+
+Finding F-11: Todo item checkboxes on `http://localhost:7002/` have no accessible name — NVDA reads only role without the item text.
+
+**Expected announcement:** `"Buy milk, check box, not checked"`, then Tab ×3: `"Walk dog, check box, not checked"` (each checkbox names its todo item)
+
+**Key script:** `page http://localhost:7002/, from top: Tab ×2` then Tab ×3
+
+The path is `http://localhost:7002/` — let me examine the todomvc directory that appears in git status.
+
+> 🔧 **list_files** — todomvc
+
+### 🤖 Assistant
+
+> 🔧 called: list_files
+
+
+
+> 🔧 **list_files** — todomvc/src
+
+### 🤖 Assistant
+
+> 🔧 called: read_file
+
+
+
+> 🔧 **read_file** — todomvc/src/todo/components/item.jsx
+
+### 🤖 Assistant
+
+> 🔧 called: apply_diff
+
+The checkbox at line 36-42 has no `aria-label` or `id`/`for` association. The `<label>` element at line 43 contains the title, but it's not associated with the checkbox (no `htmlFor`/`for` on the label pointing to the checkbox's `id`, and the label is a sibling, not a wrapper).
+
+The minimal fix is to add `aria-label={title}` to the checkbox input. This will make NVDA announce "Buy milk, check box, not checked".
+
+**Expected announcement:** `"Buy milk, check box, not checked"`
+
+> 🔧 **apply_diff** — todomvc/src/todo/components/item.jsx
+
+### 🤖 Assistant
+
+> 🔧 called: mcp__earshot__listen
+
+Now let me verify with NVDA. The finding says `page http://localhost:7002/, from top: Tab ×2`, then Tab ×3 for the second checkbox. The path is a full URL, but the listen tool takes a path. I'll use `path="/"` with the port in mind — but the earshot MCP server should handle `http://localhost:7002/`. Let me check what path format to use. The finding says `page http://localhost:7002/` which is a full URL, not just a path. I'll pass `path="/"` with the assumption earshot knows to use port 7002, or I can try passing the full path as `/`.
+
+The key script from the finding is `Tab ×2` for the first item, then after that Tab ×3 for the second. Let me combine them:
+
+> 🔧 **mcp__earshot__listen** — Tab ×2, Tab ×3
+
+### 🤖 Assistant
+
+> 🔧 called: mcp__earshot__listen_result
+
+
+
+> 🔧 **mcp__earshot__listen_result** — take_20260926T195554
+
+### 🤖 Assistant
+
+> 🔧 called: read_file, read_file
+
+The page doesn't seem to have any todo items yet (the tab is going to the footer link and then outside the page). The todomvc app might not have pre-seeded data. Let me check the main component to understand the app state and also look at the public directory:
+
+> 🔧 **read_file** — todomvc/src/todo/reducer.js
+
+> 🔧 **read_file** — todomvc/src/todo/components/main.jsx
+
+### 🤖 Assistant
+
+> 🔧 called: read_file
+
+
+
+> 🔧 **read_file** — todomvc/src/todo/app.jsx
+
+### 🤖 Assistant
+
+> 🔧 called: read_file
+
+The app starts with an empty todo list. The finding says "Buy milk" and "Walk dog" items — these need to be seeded. Let me check the `sweep/home.md` file to understand the context better:
+
+> 🔧 **read_file** — sweep/home.md
+
+### 🤖 Assistant
+
+> 🔧 called: mcp__earshot__listen
+
+The finding assumes "2 items present". I need to type items first. The key script `Tab ×2` from top would need items. Let me check the full finding key script again:
+
+The finding says: `page http://localhost:7002/, from top: Tab ×2` — but the sweep notes say "with 2 items present". So I need to type items in. Let me try the listen script with typing items first:
+
+> 🔧 **mcp__earshot__listen** — Tab, Type "Buy milk", Enter, Type "Walk dog", Enter, Tab ×2
+
+### 🤖 Assistant
+
+> 🔧 called: mcp__earshot__listen_result
+
+
+
+> 🔧 **mcp__earshot__listen_result** — take_20260926T195641
+
+### 🤖 Assistant
+
+> 🔧 called: mcp__earshot__listen
+
+The fix is working. At the second Tab (13.05s), NVDA announces **"list, with 2 items, Buy milk, check box, not checked"** — the checkbox now has its accessible name "Buy milk". Let me also verify the second checkbox ("Walk dog") by adding Tab ×3 more:
+
+> 🔧 **mcp__earshot__listen** — Tab, Type "Buy milk", Enter, Type "Walk dog", Enter, Tab ×2, Tab ×3
+
+### 🤖 Assistant
+
+> 🔧 called: mcp__earshot__listen_result
+
+
+
+> 🔧 **mcp__earshot__listen_result** — take_20260926T195721
+
+### 🤖 Assistant
+
+> 🔧 called: mcp__earshot__listen_result
+
+
+
+> 🔧 **mcp__earshot__listen_result** — take_20260926T195721
+
+### 🤖 Assistant
+
+> 🔧 called: read_file
+
+Both announcements are confirmed:
+- 13.05s: **"Buy milk, check box, not checked"** ✓
+- 15.04s: **"Walk dog, check box, not checked"** ✓
+
+Now let me update `hear-tests.json` with the new test for F-11:
+
+> 🔧 **read_file** — hear-tests.json
+
+### 🤖 Assistant
+
+> 🔧 called: apply_diff
+
+
+
+> 🔧 **apply_diff** — hear-tests.json
+
+### 🤖 Assistant
+
+> 🔧 called: execute_command
+
+Now commit both files together:
+
+> 🔧 **execute_command** — git add todomvc/src/todo/components/item.jsx hear-tests.json && git commit -m "F-11: add aria-label to todo item checkboxes so NVDA announces item title (verified by NVDA)"
+
+### 🤖 Assistant
+
+> 🔧 called: execute_command
+
+
+
+> 🔧 **execute_command** — git add todomvc/src/todo/components/item.jsx hear-tests.json; git commit -m "F-11: add aria-label to todo item checkboxes so NVDA announces item title (verified by NVDA)"
+
+### 🤖 Assistant
+
+> 🔧 called: execute_command
+
+VERIFIED
+
+Relevant transcript lines:
+```
+13.05s  said: list, with 2 items, Buy milk, check box, not checked
+15.04s  said: Walk dog, check box, not checked
+```
+
+**Fix:** Added `aria-label={title}` to the checkbox `<input>` in [`todomvc/src/todo/components/item.jsx`](todomvc/src/todo/components/item.jsx:37). The checkbox had no accessible name because its sibling `<label>` element was not associated with it. The `aria-label` directly provides the todo item's title as the control's accessible name, making NVDA announce "Buy milk, check box, not checked" and "Walk dog, check box, not checked" as expected.
+
+<end_subtask>
+
+> 🔧 **execute_command** — echo "subtask complete"
+
+### 🤖 Assistant
+
+VERIFIED
+
+**Relevant transcript lines:**
+```
+13.05s  said: list, with 2 items, Buy milk, check box, not checked
+15.04s  said: Walk dog, check box, not checked
+```
+
+**What was changed:** Added `aria-label={title}` to the `<input type="checkbox">` in [`todomvc/src/todo/components/item.jsx`](todomvc/src/todo/components/item.jsx:37). The checkbox previously had no accessible name — its sibling `<label>` wasn't associated via `htmlFor`/`id`. A single `aria-label` attribute, set to the todo's title, gives the checkbox a name NVDA can announce.
+
+===
+
+# /earshot http://localhost:7002/
+
+---
+
+**Status:** active  **Date:** 2026-09-26
+
+---
+
+### 👤 User
+
+---
+name: earshot
+description: >-
+  Switch to the earshot-run mode. The page to run is "$1" (use "/" if it is
+  empty).
+metadata:
+  user-invocable: true
+  disable-model-invocation: true
+  argument-hint: <page-path>
+---
+
+Switch to the earshot-run mode. The page to run is "$1" (use "/" if it is empty).
+Then follow the earshot-run mode instructions with path="$1".
+
+
+http://localhost:7002/
+
+---
+
+### 🤖 Assistant
+
+> 🔧 called: update_todo_list
+
+
+
+> 🔧 **update_todo_list** — 
+[-] Sweep — run NVDA over http://localhost:7002/
+[ ] Triage — present findings to human
+[ ] Record accepted findings in findings.md
+[ ] Fix each accepted finding (sequential subtasks)
+[ ] Summary
+
+
+### 🤖 Assistant
+
+> 🔧 called: mcp__earshot__listen
+
+
+
+> 🔧 **mcp__earshot__listen** — Tab ×25
+
+### 🤖 Assistant
+
+> 🔧 called: mcp__earshot__listen_result
+
+
+
+> 🔧 **mcp__earshot__listen_result** — take_20260926T195100
+
+### 🤖 Assistant
+
+> 🔧 called: mcp__earshot__listen_result
+
+
+
+> 🔧 **mcp__earshot__listen_result** — take_20260926T195100
+
+### 🤖 Assistant
+
+> 🔧 called: mcp__earshot__listen
+
+This is a TodoMVC app that starts empty (only 2 page stops: the New Todo Input and a TodoMVC footer link, then it loops into the browser chrome). I need to add items first to expose more interactive controls.
+
+> 🔧 **mcp__earshot__listen** — 1.5
+
+### 🤖 Assistant
+
+> 🔧 called: mcp__earshot__listen_result
+
+
+
+> 🔧 **mcp__earshot__listen_result** — take_20260926T195204
+
+### 🤖 Assistant
+
+> 🔧 called: mcp__earshot__listen_result
+
+
+
+> 🔧 **mcp__earshot__listen_result** — take_20260926T195204
+
+### 🤖 Assistant
+
+> 🔧 called: spawn_subagent, spawn_subagent, spawn_subagent
+
+Now I have a clear picture of the page with items. Let me analyze the suspicious stops:
+
+**Suspicious stops identified:**
+
+1. **Tab 2 (after input) → "main landmark, ❯ Toggle All Input, check box, not checked"** — The name contains a raw "❯" unicode arrow character, which would be read as a symbol/emoji. Expected: "Toggle all, check box, not checked".
+
+2. **Tab 3 → "list, with 2 items, check box, not checked"** — This is a todo item checkbox with no name. NVDA says only role ("check box, not checked") without reading the todo item text ("Buy milk"). Expected: "Buy milk, check box, not checked".
+
+3. **Tab 4 → "check box, not checked"** — Second todo item, same issue. No label announced. Expected: "Walk dog, check box, not checked".
+
+4. **Tab 5 → "list, with 3 items, All, link"** — The focus lands on a `<li>` item list that announces "list with 3 items" then "All, link". This seems like the focus is on a `<ul>` wrapping the filter links — the list container itself is focused rather than just the first link. That's unusual.
+
+Let me now explore the component files for the suspicious stops in parallel.
+
+> 🔧 **spawn_subagent** — explore
+
+> 🔧 **spawn_subagent** — explore
+
+> 🔧 **spawn_subagent** — explore
+
+### 🤖 Assistant
+
+> 🔧 called: read_file, read_file
+
+Now let me read the relevant source files to confirm what I see:
+
+> 🔧 **read_file** — todomvc/src/todo/components/main.jsx
+
+> 🔧 **read_file** — todomvc/src/todo/components/item.jsx
+
+### 🤖 Assistant
+
+> 🔧 called: read_file
+
+Now I have a full picture. Let me also look at the footer to confirm the tab behaviour:
+
+> 🔧 **read_file** — todomvc/src/todo/components/footer.jsx
+
+### 🤖 Assistant
+
+> 🔧 called: glob
+
+Now I have a clear picture. Let me re-examine the sweep output more carefully for the filter link issue.
+
+Looking at the transcript again:
+- Tab 5 (after the two checkboxes): `said: list, with 3 items, All, link` — This is the tab going to the "All" link, but NVDA first announces "list, with 3 items" (the `<ul>` context) then "All, link". This is **normal NVDA behavior** when entering a list — it announces the list context. This is NOT suspicious.
+
+Let me re-examine the "❯" arrow in "Toggle All Input":
+- Looking at the label text at line 39: `Toggle All Input` — no arrow there
+- But NVDA said: `❯ Toggle All Input, check box, not checked`
+
+The "❯" might come from a CSS `::before` pseudo-element on `.toggle-all-label`. Let me check:
+
+> 🔧 **glob** — todomvc/**/*.css
+
+### 🤖 Assistant
+
+> 🔧 called: grep
+
+
+
+> 🔧 **grep** — toggle-all
+
+### 🤖 Assistant
+
+> 🔧 called: read_file
+
+
+
+> 🔧 **read_file** — todomvc/src/todo/app.css
+
+### 🤖 Assistant
+
+> 🔧 called: grep
+
+
+
+> 🔧 **grep** — *.css
+
+### 🤖 Assistant
+
+> 🔧 called: grep
+
+
+
+> 🔧 **grep** — todomvc
+
+### 🤖 Assistant
+
+> 🔧 called: list_files
+
+
+
+> 🔧 **list_files** — todomvc/node_modules/todomvc-app-css
+
+### 🤖 Assistant
+
+> 🔧 called: grep
+
+
+
+> 🔧 **grep** — todomvc/node_modules/todomvc-app-css/index.css
+
+### 🤖 Assistant
+
+> 🔧 called: glob
+
+Found it. The `❯` character comes from the CSS `::before` pseudo-element of `.toggle-all + label:before { content: '❯'; }` in the third-party `todomvc-app-css` package. This CSS-inserted character is being read by NVDA as part of the label name, making the label read as "❯ Toggle All Input".
+
+Now I have all findings. Let me write the sweep file:
+
+> 🔧 **glob** — sweep/*.md
+
+### 🤖 Assistant
+
+> 🔧 called: write_file
+
+
+
+> 🔧 **write_file** — sweep/home.md
+
+### 🤖 Assistant
+
+> 🔧 called: update_todo_list
+
+
+
+> 🔧 **update_todo_list** — 
+[x] Sweep — run NVDA over http://localhost:7002/
+[-] Triage — present findings to human
+[ ] Record accepted findings in findings.md
+[ ] Fix each accepted finding (sequential subtasks)
+[ ] Summary
+
+
+### 🤖 Assistant
+
+> 🔧 called: ask_followup_question
+
+Here are the 3 proposed findings from the sweep of `http://localhost:7002/`. Please tell me which ones to accept:
+
+---
+
+**S-01** — NVDA said: `"❯ Toggle All Input, check box, not checked"` | The CSS `::before` pseudo-element injects a `❯` arrow that NVDA reads as part of the label name | Expected: `"Toggle all, check box, not checked"`
+
+**S-02** — NVDA said: `"list, with 2 items, check box, not checked"` (first todo item checkbox) | Checkbox has no accessible name — NVDA doesn't read the todo text ("Buy milk") | Expected: `"Buy milk, check box, not checked"`
+
+**S-03** — NVDA said: `"check box, not checked"` (second todo item checkbox) | Same issue as S-02 for "Walk dog" — no accessible name on the checkbox | Expected: `"Walk dog, check box, not checked"`
+
+### 🤖 Assistant
+
+Which of these proposed findings do you want to accept and fix?
+
+> 🔧 **ask_followup_question** — Which of these proposed findings do you want to accept and fix?
+
+### 🤖 Assistant
+
+> 🔧 called: update_todo_list
+
+
+
+> 🔧 **update_todo_list** — 
+[x] Sweep — run NVDA over http://localhost:7002/
+[x] Triage — present findings to human
+[-] Record accepted findings in findings.md
+[ ] Fix each accepted finding (sequential subtasks)
+[ ] Summary
+
+
+### 🤖 Assistant
+
+> 🔧 called: read_file
+
+
+
+> 🔧 **read_file** — findings.md
+
+### 🤖 Assistant
+
+> 🔧 called: insert_content
+
+The next available finding ID is F-11. S-02 and S-03 share the same root cause (missing accessible name on todo item checkboxes), so I'll record them as two separate findings with consecutive IDs:
+
+> 🔧 **insert_content** — findings.md
+
+### 🤖 Assistant
+
+> 🔧 called: update_todo_list
+
+
+
+> 🔧 **update_todo_list** — 
+[x] Sweep — run NVDA over http://localhost:7002/
+[x] Triage — present findings to human
+[x] Record accepted findings in findings.md
+[-] Fix F-11 (todo item checkbox accessible names)
+[ ] Summary
+
+
+### 🤖 Assistant
+
+> 🔧 called: start_subtask
+
+
+
+> 🔧 **start_subtask** — Fix F-11
+
+===
+
 # @findings.md /hear F-10
 
 ---
