@@ -218,6 +218,7 @@ export const DestinationDetail = () => {
                     <Link
                       to={`/flights?destination=${encodeURIComponent(name)}`}
                       className="px-4 py-2 rounded-lg bg-cosmic-gradient text-white text-sm font-semibold hover:opacity-90 transition-opacity whitespace-nowrap"
+                      aria-label={`Book flight ${formatDate(flight.departure_time, 'MMM dd, yyyy')} ${flight.flight_id}`}
                     >
                       Book
                     </Link>
