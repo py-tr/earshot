@@ -53,7 +53,7 @@ export const Layout = ({ children }: LayoutProps) => {
       <Header />
       
       {/* Main content */}
-      <main id="main-content" className="relative z-10 flex-1 pt-24 pb-8">
+      <main id="main-content" tabIndex={-1} className="relative z-10 flex-1 pt-24 pb-8 focus:outline-none">
         <div className="container mx-auto px-4">
           {children}
         </div>

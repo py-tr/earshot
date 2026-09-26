@@ -43,10 +43,10 @@
   },
   {
     "id": "F-05",
-    "path": "/",
+    "path": "/flights",
     "start": "TOP",
-    "key_script": "Tab",
-    "expect": ["Skip to main content"],
+    "key_script": "Tab, Enter, Tab",
+    "expect": ["Skip to main content", "main landmark", "Search flights, edit"],
     "forbid": []
   },
   {
