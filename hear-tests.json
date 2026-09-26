@@ -56,5 +56,13 @@
     "key_script": "Tab ×7",
     "expect": ["Search flights, edit"],
     "forbid": []
+  },
+  {
+    "id": "F-07",
+    "path": "/",
+    "start": "TOP",
+    "key_script": "Tab ×17",
+    "expect": ["Book a Flight, link", "Explore Flights, link", "Learn More, button", "Book Your Flight Now, link"],
+    "forbid": ["button, link"]
   }
 ]
