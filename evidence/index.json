@@ -564,7 +564,9 @@
         "evidence/F-11/after_bob_listen.wav",
         "evidence/F-11/before_bob_earshot_sweep_listen.wav"
       ],
-      "fix_commits": [],
+      "fix_commits": [
+        "b42e1c9 F-11: add aria-label to todo item checkboxes so NVDA announces item title (verified by NVDA)"
+      ],
       "gate_test": {
         "id": "F-11",
         "path": "http://localhost:7002/",
@@ -604,7 +606,9 @@
         "evidence/F-12/after_bob_listen.wav",
         "evidence/F-12/before_probe_listen.wav"
       ],
-      "fix_commits": [],
+      "fix_commits": [
+        "9362ebb F-12: TodoMVC Delete buttons reachable by keyboard and named after their todo (Bob task39, verified by NVDA: 'Delete Buy milk, button'); hover visibility restored by Claude (Bob's opacity:0 had hidden it for mouse users)"
+      ],
       "gate_test": {
         "id": "F-12",
         "path": "http://localhost:7002/",

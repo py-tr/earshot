@@ -25,7 +25,7 @@ for line in open('findings.md', encoding='utf8'):
     files = sorted(os.listdir(folder)) if os.path.isdir(folder) else []
     def pick(pred):
         return [f'{folder}/{f}' for f in files if pred(f)]
-    commits = subprocess.run(['git', 'log', '--format=%h %s', '--grep', fid, '--', 'galaxium/'],
+    commits = subprocess.run(['git', 'log', '--format=%h %s', '--grep', fid, '--', 'galaxium/', 'todomvc/src/'],
                              capture_output=True, text=True, encoding='utf8').stdout.strip().splitlines()
     rec = {
         'id': fid,
