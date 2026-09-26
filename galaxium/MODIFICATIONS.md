@@ -19,4 +19,5 @@ Each accessibility fix was written by IBM Bob in an Earshot `/hear` task and ver
 | `booking_system_frontend/src/pages/Flights.tsx` | search field named "Search flights" | F-06 |
 | `booking_system_frontend/src/components/layout/Header.tsx` | "Book a Flight" is one styled link instead of a button nested inside a link | F-07 |
 | `booking_system_frontend/src/pages/Home.tsx` | "Explore Flights" and "Book Your Flight Now" are styled links instead of buttons nested inside links | F-07 |
+| `booking_system_frontend/src/components/layout/Footer.tsx` | the GitHub icon link is named "GitHub" | F-08 |
 | `booking_system_backend/requirements.txt` | pinned `fastmcp==2.14.7` and `mcp==1.30.0` (unpinned versions crash `FastApiMCP` on a fresh install) | setup |

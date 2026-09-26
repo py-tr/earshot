@@ -1,0 +1,57 @@
+# NVDA speech/input log for the 'listen' take (take_20260926T122646), extracted verbatim from NVDA's own log (log level: input/output).
+# Clip time 0.00 s = 12:27:02.676 local (2026-09-26). Format: [clip seconds, from NVDA log timestamp] original NVDA log line.
+# Only 'Input:' and 'Speaking' records are listed; LangChangeCommand/CancellableSpeech are NVDA-internal markers, kept verbatim.
+# Note: the timestamp is when NVDA queued the speech; audio can start slightly later if earlier speech is still playing.
+# DOM focus after each key (document.activeElement sampled over CDP ~0.3 s before the next key; not from NVDA):
+#   TAB @ 1.06s -> A "Skip to main content" [page]
+#   TAB @ 3.06s -> BUTTON "Pause animation" [page]
+#   TAB @ 5.06s -> A "Galaxium Travels" [page]
+#   TAB @ 7.06s -> A "Home" [page]
+#   TAB @ 9.06s -> A "Flights" [page]
+#   TAB @ 11.06s -> A "Book a Flight" [page]
+#   TAB @ 13.06s -> A "Explore Flights" [page]
+#   TAB @ 15.06s -> BUTTON "Learn More" [page]
+#   TAB @ 17.05s -> A "DestinationEarthThe cradle of humanity — and the p" [page]
+#   TAB @ 19.06s -> A "DestinationMarsRust-red horizons and the promise o" [page]
+#   TAB @ 21.05s -> A "DestinationMoonHumanity's first step — now a bustl" [page]
+#   TAB @ 23.05s -> A "DestinationVenusHellscape below, paradise above th" [page]
+#   TAB @ 25.06s -> A "DestinationJupiterKing of planets — come for the s" [page]
+#   TAB @ 27.06s -> A "DestinationEuropaBeneath the ice: the best chance " [page]
+#   TAB @ 29.06s -> A "DestinationPlutoThe edge of the known — for travel" [page]
+#   TAB @ 31.06s -> A "Book Your Flight Now" [page]
+#   TAB @ 33.06s -> A "" [page]
+
+[  1.01s] Input: kb(desktop):tab
+[  1.07s] Speaking [LangChangeCommand ('en_US'), 'clickable', 'Skip to main content', 'same page', 'link']
+[  3.01s] Input: kb(desktop):tab
+[  3.05s] Speaking [LangChangeCommand ('en_US'), 'Pause animation', 'button']
+[  5.01s] Input: kb(desktop):tab
+[  5.06s] Speaking [LangChangeCommand ('en_US'), 'banner landmark', 'Galaxium Travels', 'same page', 'link']
+[  7.01s] Input: kb(desktop):tab
+[  7.05s] Speaking [LangChangeCommand ('en_US'), 'navigation landmark', 'Home', 'same page', 'link']
+[  9.01s] Input: kb(desktop):tab
+[  9.05s] Speaking [LangChangeCommand ('en_US'), 'Flights', 'link']
+[ 11.01s] Input: kb(desktop):tab
+[ 11.05s] Speaking [LangChangeCommand ('en_US'), 'Book a Flight', 'link']
+[ 13.01s] Input: kb(desktop):tab
+[ 13.05s] Speaking [LangChangeCommand ('en_US'), 'main landmark', 'Explore Flights', 'link']
+[ 15.01s] Input: kb(desktop):tab
+[ 15.05s] Speaking [LangChangeCommand ('en_US'), 'Learn More', 'button']
+[ 17.00s] Input: kb(desktop):tab
+[ 17.05s] Speaking [LangChangeCommand ('en_US'), 'DESTINATION', 'Earth', 'heading', 'level 3', 'The cradle of humanity — and the perfect place to return to.', 'link']
+[ 19.00s] Input: kb(desktop):tab
+[ 19.06s] Speaking [LangChangeCommand ('en_US'), 'DESTINATION', 'Mars', 'heading', 'level 3', 'Rust-red horizons and the promise of a second home.', 'link']
+[ 21.00s] Input: kb(desktop):tab
+[ 21.05s] Speaking [LangChangeCommand ('en_US'), 'DESTINATION', 'Moon', 'heading', 'level 3', "Humanity's first step — now a bustling gateway world.", 'link']
+[ 23.00s] Input: kb(desktop):tab
+[ 23.05s] Speaking [LangChangeCommand ('en_US'), 'DESTINATION', 'Venus', 'heading', 'level 3', 'Hellscape below, paradise above the clouds.', 'link']
+[ 25.01s] Input: kb(desktop):tab
+[ 25.05s] Speaking [LangChangeCommand ('en_US'), 'DESTINATION', 'Jupiter', 'heading', 'level 3', 'King of planets — come for the storms, stay for the scale.', 'link']
+[ 27.00s] Input: kb(desktop):tab
+[ 27.06s] Speaking [LangChangeCommand ('en_US'), 'DESTINATION', 'Europa', 'heading', 'level 3', 'Beneath the ice: the best chance of alien life in our solar system.', 'link']
+[ 29.01s] Input: kb(desktop):tab
+[ 29.05s] Speaking [LangChangeCommand ('en_US'), 'DESTINATION', 'Pluto', 'heading', 'level 3', 'The edge of the known — for travellers who want more.', 'link']
+[ 31.00s] Input: kb(desktop):tab
+[ 31.06s] Speaking [LangChangeCommand ('en_US'), 'Book Your Flight Now', 'link']
+[ 33.00s] Input: kb(desktop):tab
+[ 33.06s] Speaking [LangChangeCommand ('en_US'), 'content info landmark', 'github.com', 'link']

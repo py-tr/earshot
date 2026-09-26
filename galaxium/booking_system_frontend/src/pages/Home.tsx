@@ -1,3 +1,4 @@
+// Modified for Earshot (IBM Bob 2.0 Hackathon, Sept 2026): accessibility fixes; see galaxium/MODIFICATIONS.md
 import { Link } from 'react-router-dom';
 import { Button } from '../components/common';
 import { Rocket, Globe, Shield, Zap } from 'lucide-react';

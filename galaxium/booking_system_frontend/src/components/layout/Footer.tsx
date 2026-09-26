@@ -1,3 +1,4 @@
+// Modified for Earshot (IBM Bob 2.0 Hackathon, Sept 2026): accessibility fixes; see galaxium/MODIFICATIONS.md
 import { Github, Heart } from 'lucide-react';
 
 export const Footer = () => {
@@ -25,6 +26,7 @@ export const Footer = () => {
               href="https://github.com"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="GitHub"
               className="text-star-white/70 hover:text-cosmic-purple transition-colors"
             >
               <Github size={20} />

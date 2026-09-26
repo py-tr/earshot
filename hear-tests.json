@@ -64,5 +64,13 @@
     "key_script": "Tab ×17",
     "expect": ["Book a Flight, link", "Explore Flights, link", "Learn More, button", "Book Your Flight Now, link"],
     "forbid": ["button, link"]
+  },
+  {
+    "id": "F-08",
+    "path": "/",
+    "start": "TOP",
+    "key_script": "Tab ×17",
+    "expect": ["GitHub, link"],
+    "forbid": ["github.com"]
   }
 ]
