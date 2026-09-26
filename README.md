@@ -5,6 +5,14 @@ Tested on IBM's own Galaxium Travels sample app. Nothing was planted: the bugs a
 
 **Report page:** https://py-tr.github.io/earshot/ · **Video (3 min):** [VIDEO URL]
 
+**Before** (IBM's app as shipped): Enter opens the Sign In dialog, and NVDA says nothing.
+
+![Before: after Enter, NVDA says nothing; after Tab it reads "Moon, link, heading, level 3" from the page behind the dialog](report/f01_before.svg)
+
+**After** Bob's fix, verified by ear: NVDA says "Sign In, dialog".
+
+![After: after Enter, NVDA says "Sign In, dialog"; after Tab, "Close modal, button"](report/f01_after.svg)
+
 ## For reviewers: where to check each claim
 
 | Judging criterion | Claim | Check it here |
