@@ -15,10 +15,26 @@ Tested on two real apps: IBM's own Galaxium Travels sample app, and TodoMVC's Re
 
 | Judging criterion | Claim | Check it here |
 |---|---|---|
-| Application of Technology: "complete and well thought-out, with a clear application of IBM Bob 2.0" | Bob fixes UI, verifies each fix with a real screen reader through our MCP tool, rejects its own wrong fixes, discovers bugs with parallel subagents, and is blocked by the gate it built | [How it was built](#how-it-was-built) · `bob_sessions/` (one screenshot per task) · [`.bob/custom_modes.yaml`](.bob/custom_modes.yaml) · [`earshot_mcp/server.py`](earshot_mcp/server.py) |
+| Application of Technology: "complete and well thought-out, with a clear application of IBM Bob 2.0" | Eleven Bob surfaces do real work, from custom modes and an MCP tool to parallel subagents, subtasks, lifecycle hooks and headless Bob Shell: Bob fixes UI, verifies each fix with a real screen reader, rejects its own wrong fixes, discovers bugs, writes its own tests, and is blocked by the gate it built | [Bob features used](#ibm-bob-20-features-used-and-where-to-see-each-one) · [How it was built](#how-it-was-built) · `bob_sessions/` (one screenshot per task) · [`.bob/custom_modes.yaml`](.bob/custom_modes.yaml) · [`earshot_mcp/server.py`](earshot_mcp/server.py) |
 | Business Value: "how effectively the solution addresses a high priority issue" | 13 of 13 findings fixed and verified by ear on two real apps; strict lint flagged 0 of 13 and axe-core 2½ of 13 | [bench/RESULTS.md](bench/RESULTS.md) · [Why it matters](#why-it-matters) |
 | Originality: "the approach in applying IBM Bob 2.0" | The agent's test oracle is what a blind user hears: Bob must hear its fix before it counts, and every commit replays the screen-reader tests | [What a markup check cannot hear](#what-a-markup-check-cannot-hear) · [How it works](#how-it-works-60-seconds) · [evidence/gate/](evidence/gate/README.md) |
 | Presentation: "clarity and effectiveness" | Every claim links to a verbatim NVDA transcript and the NVDA audio; `hear_tests.py --replay` checks every test against them on any OS | [Evidence](#evidence) · [report page](https://py-tr.github.io/earshot/) |
+
+## IBM Bob 2.0 features used, and where to see each one
+
+| Bob feature | How Earshot uses it | Proof |
+|---|---|---|
+| **Agent mode** | Bob built the MCP server, the gate, the report, typing in `listen()` and the hooks | [`bob_sessions/INDEX.md`](bob_sessions/INDEX.md) (tasks 02, 10, 19, 23, 29) |
+| **Custom modes** with `fileRegex` fences | `earshot` fixes (may edit only app source and `hear-tests.json`), `earshot-sweep` discovers (writes only `sweep/`), `earshot-run` runs the whole loop | [`.bob/custom_modes.yaml`](.bob/custom_modes.yaml) |
+| **Rules** per mode | Each mode's rules live in `.bob/rules-<mode>/` (Bob's documented best practice); Bob Shell confirmed it loads them | [`.bob/rules-earshot/`](.bob/rules-earshot/) |
+| **Slash commands and skills** | `/hear <finding>`, `/sweep <page>`, `/earshot <page>`; Bob wrote the `nvda-expectations` skill from our transcripts and WCAG pages | [`.bob/commands/`](.bob/commands/) · [`.bob/skills/nvda-expectations/`](.bob/skills/nvda-expectations/SKILL.md) |
+| **MCP server** (our own) | `listen()` drives Chrome with real NVDA and returns what NVDA said; `listen_result()` collects long takes | [`earshot_mcp/server.py`](earshot_mcp/server.py) |
+| **Parallel subagents** | Each sweep spawns one explore subagent per suspicious Tab stop, in parallel, to find the file and line | [`bob_sessions/`](bob_sessions/INDEX.md) (tasks 13a, 13d, 22, 38) · [headless run](bob_sessions/shell/INDEX.md) |
+| **Managing multiple steps**: todo list, human question, subtasks | `/earshot` keeps a visible todo list, asks the human to triage (`ask_followup_question`) and fixes each accepted finding in a `/hear` subtask (`start_subtask`) | tasks 36b and 38; [`.bob/rules-earshot-run/`](.bob/rules-earshot-run/01-whole-loop.md) |
+| **Document understanding** | Bob read the audit PDF into `findings.md`; Bob read WCAG Understanding pages through `@https://` mentions to write the skill | task 01 · task 41 |
+| **Lifecycle hooks** | `PreToolUse` replays the screen-reader tests before any `git commit` Bob runs (it blocked `--no-verify`); `SessionStart` checks that NVDA and the apps are up | [`.bob/settings.json`](.bob/settings.json) · [evidence/gate/](evidence/gate/README.md) |
+| **`.bobignore`** | Keeps Bob out of recordings, dependencies and build output | [`.bobignore`](.bobignore) |
+| **Bob Shell** (headless, cost-capped) | `bob run --mode earshot-sweep --max-cost 1.5 …` sweeps a page by ear from the terminal; Bob Shell also wrote the skill, 72 unit tests, the affected-tests gate and the diagram | [`bob_sessions/shell/INDEX.md`](bob_sessions/shell/INDEX.md) |
 
 Machine-readable: [`evidence/index.json`](evidence/index.json) links every finding to its NVDA transcripts, audio, fix commit, gate test and Bob tasks; [`bob_sessions/INDEX.md`](bob_sessions/INDEX.md) lists every Bob task with its mode, cost and screenshot.
 
@@ -62,7 +78,7 @@ The first command replays every gate test against the NVDA transcripts stored in
 
 Earshot does not replace axe-core. axe also found 22 colour-contrast failures that no screen reader would report. Earshot catches what only the ear catches.
 
-**Reliability and cost, counted honestly.** Over the build, `listen()` recorded 254 NVDA takes. Three were aborted by the foreground safety check (another window took focus; the third was our own terminal during a gate run), and 5 produced no transcript (3 while the MCP timeout was misconfigured on day 1, 2 hung takes). In the first two `/earshot` runs, about 20 further calls aborted before a take started, because Bob passed a start control that does not exist on that page; the instructions now require `start="TOP"`. The gate once blocked a commit without listening, because the app served a half-written file, and once reported a regression that was really "could not listen", because a window title crashed the console output; both are fixed ("could not listen" has its own exit code, and output is UTF-8). The whole build used about 28 Bobcoins (about $14 at IBM's documented $0.50 per Bobcoin).
+**Reliability and cost, counted honestly.** Over the build, `listen()` recorded 254 NVDA takes. Three were aborted by the foreground safety check (another window took focus; the third was our own terminal during a gate run), and 5 produced no transcript (3 while the MCP timeout was misconfigured on day 1, 2 hung takes). In the first two `/earshot` runs, about 20 further calls aborted before a take started, because Bob passed a start control that does not exist on that page; the instructions now require `start="TOP"`. The gate once blocked a commit without listening, because the app served a half-written file, and once reported a regression that was really "could not listen", because a window title crashed the console output; both are fixed ("could not listen" has its own exit code, and output is UTF-8). The whole build used about 32 Bobcoins (about $16 at IBM's documented $0.50 per Bobcoin).
 
 ## What a markup check cannot hear
 
@@ -206,7 +222,7 @@ Found or seen during the build, listed so nobody mistakes them for fixed:
 
 ## How it was built
 
-- **Built by IBM Bob during the event.** Every task's consumption summary is screenshotted in `bob_sessions/` (`pytr_taskNN_*`). The hackathon-provisioned account (`ibm-coding-challenge-uat`) was never received, so all tasks ran on an IBM Bob **trial account** (50 Bobcoins; about 28 used). Main pieces:
+- **Built by IBM Bob during the event.** Every task's consumption summary is screenshotted in `bob_sessions/` (`pytr_taskNN_*`). The hackathon-provisioned account (`ibm-coding-challenge-uat`) was never received, so all tasks ran on an IBM Bob **trial account** (50 Bobcoins; about 32 used). Main pieces:
   - `findings.md` from the PDF (task01)
   - the MCP server, the `earshot` mode and `/hear` (task02, 02b–02i)
   - all UI fixes: F-01 task03 attempt 7, F-02 task05, F-03 task06, N-01 task07, F-04 task15, F-05 task16 and task21, F-06 task17, F-07 task24 and task25, F-08 task26, N-02 task27, F-09 task34, F-10 task36b and task37, F-11 task38, F-12 task39
