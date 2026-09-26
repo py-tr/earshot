@@ -1,6 +1,8 @@
 # Earshot: screen-reader tests for AI-written UI
 
-IBM Bob fixes the UI, a real screen reader (NVDA) checks every fix by ear, and a two-layer gate (a git hook, plus a hook inside Bob) blocks any change that breaks what a blind user hears.
+![10 of 10 verified by NVDA](https://img.shields.io/badge/verified%20by%20NVDA-10%20of%2010-2ea44f) ![1.5 of 10 flagged by lint and axe](https://img.shields.io/badge/flagged%20by%20lint%20%2B%20axe-1.5%20of%2010-orange) ![gate blocked Bob twice](https://img.shields.io/badge/gate-blocked%20Bob%202%C3%97-blue)
+
+IBM Bob fixes the UI, a real screen reader (NVDA, not a simulation) checks every fix by ear, and a two-layer gate (a git hook, plus a hook inside Bob) blocks any change that breaks what a blind user hears.
 Tested on IBM's own Galaxium Travels sample app. Nothing was planted: the bugs are IBM's; the audit document is ours.
 
 **Report page:** https://py-tr.github.io/earshot/ · **Video (3 min):** [VIDEO URL]
@@ -151,7 +153,7 @@ In Bob, open `findings.md` and type `/hear F-01`, or type `/sweep /flights`.
 - **Tab counts are brittle.** Tests address controls by their Tab position from the top of the page, so a change that adds or removes a Tab stop (as F-05 and F-07 did) can shift other tests. The gate then fails loudly, and a person updates the count.
 - **Some things need a person.** Whether the animation actually stopped (N-01) and whether a proposal is really a failure (7 of 14 sweep proposals were rejected or duplicates) are human calls.
 - **Not a compliance tool.** Passing Earshot does not make an app WCAG-conformant. It proves only that specific announcements happen on specific key paths.
-- **Prior art.** axe-core and Deque's axe MCP server check rules in the DOM. Guidepup automates real screen readers for tests that humans write. Earshot puts a real screen reader inside the AI agent's fix loop and inside the commit gate.
+- **Prior art.** axe-core and Deque's axe MCP server check rules in the DOM. Guidepup automates real screen readers for tests that humans write. [a11ign](https://github.com/a11ign/a11ign) drives NVDA through a page and reports the barriers a rule scanner cannot see. [CurbCut](https://github.com/eziedutech/curbcut), another entry in this hackathon, reviews pull requests with Bob against WCAG 2.2 and proves each fix with a test; its README says it "does not judge real screen reader experience". Earshot's difference: what a real screen reader says is the oracle inside the AI agent's own fix loop (Bob's own fixes were rejected by ear) and inside a two-layer gate that blocked Bob's commits.
 
 ## How it was built
 
