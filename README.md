@@ -33,7 +33,7 @@ python earshot_mcp/hear_tests.py --replay
 python -m unittest discover -s earshot_mcp/tests
 ```
 
-The first command replays every gate test against the NVDA transcripts stored in `evidence/`. Each test must **pass on the fixed transcript and fail on every broken one** (the original bug and Bob's rejected fixes), so you can see that each test tells broken from fixed. Expected output: 13 lines of `PASS`, in under a second. The second runs 50 unit tests of the key parser, the pass/fail logic, `hear-tests.json` and the Bob hook (written by Bob in Bob Shell, task42). The live run with real NVDA needs Windows (see [Setup](#setup-windows-only)).
+The first command replays every gate test against the NVDA transcripts stored in `evidence/`. Each test must **pass on the fixed transcript and fail on every broken one** (the original bug and Bob's rejected fixes), so you can see that each test tells broken from fixed. Expected output: 13 lines of `PASS`, in under a second. The second runs 72 unit tests of the key parser, the pass/fail logic, the affected-tests selection, `hear-tests.json` and the Bob hook (written by Bob in Bob Shell, tasks 42 and 43). The live run with real NVDA needs Windows (see [Setup](#setup-windows-only)).
 
 ## Result
 
@@ -191,7 +191,7 @@ Found or seen during the build, listed so nobody mistakes them for fixed:
 - **Windows and NVDA only.** JAWS, VoiceOver and TalkBack are not covered yet.
 - **Takes over the desktop.** `listen()` needs Chrome in the foreground and aborts if the foreground window changes. It runs one take at a time, and each test takes 30–60 s. Run it on a dedicated machine or VM, not on the machine you are typing on.
 - **Typing is basic.** `listen()` can type plain text (letters, digits, spaces, `.`, `-`, `'`), but not special keys such as arrows or Backspace.
-- **The gate is slow for a pre-commit hook.** All 13 tests take about 9 minutes. Today it runs only when frontend files are staged; the next step is to run it on push or in CI on a dedicated listening machine (not built).
+- **The gate is slow for a pre-commit hook, less so now.** All 13 tests take about 9 minutes. The git hook replays only the tests a commit can affect: a change to `Modal.tsx` replays the 4 dialog tests (about 2½ minutes), a TodoMVC change only TodoMVC's tests, and a change to a file no test watches falls back to all tests of that app. `hear_tests.py --staged --plan` shows the selection without listening. The Bob hook still replays everything. The next step is to run the gate on push or in CI on a dedicated listening machine (not built).
 - **Tests only hear what they drive.** F-09 shows the limit, and the known issues above are paths no test drives yet: a regression in a path no test walked (typing inside the dialog) passed the gate until a test typed there. Earshot guards the paths you give it; `/sweep` and new tests widen them.
 - **Tab counts are brittle.** Tests address controls by their Tab position from the top of the page, so a change that adds or removes a Tab stop (as F-05 and F-07 did) can shift other tests. The gate then fails loudly, and a person updates the count.
 - **Some things need a person.** Whether the animation actually stopped (N-01) and whether a proposal is really a failure (7 of 14 sweep proposals were rejected or duplicates) are human calls.

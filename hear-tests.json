@@ -6,7 +6,11 @@
       "Sign In, dialog",
       "Close modal, button"
     ],
-    "forbid": []
+    "forbid": [],
+    "watch": [
+      "galaxium/booking_system_frontend/src/components/common/Modal.tsx",
+      "galaxium/booking_system_frontend/src/components/common/Input.tsx"
+    ]
   },
   {
     "id": "F-02",
@@ -20,6 +24,10 @@
     "forbid": [
       "github.com",
       "GitHub, link"
+    ],
+    "watch": [
+      "galaxium/booking_system_frontend/src/components/common/Modal.tsx",
+      "galaxium/booking_system_frontend/src/components/common/Input.tsx"
     ]
   },
   {
@@ -32,6 +40,10 @@
     ],
     "forbid": [
       "John Doe, edit"
+    ],
+    "watch": [
+      "galaxium/booking_system_frontend/src/components/common/Modal.tsx",
+      "galaxium/booking_system_frontend/src/components/common/Input.tsx"
     ]
   },
   {
@@ -113,7 +125,11 @@
       "Name, edit, required",
       "Email, edit, required"
     ],
-    "forbid": []
+    "forbid": [],
+    "watch": [
+      "galaxium/booking_system_frontend/src/components/common/Modal.tsx",
+      "galaxium/booking_system_frontend/src/components/common/Input.tsx"
+    ]
   },
   {
     "id": "F-10",

@@ -26,7 +26,11 @@ _HERE = _server_mod._HERE
 
 _TESTS_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "hear-tests.json")
 
-_FRONTEND_PREFIX = ("galaxium/booking_system_frontend/src/", "todomvc/src/")  # both apps under test
+_APP_SOURCE = {
+    "galaxium": "galaxium/booking_system_frontend/src/",
+    "todomvc": "todomvc/src/",
+}
+_TODOMVC_URL_PREFIX = "http://localhost:7002"
 
 
 def _load_tests():
@@ -34,16 +38,84 @@ def _load_tests():
         return json.load(f)
 
 
-def _staged_touches_frontend() -> bool:
-    """Return True if any staged file is under the frontend source tree."""
+def _test_app(test: dict) -> str:
+    """Return 'todomvc' if the test path starts with the TodoMVC URL, else 'galaxium'."""
+    path = test.get("path", "")
+    if path.startswith(_TODOMVC_URL_PREFIX):
+        return "todomvc"
+    return "galaxium"
+
+
+def _staged_files() -> list[str]:
+    """Return the list of staged file paths (relative to repo root)."""
     result = subprocess.run(
         ["git", "diff", "--cached", "--name-only"],
         capture_output=True, text=True,
     )
-    for line in result.stdout.splitlines():
-        if line.startswith(_FRONTEND_PREFIX):
-            return True
-    return False
+    return result.stdout.splitlines()
+
+
+def _staged_apps(staged: list[str]) -> set[str]:
+    """Return the set of app names that have staged files under their source folder."""
+    apps = set()
+    for app, prefix in _APP_SOURCE.items():
+        if any(f.startswith(prefix) for f in staged):
+            apps.add(app)
+    return apps
+
+
+def _select_tests(tests: list[dict], staged: list[str]) -> tuple[list[dict], dict[str, str]]:
+    """Select tests to run based on staged files.
+
+    Returns (selected_tests, reasons) where reasons maps test id -> why it was selected.
+    Rule: for each app with staged changes:
+      - If every staged file of that app is covered by the watch list of at least one test,
+        run only those watch-covering tests.
+      - Otherwise run all tests for that app (safe default).
+    """
+    apps_with_changes = _staged_apps(staged)
+
+    selected: list[dict] = []
+    reasons: dict[str, str] = {}
+
+    for app in apps_with_changes:
+        app_prefix = _APP_SOURCE[app]
+        app_staged = [f for f in staged if f.startswith(app_prefix)]
+        app_tests = [t for t in tests if _test_app(t) == app]
+
+        # Find tests whose watch list covers at least one staged file
+        watch_covering = [
+            t for t in app_tests
+            if t.get("watch") and any(
+                any(f.startswith(w) or f == w for w in t["watch"])
+                for f in app_staged
+            )
+        ]
+
+        # Check if every staged file is covered by at least one watch-covering test
+        all_covered = bool(watch_covering) and all(
+            any(
+                any(f.startswith(w) or f == w for w in (t.get("watch") or []))
+                for t in watch_covering
+            )
+            for f in app_staged
+        )
+
+        if all_covered:
+            for t in watch_covering:
+                selected.append(t)
+                reasons[t["id"]] = f"watch match ({app})"
+        else:
+            for t in app_tests:
+                selected.append(t)
+                reasons[t["id"]] = f"all tests for {app} (safe default)"
+
+    return selected, reasons
+
+
+def _staged_touches_frontend() -> bool:
+    """Return True if any staged file is under the frontend source tree."""
+    return bool(_staged_apps(_staged_files()))
 
 
 def _run_take(keys: str, start: str = "Select Seat Class", gap: float = 2.0, path: str | None = None) -> str:
@@ -166,7 +238,9 @@ def main():
     parser.add_argument("--replay", action="store_true",
                         help="Offline, any OS: check the tests against the stored NVDA transcripts in evidence/")
     parser.add_argument("--staged", action="store_true",
-                        help="Skip unless staged files include frontend source")
+                        help="Run only tests whose app has staged files; use watch lists to narrow further")
+    parser.add_argument("--plan", action="store_true",
+                        help="Print which tests would run and why, then exit 0 without listening")
     parser.add_argument("--only", metavar="ID",
                         help="Run only the test with this ID")
     args = parser.parse_args()
@@ -174,17 +248,28 @@ def main():
     if args.replay:
         sys.exit(_replay())
 
+    tests = _load_tests()
+
     if args.staged:
-        if not _staged_touches_frontend():
+        staged = _staged_files()
+        if not _staged_apps(staged):
             print("earshot gate: no UI changes")
             sys.exit(0)
+        tests, reasons = _select_tests(tests, staged)
+    else:
+        reasons = {}
 
-    tests = _load_tests()
     if args.only:
         tests = [t for t in tests if t["id"] == args.only]
         if not tests:
             print(f"No test with ID {args.only!r}")
             sys.exit(1)
+
+    if args.plan:
+        for t in tests:
+            why = reasons.get(t["id"], "explicitly selected" if args.only else "all tests")
+            print(f"WOULD RUN {t['id']}: {why}")
+        sys.exit(0)
 
     any_failed = False
     could_not_listen = 0
