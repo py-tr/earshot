@@ -11,6 +11,17 @@
           }
         ]
       }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".venv\\Scripts\\python.exe earshot_mcp\\preflight.py",
+            "timeout": 10
+          }
+        ]
+      }
     ]
   }
 }

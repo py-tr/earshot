@@ -1,0 +1,4 @@
+# Write the hear-test, then commit
+
+- Before committing, add one test for the finding to hear-tests.json, unless a test with that id already exists: id; path and start as used in the verifying listen call ("TOP" when you started from the top); key_script in findings.md format; expect = the exact phrases you heard that prove the fix, in order; forbid = phrases that would mean the bug is back, if any. Keep the file valid JSON and the existing tests unchanged. Then run `git add` naming each src file you edited plus hear-tests.json, and nothing else; commit; then run `git show --stat HEAD`. Reply VERIFIED only if it lists every file you edited plus hear-tests.json, and quote the commit id. If the gate blocks the commit, fix only the failing test and re-run the same `git add` and commit.
+- If a command is blocked by a hook, read takes/bob_hook_last.txt and report what NVDA heard; never retry with --no-verify.
