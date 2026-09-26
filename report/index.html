@@ -18,8 +18,8 @@
     </header>
 
     <div class="banner" role="note" aria-label="Summary">
-      <p>Automated checks flagged 1 of 3 findings (half of one). Earshot verified 3 of 3 by ear.</p>
-      <p>The fix that passes axe-core still left the dialog silent in NVDA. <a href="../bench/RESULTS.md">How we measured</a></p>
+      <p>Automated checks flagged ½ of 1 of 6 findings. Earshot verified 6 of 6 with a real screen reader (NVDA).</p>
+      <p>3 were discovered by Bob's own sweep · 3 of Bob's own fixes were rejected by ear · every commit is gated by 6 screen-reader tests. <a href="https://github.com/py-tr/earshot/blob/main/bench/RESULTS.md">How we measured</a></p>
     </div>
 
     <main>
@@ -27,10 +27,37 @@
       <div id="findings-list" class="cards" aria-live="polite">
         <p>Loading findings…</p>
       </div>
+
+      <section aria-labelledby="sweep-heading">
+        <h2 id="sweep-heading">Discovery: /sweep</h2>
+        <p>Bob tabbed through /flights by ear (25 Tabs from the top, real NVDA), then five explore subagents checked suspects in parallel and produced 10 proposals across two runs.</p>
+        <p>Of those 10, the human accepted 3 (→ F-04, F-05, F-06), rejected 6, and marked 1 duplicate: <em>S-02/S-03 (run 1)</em> — same name, same target, allowed by WCAG 2.4.4; <em>S-04 (run 1)</em> — link inside h3 is valid, NVDA's announcement is standard; <em>S-01 (run 2)</em> — NVDA's "clickable" prefix comes from an ancestor click handler, not a WCAG failure; <em>S-03/S-04 (run 2)</em> — same reasons as run 1; <em>S-05 (run 2)</em> — duplicate of F-04.</p>
+      </section>
+
+      <section aria-labelledby="gate-heading">
+        <h2 id="gate-heading">Gate</h2>
+        <p>Every UI commit runs all 6 screen-reader hear-tests as a git pre-commit hook (<code>.githooks/pre-commit</code> → <code>earshot_mcp/hear_tests.py</code>); if any test fails the commit is blocked and nothing reaches HEAD.</p>
+        <p>When Bob tried to "tidy up" the focus-management code in Modal.tsx (removing <code>tabIndex={-1}</code>, <code>returnFocusRef</code>, and the <code>setTimeout</code> focus call), the gate caught it immediately:</p>
+<pre><code>PS&gt; git -C earshot commit -m "refactor: simplify Modal"
+FAIL F-01: missing 'Sign In, dialog'
+  said: Moon, link, heading, level 3
+FAIL F-02: missing 'Register, button'
+  said: Moon, link, heading, level 3
+  said: Select Seat Class, Earth to Moon, button
+  ...
+FAIL F-03: missing 'Close modal, button'
+  said: Moon, link, heading, level 3
+  ...
+PASS F-04
+PASS F-05
+PASS F-06
+BLOCKED by Earshot: this change breaks what a screen reader hears.</code></pre>
+<p class="note">Verbatim terminal output (trimmed where marked with ...); the full transcripts are in <code>evidence/gate/</code>. Without the focus handling, focus never entered the dialog, so all three dialog tests heard the page behind it.</p>
+      </section>
     </main>
 
     <footer class="site-footer">
-      <p>Made with IBM Bob</p>
+      <p>Built with IBM Bob · <a href="https://github.com/py-tr/earshot">source on GitHub</a></p>
     </footer>
 
   </div>

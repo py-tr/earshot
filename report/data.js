@@ -65,6 +65,66 @@ var EARSHOT_DATA = [
     }
   },
   {
+    id: "F-04",
+    status: "verified \u2014 discovered by Bob\u2019s /sweep, accepted by a human",
+    wcag: "2.4.6 Headings and Labels (AA); 1.3.1 Info and Relationships (A)",
+    component: "/flights booking buttons",
+    script: "TAB",
+    expected: "\u201cSelect Seat Class, Earth to Mars, button\u201d",
+    audio: {
+      rejected: "../evidence/F-04/attempt1_rejected_bob_listen.wav",
+      after:    "../evidence/F-04/after_bob_listen.wav"
+    },
+    transcript: {
+      rejected: [
+        "TAB \u2192 Select Seat Class, button (route missing: Button dropped aria-label)"
+      ],
+      after: [
+        "TAB \u2192 Select Seat Class, Earth to Mars, button"
+      ]
+    }
+  },
+  {
+    id: "F-05",
+    status: "verified \u2014 discovered by Bob\u2019s /sweep, accepted by a human",
+    wcag: "2.4.1 Bypass Blocks (A)",
+    component: "Every page (no skip link)",
+    script: "TAB from top",
+    expected: "\u201cSkip to main content, same page, link\u201d as first tab stop",
+    audio: {
+      before: "../evidence/F-05/before_probe_listen.wav",
+      after:  "../evidence/F-05/after_bob_listen.wav"
+    },
+    transcript: {
+      before: [
+        "first TAB \u2192 Pause animation, button (no skip link)"
+      ],
+      after: [
+        "first TAB \u2192 Skip to main content, same page, link"
+      ]
+    }
+  },
+  {
+    id: "F-06",
+    status: "verified \u2014 discovered by Bob\u2019s /sweep, accepted by a human",
+    wcag: "1.3.1 Info and Relationships (A); 4.1.2 Name, Role, Value (A); 3.3.2 Labels or Instructions (A)",
+    component: "/flights search field",
+    script: "TAB",
+    expected: "\u201cSearch flights, edit\u201d",
+    audio: {
+      before: "../evidence/F-06/before_bob_sweep_listen.wav",
+      after:  "../evidence/F-06/after_bob_listen.wav"
+    },
+    transcript: {
+      before: [
+        "TAB \u2192 Search by origin or destination..., edit (placeholder as name)"
+      ],
+      after: [
+        "TAB \u2192 Search flights, edit"
+      ]
+    }
+  },
+  {
     id: "N-01",
     status: "fixed \u2014 confirmed by ear + human",
     wcag: "2.2.2 Pause, Stop, Hide (A)",
