@@ -127,6 +127,53 @@ var EARSHOT_DATA = [
     }
   },
   {
+    id: "F-07",
+    status: "verified — discovered by Bob’s /sweep, accepted by a human",
+    wcag: "4.1.2 Name, Role, Value (A); 2.4.3 Focus Order (A)",
+    component: "Home page: a button nested inside a link, in 3 places (Book a Flight, Explore Flights, Book Your Flight Now)",
+    script: "TAB ×17 from top of /",
+    expected: "Each control is one Tab stop: “Book a Flight, link” once; never “button, link”",
+    audio: {
+      before:   "../evidence/F-07/before_bob_sweep_listen.wav",
+      rejected: "../evidence/F-07/attempt1_rejected_bob_listen.wav",
+      after:    "../evidence/F-07/after_bob_listen.wav"
+    },
+    transcript: {
+      before: [
+        "TAB → Book a Flight, button, link",
+        "TAB → Book a Flight, button, link (same control again)"
+      ],
+      rejected: [
+        "TAB → Book a Flight, button, link (tabIndex=-1 on the inner button did not help)"
+      ],
+      after: [
+        "TAB → Book a Flight, link",
+        "TAB → Explore Flights, link",
+        "TAB → Book Your Flight Now, link"
+      ]
+    }
+  },
+  {
+    id: "F-08",
+    status: "verified — discovered by Bob’s /sweep, accepted by a human",
+    wcag: "2.4.4 Link Purpose (In Context) (A); 1.1.1 Non-text Content (A)",
+    component: "Footer GitHub icon link (axe-core flags this one too: link-name)",
+    script: "TAB ×17 from top of /",
+    expected: "“GitHub, link”",
+    audio: {
+      before: "../evidence/F-08/before_bob_listen.wav",
+      after:  "../evidence/F-08/after_bob_listen.wav"
+    },
+    transcript: {
+      before: [
+        "TAB → content info landmark, github.com, link (the raw address)"
+      ],
+      after: [
+        "TAB → content info landmark, GitHub, link"
+      ]
+    }
+  },
+  {
     id: "N-01",
     status: "fixed \u2014 confirmed by ear + human",
     wcag: "2.2.2 Pause, Stop, Hide (A)",
@@ -143,9 +190,24 @@ var EARSHOT_DATA = [
   },
   {
     id: "N-02",
-    status: "needs-human",
+    status: "verified",
     wcag: "4.1.3 Status Messages (AA)",
-    component: "/flights results count",
-    reason: "Live-region politeness and non-interruption of typing requires manual screen-reader observation; earshot cannot assert ARIA live behaviour from audio alone."
+    component: "/flights results count while typing in the search field",
+    script: "TAB ×7, then type “Mars”",
+    expected: "The new count is announced politely, without interrupting typing",
+    audio: {
+      before: "../evidence/N-02/before_typing_listen.wav",
+      after:  "../evidence/N-02/after_bob_listen.wav"
+    },
+    transcript: {
+      before: [
+        "TYPE → M, a, r, s … then silence (the count changed on screen only)"
+      ],
+      after: [
+        "M → Showing 5 flights",
+        "a → Showing 4 flights",
+        "r, s → letters echoed; typing never interrupted"
+      ]
+    }
   }
 ];

@@ -10,9 +10,12 @@ Measured 2026-09-25 on IBM's Galaxium Travels sample app. The "original" code is
 | **F-04** 9 booking buttons all "Select Seat Class" (found by Bob's /sweep) | not flagged | not flagged (no rule for identical button names) | heard, first fix rejected (Button dropped aria-label), fixed, re-heard: "Select Seat Class, Earth to Mars" |
 | **F-05** no skip link (found by Bob's /sweep) | not flagged | not flagged (`bypass` passes because the page has headings and landmarks) | heard, fixed, re-heard: "Skip to main content, same page, link" |
 | **F-06** search field named only by its placeholder (found by Bob's /sweep) | not flagged | not flagged (`label` accepts a placeholder as the name) | heard, fixed, re-heard: "Search flights, edit" |
+| **F-07** a button nested inside a link: one control, two Tab stops, in 3 places on / (found by Bob's /sweep of the Home page) | not flagged | not flagged (on /, axe reports only `link-name` and `region`) | heard ("Book a Flight, button, link" twice), first fix rejected (`tabIndex=-1` on the inner button: still "button, link"), fixed, re-heard: "Book a Flight, link" once |
+| **F-08** footer GitHub icon link has no name (found by Bob's /sweep of the Home page) | not flagged | **flagged**: `link-name` | heard ("github.com, link"), fixed, re-heard: "GitHub, link" |
+| **N-02** result count not announced while typing (audit; testable by ear since `listen()` can type) | not flagged | not flagged (a missing status message cannot be seen in a static scan) | heard (typed letters echoed, then silence), fixed, re-heard: "Showing 4 flights" |
 
-**Automated checks: 1 of 6 findings flagged, and only half of that one. Earshot: 6 of 6 verified by ear, 3 of them discovered by Bob's own /sweep.**
-(F-04..F-06 were measured on the same original-code scans, `axe_baseline.json` and `lint_baseline.json`, of /flights.)
+**Automated checks: 1½ of 9 findings flagged (lint 0, axe-core 1½). Earshot: 9 of 9 verified by ear, 5 of them discovered by Bob's own /sweep. 7 of the 9 were caught only by ear.**
+(F-04..F-06 were measured on the same original-code scans, `axe_baseline.json` and `lint_baseline.json`, of /flights. F-07, F-08 and N-02 were measured on 2026-09-26: lint on the original `Home.tsx`, `Header.tsx`, `Footer.tsx` and `Flights.tsx` in `bench/baseline/` (no messages), axe-core 4.13 on / before the F-07 fix. N-01, the starfield pause, needs a human eye and is not counted.)
 
 ## The name-only fix passes axe and still fails blind users
 
@@ -25,7 +28,7 @@ The checker is satisfied, and the user still cannot find the dialog. Earshot rej
 
 ## What the automated tools find that Earshot does not
 
-Stated for fairness: they are complementary. axe also flags, on both versions, **22 colour-contrast failures**, an **unnamed footer link** (github.com), **heading-order** issues, and the starfield **canvas outside landmarks**. Lint flags **8 unassociated labels in the flight filters**. None of those is an audit finding here; they are candidates for the next audit.
+Stated for fairness: they are complementary. axe also flags, on both versions, **22 colour-contrast failures**, **heading-order** issues, and the starfield **canvas outside landmarks**. Lint flags **8 unassociated labels in the flight filters**. None of those is an audit finding here; they are candidates for the next audit.
 
 ## Reproduce
 

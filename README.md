@@ -10,15 +10,18 @@ Tested on IBM's own Galaxium Travels sample app. Nothing was planted: the bugs a
 | | Strict React lint (eslint-plugin-jsx-a11y 6.10.2) | axe-core 4.13.0 | Earshot (NVDA 2026.2 via `listen()`) |
 |---|---|---|---|
 | Audit findings F-01..F-03 | 0 of 3 | half of 1 (the dialog name only) | **3 of 3 heard, fixed and re-heard** |
-| Sweep findings F-04..F-06 (discovered by Bob) | 0 of 3 | 0 of 3 | **3 of 3 heard, fixed and re-heard** |
-| **All six** | **0 of 6** | **half of 1 of 6** | **6 of 6** |
+| Sweep findings F-04..F-08 (discovered by Bob on /flights and /) | 0 of 5 | 1 of 5 (F-08, the unnamed link) | **5 of 5 heard, fixed and re-heard** |
+| Audit finding N-02 (needs typing) | 0 of 1 | 0 of 1 | **1 of 1 heard, fixed and re-heard** |
+| **All nine** | **0 of 9** | **1½ of 9** | **9 of 9** |
+
+**7 of the 9 were caught only by ear.**
 
 - **The fix that passed axe was still silent.** Bob's first F-01 fix only added a dialog name. axe reported no dialog violation, yet in NVDA Enter was followed by silence, and Tab then read "Moon, link, heading, level 3" from the page behind the dialog. Earshot rejected that fix. ([bench/RESULTS.md](bench/RESULTS.md))
-- **6 of 6 findings resolved and verified by NVDA.** Three (F-01..F-03) came from the audit PDF. Three (F-04..F-06) were discovered by Bob's `/sweep` and accepted by a human.
-- **The gate works.** [`hear-tests.json`](hear-tests.json) holds 6 tests, and a full run passes 6 of 6 in about 4 min 40 s. It refused Bob's own "tidy-up" of `Modal.tsx`, which removed the dialog's focus management. NVDA heard silence, so the commit was blocked. ([evidence/gate/](evidence/gate/README.md))
-- **It costs no human attention per commit.** Checking the same 6 announcements by hand with NVDA took a person 60 seconds at full speed and full concentration, and that has to be repeated on every commit. The gate needs 0 minutes of attention (about 4 min 40 s unattended), and it has already caught a regression that looked like a harmless tidy-up.
+- **9 of 9 findings resolved and verified by NVDA.** Four (F-01..F-03, N-02) came from the audit PDF. Five (F-04..F-08) were discovered by Bob's `/sweep` on two pages and accepted by a human.
+- **The gate works.** [`hear-tests.json`](hear-tests.json) holds 9 tests, and a full run passes 9 of 9 in about 6½ minutes. It refused Bob's own "tidy-up" of `Modal.tsx`, which removed the dialog's focus management. NVDA heard silence, so the commit was blocked. ([evidence/gate/](evidence/gate/README.md))
+- **It costs no human attention per commit.** Checking the first 6 announcements by hand with NVDA took a person 60 seconds at full speed and full concentration, and that has to be repeated on every commit. The gate needs 0 minutes of attention (about 6½ minutes unattended for all 9), and it has already caught a regression that looked like a harmless tidy-up.
 - **A human check made the tests stricter.** During a manual NVDA check, the skip link (F-05) was announced but pressing it left focus on the page body, so NVDA said nothing. Bob made `<main>` focusable and verified by ear that Enter now says "main landmark" and the next Tab reaches "Search flights, edit". The F-05 test now checks `Tab, Enter, Tab` instead of just `Tab`.
-- **3 of Bob's own fixes were rejected by ear before the right one landed:** F-01 (name only), F-02 (no focus trap: Tab escaped to "github.com, link") and F-04 (the `Button` component dropped the label).
+- **4 of Bob's own fixes were rejected by ear before the right one landed:** F-01 (name only), F-02 (no focus trap: Tab escaped to "github.com, link"), F-04 (the `Button` component dropped the label) and F-07 (`tabIndex=-1` on the nested button: NVDA still said "button, link").
 
 Earshot does not replace axe-core. axe also found 22 colour-contrast failures that no screen reader would report. Earshot catches what only the ear catches.
 
@@ -42,7 +45,7 @@ audit PDF ──► findings.md ──► /hear F-0x ──► Bob edits ──�
 
 1. **Audit to findings.** Bob reads the audit PDF ([`audit/earshot-audit.pdf`](audit/earshot-audit.pdf)) and writes [`findings.md`](findings.md). Each line holds the WCAG criterion, a key script such as `Enter, Tab`, and the exact announcement expected, such as "Sign In, dialog".
 2. **`/hear F-01`.** Bob switches to the `earshot` custom mode, which may only edit `galaxium/booking_system_frontend/src/`. It states the expected announcement, makes a minimal fix, then calls the MCP tool `listen(key_script)`.
-3. **`listen()`** drives Chrome with real keystrokes while NVDA runs. It returns only what NVDA said, plus where keyboard focus landed after each key. If the expected phrase is missing, Bob has to try again. After a second failure it replies NEEDS HUMAN.
+3. **`listen()`** drives Chrome with real keystrokes (Tab, Enter, Shift+Tab, Escape, and typed text such as `Type "Mars"`) while NVDA runs. It returns only what NVDA said, plus where keyboard focus landed after each key. If the expected phrase is missing, Bob has to try again. After a second failure it replies NEEDS HUMAN.
 4. **Gate.** Every verified finding becomes a test in `hear-tests.json`. `.githooks/pre-commit` replays the tests with NVDA whenever frontend files are staged, and prints `BLOCKED by Earshot: this change breaks what a screen reader hears.` when an expected phrase is missing.
 5. **`/sweep <page>`.** Bob switches to the `earshot-sweep` mode, which can only write `sweep/*.md`. It Tabs through the page 25 times, flags suspicious stops and asks for one explore subagent per item, in parallel, to find the responsible file and line. A human accepts or rejects each proposal.
 
@@ -59,9 +62,11 @@ Every transcript is extracted verbatim from NVDA's own log. The `.wav` next to i
 | F-05 | No skip link (2.4.1); found by `/sweep` | first Tab → "Pause animation, button" | first Tab → "Skip to main content, same page, link"; Enter → "main landmark"; next Tab → "Search flights, edit" | [before](evidence/F-05/before_probe_listen.txt) · [after](evidence/F-05/after_bob_listen.txt) · [skip link moves focus](evidence/F-05/after_skip_focus_listen.txt) |
 | F-06 | Search field named only by its placeholder (1.3.1, 4.1.2, 3.3.2); found by `/sweep` | "Search by origin or destination..., edit" | "Search flights, edit" | [before](evidence/F-06/before_bob_sweep_listen.txt) · [after](evidence/F-06/after_bob_listen.txt) |
 | N-01 | Starfield animation cannot be paused (2.2.2) | no control | "Pause animation, button"; a human confirmed by eye that the motion stops | [ear check](evidence/N-01/ear_check_bob_listen.txt) |
-| N-02 | Result count not announced (4.1.3) | NEEDS HUMAN: `listen()` cannot type yet | open | [findings.md](findings.md) |
+| F-07 | A button nested inside a link: two Tab stops for one control, 3 places on / (4.1.2, 2.4.3); found by `/sweep` | "Book a Flight, button, link" twice in a row | "Book a Flight, link" once | [sweep](sweep/home.md) · [before](evidence/F-07/before_bob_sweep_listen.txt) · [rejected attempt](evidence/F-07/attempt1_rejected_bob_listen.txt) · [after](evidence/F-07/after_bob_listen.txt) |
+| F-08 | Footer GitHub icon link has no name (2.4.4, 1.1.1); found by `/sweep`; axe flags it too | "github.com, link" | "GitHub, link" | [before](evidence/F-08/before_bob_listen.txt) · [after](evidence/F-08/after_bob_listen.txt) |
+| N-02 | Result count not announced while typing (4.1.3) | typed "M, a, r, s", then silence | "Showing 5 flights", then "Showing 4 flights", while typing | [before](evidence/N-02/before_typing_listen.txt) · [after](evidence/N-02/after_bob_listen.txt) |
 | Gate | Bob's "tidy-up" of `Modal.tsx` | F-01, F-02 and F-03 all failed: silence, then "Moon, link, heading, level 3" | commit refused, nothing committed | [README](evidence/gate/README.md) · [Bob's diff](evidence/gate/bob_refactor_blocked.diff) |
-| Sweep | Two `/sweep` runs on /flights | 10 proposals | human accepted 3 (F-04, F-05, F-06) and rejected 6; 1 was a duplicate | [run 1](sweep/flights.md) · [run 2](sweep/flights-run2.md) · [triage](sweep/flights.triage.md) |
+| Sweep | Three `/sweep` runs: two on /flights, one on / | 14 proposals | human accepted 3 on /flights (F-04, F-05, F-06; 6 rejected, 1 duplicate) and all 4 on / as 2 findings (F-07 with 3 instances, F-08) | [run 1](sweep/flights.md) · [run 2](sweep/flights-run2.md) · [/flights triage](sweep/flights.triage.md) · [/ run](sweep/home.md) · [/ triage](sweep/home.triage.md) |
 
 ## Setup (Windows only)
 
@@ -97,7 +102,7 @@ In Bob, open `findings.md` and type `/hear F-01`, or type `/sweep /flights`.
 | Path | What it is |
 |---|---|
 | `audit/earshot-audit.pdf` | The input audit EAR-2026-09-001 (self-authored for the demo, not a compliance statement) |
-| `findings.md` | Findings in one-line form (written by Bob from the PDF; F-04..F-06 added after triage) |
+| `findings.md` | Findings in one-line form (written by Bob from the PDF; F-04..F-08 added after triage) |
 | `.bob/custom_modes.yaml` | Custom modes `earshot` (fixes; edits only the frontend src) and `earshot-sweep` (discovery; edits only `sweep/*.md`, subagents allowed) |
 | `.bob/commands/hear.md`, `sweep.md` | `/hear` and `/sweep` slash commands. `.bob/skills/` holds the skills Bob generated from them |
 | `earshot_mcp/server.py` | MCP server with `listen(key_script, start, gap, path)` and `listen_result(label)` |
@@ -114,22 +119,24 @@ In Bob, open `findings.md` and type `/hear F-01`, or type `/sweep /flights`.
 
 - **Windows and NVDA only.** JAWS, VoiceOver and TalkBack are not covered yet.
 - **Takes over the desktop.** `listen()` needs Chrome in the foreground and aborts if the foreground window changes. It runs one take at a time, and each test takes 30–60 s. Run it on a dedicated machine or VM, not on the machine you are typing on.
-- **Typing is not supported yet.** `listen()` sends navigation keys only, so N-02 (the result count is not announced while typing) stays NEEDS HUMAN.
-- **Some things need a person.** Whether the animation actually stopped (N-01) and whether a proposal is really a failure (7 of 10 sweep proposals were rejected or duplicates) are human calls.
+- **Typing is basic.** `listen()` can type plain text (letters, digits, spaces, `.`, `-`, `'`), but not special keys such as arrows or Backspace.
+- **Tab counts are brittle.** Tests address controls by their Tab position from the top of the page, so a change that adds or removes a Tab stop (as F-05 and F-07 did) can shift other tests. The gate then fails loudly, and a person updates the count.
+- **Some things need a person.** Whether the animation actually stopped (N-01) and whether a proposal is really a failure (7 of 14 sweep proposals were rejected or duplicates) are human calls.
 - **Not a compliance tool.** Passing Earshot does not make an app WCAG-conformant. It proves only that specific announcements happen on specific key paths.
 - **Prior art.** axe-core and Deque's axe MCP server check rules in the DOM. Guidepup automates real screen readers for tests that humans write. Earshot puts a real screen reader inside the AI agent's fix loop and inside the commit gate.
 
 ## How it was built
 
-- **Built by IBM Bob during the event.** Every task's consumption summary is screenshotted in `bob_sessions/` (`pytr_taskNN_*`). The hackathon-provisioned account (`ibm-coding-challenge-uat`) was never received, so all tasks ran on an IBM Bob **trial account** (50 Bobcoins; about 15 used). Main pieces:
+- **Built by IBM Bob during the event.** Every task's consumption summary is screenshotted in `bob_sessions/` (`pytr_taskNN_*`). The hackathon-provisioned account (`ibm-coding-challenge-uat`) was never received, so all tasks ran on an IBM Bob **trial account** (50 Bobcoins; about 18 used). Main pieces:
   - `findings.md` from the PDF (task01)
   - the MCP server, the `earshot` mode and `/hear` (task02, 02b–02i)
-  - all UI fixes: F-01 task03 attempt 7, F-02 task05, F-03 task06, N-01 task07, F-04 task15, F-05 task16, F-06 task17
-  - the report page (task04, 09)
-  - the gate (task10, task18)
+  - all UI fixes: F-01 task03 attempt 7, F-02 task05, F-03 task06, N-01 task07, F-04 task15, F-05 task16 and task21, F-06 task17, F-07 task24 and task25, F-08 task26, N-02 task27
+  - the report page (task04, 09, 20)
+  - the gate (task10, task18, task19)
+  - typing in `listen()` (task23)
   - `/sweep` and the `earshot-sweep` mode (task12, 12b, 13c)
   - page-aware `/hear` (task14)
-  - both sweeps (task13a–13d)
+  - the sweeps (task13a–13d on /flights, task22 on /)
 - **Prepared before kickoff and disclosed:**
   - the NVDA driver (`driver.py`), the transcript extractor (`extract.py`), the audio capture tool (`proccap/`) and the F-01 transcript fixtures.
   - Before kickoff we also spiked focus-trap and label fixes on a local Galaxium branch to prove the approach. Those spikes were not shipped: every fix in this repo was written by Bob during the event.
@@ -139,6 +146,7 @@ In Bob, open `findings.md` and type `/hear F-01`, or type `/sweep /flights`.
   - the draft of the self-authored audit PDF
   - the benchmark scripts (`bench/`)
   - driver fixes during the event (watchdog, focus labels, `--path` / `--start`)
+  - review of every Bob diff, a headless visual check (it caught F-07's full-width button, which Bob then fixed in task25), gate-test updates and the evidence files
   - these write-ups
 - **The human** triaged every sweep proposal, approved every change, made the visual check for N-01, and committed Bob's verified fixes (Bob verified each fix by ear; from F-04 on, the commits also had to pass the Earshot gate).
 

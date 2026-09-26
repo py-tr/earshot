@@ -18,8 +18,8 @@
     </header>
 
     <div class="banner" role="note" aria-label="Summary">
-      <p>Automated checks flagged ½ of 1 of 6 findings. Earshot verified 6 of 6 with a real screen reader (NVDA).</p>
-      <p>3 were discovered by Bob's own sweep · 3 of Bob's own fixes were rejected by ear · every commit is gated by 6 screen-reader tests. <a href="https://github.com/py-tr/earshot/blob/main/bench/RESULTS.md">How we measured</a></p>
+      <p>Automated checks flagged 1½ of 9 findings. Earshot verified 9 of 9 with a real screen reader (NVDA); 7 of the 9 were caught only by ear.</p>
+      <p>5 were discovered by Bob's own sweep on two pages · 4 of Bob's own fixes were rejected by ear · every commit is gated by 9 screen-reader tests. <a href="https://github.com/py-tr/earshot/blob/main/bench/RESULTS.md">How we measured</a></p>
     </div>
 
     <main>
@@ -30,8 +30,9 @@
 
       <section aria-labelledby="sweep-heading">
         <h2 id="sweep-heading">Discovery: /sweep</h2>
-        <p>Bob tabbed through /flights by ear (25 Tabs from the top, real NVDA), then five explore subagents checked suspects in parallel and produced 10 proposals across two runs.</p>
+        <p>Bob tabbed through /flights by ear (25 Tabs from the top, real NVDA), then five explore subagents checked suspects in parallel and produced 10 proposals across two runs. A third run on the Home page (/) produced 4 more, with four subagents in parallel.</p>
         <p>Of those 10, the human accepted 3 (→ F-04, F-05, F-06), rejected 6, and marked 1 duplicate: <em>S-02/S-03 (run 1)</em> — same name, same target, allowed by WCAG 2.4.4; <em>S-04 (run 1)</em> — link inside h3 is valid, NVDA's announcement is standard; <em>S-01 (run 2)</em> — NVDA's "clickable" prefix comes from an ancestor click handler, not a WCAG failure; <em>S-03/S-04 (run 2)</em> — same reasons as run 1; <em>S-05 (run 2)</em> — duplicate of F-04.</p>
+        <p>On the Home page the human accepted all 4 as two findings: three buttons nested inside links, each heard twice in a row (one root cause, → F-07), and an icon-only GitHub link read as its web address (→ F-08; axe-core flags this one too).</p>
       </section>
 
       <section aria-labelledby="gate-heading">
@@ -53,7 +54,7 @@ PASS F-05
 PASS F-06
 BLOCKED by Earshot: this change breaks what a screen reader hears.</code></pre>
 <p class="note">Verbatim terminal output (trimmed where marked with ...); the full transcripts are in <code>evidence/gate/</code>. Without the focus handling, focus never entered the dialog, so all three dialog tests heard the page behind it.</p>
-<p class="note">Checking the same 6 announcements by hand with NVDA took a person 60 seconds at full speed, on every commit. The gate needs no attention: it runs unattended in about 4 min 40 s.</p>
+<p class="note">Checking the first 6 announcements by hand with NVDA took a person 60 seconds at full speed, on every commit. The gate needs no attention: all 9 tests run unattended in about 6½ minutes.</p>
       </section>
     </main>
 
