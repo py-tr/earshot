@@ -1,0 +1,58 @@
+[
+ {
+  "state": "dashboard",
+  "rule": "color-contrast",
+  "impact": "serious",
+  "help": "Elements must meet minimum color contrast ratio thresholds",
+  "targets": [
+   ".nav-item.me-2:nth-child(2) > .router-link-exact-active[aria-current=\"page\"][href$=\"dashboard\"]",
+   "a[href$=\"add\"]",
+   ".item[href$=\"dashboard/1\"] > .row[data-v-4d413681=\"\"] > .small-padding.col-9.gap-2 > .me-1[data-v-4d413681=\"\"] > .bg-primary.rounded-pill[title=\"24 hours\"]",
+   ".item[href$=\"dashboard/2\"] > .row[data-v-4d413681=\"\"] > .small-padding.col-9.gap-2 > .me-1[data-v-4d413681=\"\"] > .bg-primary.rounded-pill[title=\"24 hours\"]",
+   "tr:nth-child(1) > td:nth-child(2) > .bg-primary.rounded-pill[data-v-e1d419d8=\"\"]",
+   "tr:nth-child(2) > td:nth-child(2) > .bg-primary.rounded-pill[data-v-e1d419d8=\"\"]"
+  ]
+ },
+ {
+  "state": "dashboard",
+  "rule": "heading-order",
+  "impact": "moderate",
+  "help": "Heading levels should only increase by one",
+  "targets": [
+   ".col[data-v-0326f590=\"\"]:nth-child(1) > h3"
+  ]
+ },
+ {
+  "state": "monitor Details page",
+  "rule": "color-contrast",
+  "impact": "serious",
+  "help": "Elements must meet minimum color contrast ratio thresholds",
+  "targets": [
+   ".nav-link.active[href$=\"dashboard\"]",
+   "a[href$=\"add\"]",
+   ".router-link-exact-active > .row[data-v-4d413681=\"\"] > .small-padding.col-9.gap-2 > .me-1[data-v-4d413681=\"\"] > .bg-primary.rounded-pill[title=\"24 hours\"]",
+   "a[href$=\"dashboard/2\"] > .row[data-v-4d413681=\"\"] > .small-padding.col-9.gap-2 > .me-1[data-v-4d413681=\"\"] > .bg-primary.rounded-pill[title=\"24 hours\"]",
+   "a[href$=\"localhost:5173\"]",
+   ".text-danger",
+   ".word.justify-content-between[data-v-b198a205=\"\"] > div[data-v-b198a205=\"\"]:nth-child(1)",
+   ".word.justify-content-between[data-v-b198a205=\"\"] > div[data-v-b198a205=\"\"]:nth-child(2)",
+   ".col-md-8 > .word",
+   "span[data-testid=\"monitor-status\"]",
+   ".col-sm.d-sm-block.col:nth-child(1) > .mb-0.mb-sm-2",
+   ".col-sm.d-sm-block.col:nth-child(2) > .mb-0.mb-sm-2",
+   ".col-sm.d-sm-block.col:nth-child(3) > .mb-0.mb-sm-2",
+   ".col-sm.d-sm-block.col:nth-child(4) > .mb-0.mb-sm-2",
+   ".col-sm.d-sm-block.col:nth-child(5) > .mb-0.mb-sm-2",
+   "td:nth-child(1) > .bg-primary.rounded-pill[data-v-e1d419d8=\"\"]"
+  ]
+ },
+ {
+  "state": "monitor Details page",
+  "rule": "heading-order",
+  "impact": "moderate",
+  "help": "Heading levels should only increase by one",
+  "targets": [
+   ".col-sm.d-sm-block.col:nth-child(1) > h4"
+  ]
+ }
+]
