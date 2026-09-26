@@ -2,51 +2,28 @@
 
 ![13 of 13 verified by NVDA](https://img.shields.io/badge/verified%20by%20NVDA-13%20of%2013-2ea44f) ![2.5 of 13 flagged by lint and axe](https://img.shields.io/badge/flagged%20by%20lint%20%2B%20axe-2.5%20of%2013-orange) ![gate refused a prompted regression twice](https://img.shields.io/badge/gate-refused%20a%20prompted%20regression%202%C3%97-blue) ![CI: replay + 72 unit tests](https://img.shields.io/badge/CI-replay%20%2B%2072%20unit%20tests-lightgrey)
 
-IBM Bob fixes the UI, a real screen reader (NVDA, not a simulation) checks every fix by ear, and a two-layer gate (a git hook, plus a hook inside Bob) refuses changes that break what a blind user hears on the paths its tests drive.
-Tested on two real apps: IBM's own Galaxium Travels sample app, and TodoMVC's React example as a second app Earshot had never seen. Nothing was planted: the bugs are theirs; the audit document is ours.
+Blind people use websites by listening to a screen reader. More and more UI code is written by AI coding agents, and those agents can't hear what they build: a fix can pass every automated check while the screen reader says nothing at all.
 
-**Report page:** https://py-tr.github.io/earshot/ · **Video (3 min):** [VIDEO URL]
+**Earshot gives IBM Bob ears.** Bob fixes an accessibility bug, then runs a real screen reader (NVDA, not a simulation) through the page with my MCP tool `listen()`. The fix counts only when NVDA says the right thing. Every verified fix becomes a test, and a gate (a git hook, plus a hook inside Bob) replays those tests before UI commits, so a later change can't quietly break what a blind user hears.
+
+I tried it on two real apps I didn't write: IBM's own Galaxium Travels sample app, and the TodoMVC React example as a second app Earshot had never seen. Nothing was planted: the bugs are theirs (the audit document that lists the first five is mine).
 
 **One real bug, start to finish (F-01 of 13):**
 
 ![Blind people "read" websites by ear, with a screen reader (NVDA). The problem: apps often break for screen readers. For example, BEFORE: pressing Enter opens a Sign In window, and the screen reader says nothing. IBM Bob fixes the code, then checks it by ear with Earshot, the screen-reader testing tool I built. AFTER: the same key makes NVDA say "Sign In, dialog". 13 different accessibility bugs, all fixed by Bob in two real web apps, each verified by ear with Earshot; automated checkers (lint and axe) flagged only 2½.](report/f01_before_after.gif)
 
-*Captions show what NVDA said; the [report page](https://py-tr.github.io/earshot/) has the audio and waveforms.*
+*Captions show what NVDA said; the [report page](https://py-tr.github.io/earshot/) has the real audio and waveforms.*
 
-**The key idea:** the AI agent's test oracle is what a real screen reader says. Bob's fix counts only when NVDA is heard saying the right thing, and every commit replays those checks.
+## Results at a glance
 
-**In three lines:** IBM Bob fixes accessibility bugs in real web apps and must hear each fix through a real screen reader before it counts. On two apps, 13 of 13 findings were fixed and verified by ear, while strict lint and axe-core flagged 2½ of them. A gate replays the affected checks on UI commits, locally and inside Bob; CI replays the stored transcripts on every push.
+- **13 of 13** accessibility bugs fixed by Bob and verified by ear, on two apps.
+- **2½ of 13** flagged by automated checkers (strict React lint: 0; axe-core: 2½). 10 of the 13 were caught only by ear.
+- **4 of Bob's own fixes were rejected by ear**, because NVDA still didn't say the right thing. Bob tried again until it did.
+- **2 prompted regressions refused at commit.** I asked Bob to delete the dialog's focus code as a "tidy-up". The git hook refused the commit, and the Bob hook refused it again even with `--no-verify`. (The gate also once refused one of Bob's own over-strict tests, in task34; that was a bad test, not a regression.)
 
-## For reviewers: where to check each claim
+**Report page (with audio):** https://py-tr.github.io/earshot/ · **Video (3 min):** [VIDEO URL] · **Judges:** [where to check each claim](#for-judges-where-to-check-each-claim)
 
-| Judging criterion | Claim | Check it here |
-|---|---|---|
-| Application of Technology: "complete and well thought-out, with a clear application of IBM Bob 2.0" | Bob's own surfaces do the work, from custom modes and an MCP tool to parallel subagents, subtasks, lifecycle hooks and headless Bob Shell: Bob fixes UI, verifies each fix with a real screen reader, rejects its own wrong fixes, discovers bugs, writes its own tests, and is refused by the gate it built (after we fixed the hook's input handling) | [Bob features used](#ibm-bob-20-features-used-and-where-to-see-each-one) · [How it was built](#how-it-was-built) · `bob_sessions/` (one screenshot per task) · [`.bob/custom_modes.yaml`](.bob/custom_modes.yaml) · [`earshot_mcp/server.py`](earshot_mcp/server.py) |
-| Business Value: "how effectively the solution addresses a high priority issue" | 13 of 13 findings fixed and verified by ear on two real apps; strict lint flagged 0 of 13 and axe-core 2½ of 13 | [bench/RESULTS.md](bench/RESULTS.md) · [Why it matters](#why-it-matters) |
-| Originality: "the approach in applying IBM Bob 2.0" | The agent's test oracle is what a blind user hears: Bob must hear its fix before it counts, and every commit replays the screen-reader tests | [What a markup check cannot hear](#what-a-markup-check-cannot-hear) · [How it works](#how-it-works-60-seconds) · [evidence/gate/](evidence/gate/README.md) |
-| Presentation: "clarity and effectiveness" | Every claim links to a verbatim NVDA transcript and the NVDA audio; `hear_tests.py --replay` checks every test against them on any OS | [Evidence](#evidence) · [report page](https://py-tr.github.io/earshot/) |
-
-## IBM Bob 2.0 features used, and where to see each one
-
-| Bob feature | How Earshot uses it | Proof |
-|---|---|---|
-| **Agent mode** | Bob built the MCP server, the gate, the report, typing in `listen()` and the hooks | [`bob_sessions/INDEX.md`](bob_sessions/INDEX.md) (tasks 02, 10, 19, 23, 29) |
-| **Custom modes** with `fileRegex` fences | `earshot` fixes (may edit only app source and `hear-tests.json`), `earshot-sweep` discovers (writes only `sweep/`), `earshot-run` runs the whole loop | [`.bob/custom_modes.yaml`](.bob/custom_modes.yaml) |
-| **Rules** per mode | Each mode's rules live in `.bob/rules-<mode>/` (Bob's documented best practice; we moved Bob's instructions there); Bob Shell confirmed it loads them | [`.bob/rules-earshot/`](.bob/rules-earshot/) |
-| **Slash commands and skills** | `/hear <finding>`, `/sweep <page>`, `/earshot <page>`; Bob wrote the `nvda-expectations` skill from our transcripts and WCAG pages | [`.bob/commands/`](.bob/commands/) · [`.bob/skills/nvda-expectations/`](.bob/skills/nvda-expectations/SKILL.md) |
-| **MCP server** (our own) | `listen()` drives Chrome with real NVDA and returns what NVDA said; `listen_result()` collects long takes | [`earshot_mcp/server.py`](earshot_mcp/server.py) |
-| **Parallel subagents** | Each sweep spawns one explore subagent per suspicious Tab stop, in parallel, to find the file and line | [`bob_sessions/`](bob_sessions/INDEX.md) (tasks 13a, 13d, 22, 38) · [headless run](bob_sessions/shell/INDEX.md) |
-| **Managing multiple steps**: todo list, human question, subtasks | `/earshot` keeps a visible todo list, asks the human to triage (`ask_followup_question`) and fixes each accepted finding in a `/hear` subtask (`start_subtask`) | tasks 36b and 38; [`.bob/rules-earshot-run/`](.bob/rules-earshot-run/01-whole-loop.md) |
-| **Document understanding** | Bob read the audit PDF into `findings.md`; Bob read WCAG Understanding pages through `@https://` mentions to write the skill | task 01 · task 41 |
-| **Lifecycle hooks** | `PreToolUse` replays the screen-reader tests before any `git commit` Bob runs (it blocked `--no-verify`); `SessionStart` checks that NVDA and the apps are up | [`.bob/settings.json`](.bob/settings.json) · [evidence/gate/](evidence/gate/README.md) |
-| **`.bobignore`** (set up by us) | Keeps Bob out of recordings, dependencies and build output | [`.bobignore`](.bobignore) |
-| **Bob Shell** (headless, cost-capped) | `bob run --mode earshot-sweep --max-cost 1.5 …` sweeps a page by ear from the terminal; Bob Shell also wrote the skill, 72 unit tests, the affected-tests gate and the diagram | [`bob_sessions/shell/INDEX.md`](bob_sessions/shell/INDEX.md) |
-
-Machine-readable: [`evidence/index.json`](evidence/index.json) links every finding to its NVDA transcripts, audio, fix commit, gate test and Bob tasks; [`bob_sessions/INDEX.md`](bob_sessions/INDEX.md) lists every Bob task with its mode, cost and screenshot.
-
-The three numbers: **13 of 13 fixed and verified by ear · 2½ of 13 flagged by lint and axe · 4 of Bob's fixes rejected by ear, and 2 prompted regressions refused at commit (we asked Bob to delete the dialog's focus code as a "tidy-up"; the git hook refused it, and the Bob hook refused it again despite `--no-verify`).** (The gate also refused one of Bob's own over-strict tests in task34; that was a bad test, not a regression.)
-
-## Check it yourself (any OS, one minute, no screen reader; CI runs this on Linux)
+## Try it in one minute (no screen reader needed)
 
 ```
 git clone https://github.com/py-tr/earshot && cd earshot
@@ -55,59 +32,9 @@ python earshot_mcp/hear_tests.py --replay
 python -m unittest discover -s earshot_mcp/tests
 ```
 
-The first command replays every gate test against the NVDA transcripts stored in `evidence/`. Each test must **pass on the fixed transcript and fail on every broken one** (the original bug and Bob's rejected fixes), so you can see that each test tells broken from fixed. Expected output: 13 lines of `PASS`, in under a second. The second runs 72 unit tests of the key parser, the pass/fail logic, the affected-tests selection, `hear-tests.json` and the Bob hook (written by Bob in Bob Shell, tasks 42 and 43). The live run with real NVDA needs Windows (see [Setup](#setup-for-live-listening-windows-only-because-nvda-runs-only-on-windows)).
+The first command replays every gate test against the real NVDA transcripts saved in `evidence/`. Each test has to **pass on the fixed transcript and fail on every broken one** (the original bug and Bob's rejected fixes), which shows that each test can tell broken from fixed. You should see 13 `PASS` lines in under a second. The second command runs 72 unit tests of the key parser, the pass/fail logic, the affected-tests selection, `hear-tests.json` and the Bob hook (Bob wrote them in Bob Shell, tasks 42 and 43). Both run on any OS, and CI runs them on Linux on every push. Listening live with NVDA needs Windows (see [Setup](#setup-for-live-listening-windows-only-because-nvda-runs-only-on-windows)).
 
-## Result
-
-| | Strict React lint (eslint-plugin-jsx-a11y 6.10.2) | axe-core 4.13.0 | Earshot (NVDA 2026.2 via `listen()`) |
-|---|---|---|---|
-| Audit findings F-01..F-03 | 0 of 3 | half of 1 (the dialog name only) | **3 of 3 heard, fixed and re-heard** |
-| Sweep findings F-04..F-08 (discovered by Bob on /flights and /) | 0 of 5 | 1 of 5 (F-08, the unnamed link) | **5 of 5 heard, fixed and re-heard** |
-| Audit finding N-02 (needs typing) | 0 of 1 | 0 of 1 | **1 of 1 heard, fixed and re-heard** |
-| F-09: a regression our own F-01 fix introduced (found by typing) | 0 of 1 | 0 of 1 | **1 of 1 heard, fixed and re-heard** |
-| F-10: two identical "Book" links (found by the one-command `/earshot` run on /destinations/mars) | 0 of 1 | 0 of 1 (not even axe's AAA and experimental rules) | **1 of 1 heard, fixed and re-heard** |
-| TodoMVC (second app): F-11 unnamed todo checkboxes (found by `/earshot`), F-12 Delete buttons unreachable by keyboard (heard by a human in the sweep transcript) | 0 of 2 | 1 of 2 (F-11, `label`) | **2 of 2 heard, fixed and re-heard** |
-| **All thirteen** | **0 of 13** | **2½ of 13** | **13 of 13** |
-
-**Earshot fixed and verified 13 of 13 on two apps; 10 of the 13 were caught only by ear.** Four counted findings came from our own audit document (F-01..F-03, N-02; the audit's fifth, N-01, is an animation pause that needs a human eye, so it is fixed but not counted), seven were found by Bob's sweeps (F-04..F-08, F-10 on Galaxium, F-11 on TodoMVC), one (F-09) is a regression our own F-01 fix introduced, found by ear, and one (F-12) was heard by a human reading the sweep transcript: Tab never reached a Delete button. For F-04..F-08, a human accepted the expected announcement in triage before Bob fixed against it. For F-10, Bob first wrote its own expected phrase as a pattern and marked a label ending in a bare flight id as verified; a human rewrote the expectation, and the final fix and its test were checked against that. The expected announcement is only as good as the person who accepts it. N-02 is a fair row but not a contest: no static checker has a rule for a missing status message, which is exactly the gap Earshot fills.
-
-- **The fix that passed axe was still silent.** Bob's first F-01 fix only added a dialog name. axe reported no dialog violation, yet in NVDA Enter was followed by silence, and Tab then read "Moon, link, heading, level 3" from the page behind the dialog. Earshot rejected that fix. ([bench/RESULTS.md](bench/RESULTS.md))
-- **Our own verified fix had broken typing, and the ear caught it.** Bob's F-01 fix moved focus into the Sign In dialog correctly, but its effect re-ran on every render, so after one typed letter focus jumped out of the Name field. None of the 9 tests typed inside the dialog, so the gate could not see it. The first time `listen()` typed there, NVDA heard "N" and then the dialog again. Bob fixed it (F-09), wrote the regression test itself, and committed through the gate. ([evidence/F-09](evidence/F-09/))
-- **13 of 13 findings resolved and verified by NVDA, on two apps.** Four came from the audit PDF; seven were discovered by Bob's sweeps (six on Galaxium, one on TodoMVC); F-09 is our own regression; F-12 was heard by a human. On TodoMVC, one `/earshot` command swept, triaged with the human inside Bob, fixed, verified and wrote the test, on an app Earshot had never seen.
-- **It runs headless, from the terminal.** `bob run --mode earshot-sweep --max-cost 1.5 "Sweep /destinations/earth. This is an unattended run: …"` (Bob Shell, no IDE) swept a page by ear with two parallel subagents, wrote its proposals and stopped at a cost cap: 0.31 Bobcoins, 2 minutes. On that already-fixed page it proposed 1 item and a human rejected it: it invented nothing. That is the shape of a nightly job on a listening machine: Bob proposes, a human triages in the IDE. ([triage](sweep/destinations-earth.triage.md))
-- **The gate works.** [`hear-tests.json`](hear-tests.json) holds 13 tests on two apps, and a full run passes 13 of 13 in about 9 minutes ([timing](evidence/gate/gate_13_tests_timing.txt)). Asked to delete the dialog's focus code as a "tidy-up", Bob complied, and the gate refused the commit. NVDA heard silence, so the commit was blocked. ([evidence/gate/](evidence/gate/README.md))
-- **Even `--no-verify` does not get past it, after one fix.** Asked to skip the slow hook, Bob ran `git commit --no-verify`; the Bob lifecycle hook replayed the tests, NVDA heard the dialog go silent, and the command was blocked before git ran (task30c). The first try (task30b) got through, because our hook read the input fields named in IBM's docs, not the ones Bob sends; that commit was undone at once. A later check found a second gap: when Bob stages and commits in one command (`git add X; git commit`), nothing is staged yet when the hook fires, so Bob's own fix commits were gated by the git hook alone. The hook now checks the working tree too. ([evidence/gate/](evidence/gate/README.md))
-- **The fence is an instruction, the gate is the enforcement.** In task30a, asked in Agent mode to edit IBM's code, Bob refused, citing `AGENTS.md` (galaxium code is edited only in the Earshot mode). But in task11, also in Agent mode, it did edit `Modal.tsx` when asked. What stopped that change was the gate, not the rule.
-- **It costs no human attention per commit.** Checking the first 6 announcements by hand with NVDA took a person 60 seconds at full speed and full concentration, and that has to be repeated on every commit. The gate needs 0 minutes of attention (about 9 minutes unattended for all 13), and it has already caught a regression that looked like a harmless tidy-up.
-- **A human check made the tests stricter.** During a manual NVDA check, the skip link (F-05) was announced but pressing it left focus on the page body, so NVDA said nothing. Bob made `<main>` focusable and verified by ear that Enter now says "main landmark" and the next Tab reaches "Search flights, edit". The F-05 test now checks `Tab, Enter, Tab` instead of just `Tab`.
-- **4 of Bob's own fixes were rejected by ear before the right one landed:** F-01 (name only), F-02 (no focus trap: Tab escaped to "github.com, link"), F-04 (the `Button` component dropped the label) and F-07 (`tabIndex=-1` on the nested button: NVDA still said "button, link").
-
-Earshot does not replace axe-core. axe also found 22 colour-contrast failures that no screen reader would report. Earshot catches what only the ear catches.
-
-## What a markup check cannot hear
-
-Rule scanners read the markup. Unit and end-to-end tests check what their author thought to assert. Both can pass while a blind user hears nothing, because neither listens to the speech output. Five cases from this repo:
-
-- **F-01, a correct-looking fix that is silent.** Bob's first fix gave the dialog a proper accessible name. axe-core reported no violation, and a test asserting the dialog's role and name would pass. In NVDA, Enter was followed by silence, because focus never moved into the dialog.
-- **N-02, a correct page that says nothing.** The result count is right in the DOM and on screen, so no rule fires. In NVDA, typing in the search box produced only the typed letters, because nothing announced the change.
-- **F-07, correct elements that read twice.** Every element had a valid name and role; one link wrapped one button. axe-core on the Home page reported only an unnamed link and a region issue. NVDA read each of the three controls twice, on two Tab stops.
-- **F-09, a verified fix that broke typing.** Our own F-01 fix, guarded by 9 passing screen-reader tests, made focus leave the Name field after one typed letter. No test typed there, so nothing failed. The first take that typed inside the dialog heard it at once.
-
-- **F-12, a button that only a mouse can reach.** TodoMVC hides each Delete button with `display: none` until the pointer hovers over the item. axe-core skips hidden elements, so it reports nothing. In NVDA, Tab goes from the last checkbox straight to "All, link": a keyboard user can never delete a todo.
-
-What Earshot adds is not more rules but a different oracle: the speech a blind user actually gets. Where rules do find problems (22 contrast failures, F-08's unnamed link), use them too.
-
-## Why it matters
-
-- In WebAIM's February 2026 scan of the top million home pages, **95.9% had detectable WCAG 2 failures**; **missing form labels appeared on 51%** of them. ([WebAIM Million 2026](https://webaim.org/projects/million/))
-- **3,117 website-accessibility lawsuits** were filed in US federal court alone in 2025, up 27% (Seyfarth Shaw). The **European Accessibility Act** has applied since 28 June 2025 to e-commerce, banking and passenger-transport sites (Directive (EU) 2019/882).
-- **NVDA is the most commonly used desktop screen reader** (65.6% of respondents, WebAIM Screen Reader Survey #10), which is why Earshot listens with it.
-- More and more UI code is written by AI assistants, and a fix can pass automated checks while a blind user still hears nothing (see F-01 below).
-
-- **What it costs.** The whole build used about 32 Bobcoins (about $16). The median Bob cost per verified fix, failed attempts included, was about 0.7 Bobcoins (about $0.35); the most expensive was F-10 at about 4.7 Bobcoins, including a failed first `/earshot` run in the wrong mode and the sweep itself ([`bob_sessions/INDEX.md`](bob_sessions/INDEX.md)). Checking the same announcements by hand took a person 60 seconds of full attention per commit for just 6 checks.
-- **How a team adopts it.** On an app Earshot had never seen (TodoMVC), one `/earshot <page>` command and one triage answer produced a verified fix and its gate test. CI runs the replay and 72 unit tests on every push ([`.github/workflows/check.yml`](.github/workflows/check.yml)); the full listening gate can run on a self-hosted Windows runner ([template](docs/ci/README.md)).
-
-## How it works (60 seconds)
+## How it works
 
 ```mermaid
 flowchart TD
@@ -130,6 +57,80 @@ flowchart TD
 4. **Gate, in two layers.** Every verified finding becomes a test in `hear-tests.json`. `.githooks/pre-commit` replays the tests with NVDA whenever frontend files are staged, and prints `BLOCKED by Earshot: this change breaks what a screen reader hears.` when an expected phrase is missing. Because `git commit --no-verify` skips git hooks, a Bob lifecycle hook (`.bob/settings.json`, `PreToolUse` on `execute_command` → `earshot_mcp/bob_hook.py`) replays the same tests before any `git commit` Bob runs and blocks it with exit code 2. When it passes, it records the staged tree, so the git hook does not listen twice.
 5. **`/sweep <page>`.** Bob switches to the `earshot-sweep` mode, which can only write `sweep/*.md`. It Tabs through the page 25 times, flags suspicious stops and asks for one explore subagent per item, in parallel, to find the responsible file and line. A human accepts or rejects each proposal.
 
+## Why automated checkers miss these
+
+Rule scanners read the markup. Unit and end-to-end tests check what their author thought to assert. Both can pass while a blind user hears nothing, because neither listens to the speech output. Five cases from this repo:
+
+- **F-01, a correct-looking fix that is silent.** Bob's first fix gave the dialog a proper accessible name. axe-core reported no violation, and a test asserting the dialog's role and name would pass. In NVDA, Enter was followed by silence, because focus never moved into the dialog.
+- **N-02, a correct page that says nothing.** The result count is right in the DOM and on screen, so no rule fires. In NVDA, typing in the search box produced only the typed letters, because nothing announced the change.
+- **F-07, correct elements that read twice.** Every element had a valid name and role; one link wrapped one button. axe-core on the Home page reported only an unnamed link and a region issue. NVDA read each of the three controls twice, on two Tab stops.
+- **F-09, a verified fix that broke typing.** Bob's own F-01 fix, guarded by 9 passing screen-reader tests, made focus leave the Name field after one typed letter. No test typed there, so nothing failed. The first take that typed inside the dialog heard it at once.
+- **F-12, a button that only a mouse can reach.** TodoMVC hides each Delete button with `display: none` until the pointer hovers over the item. axe-core skips hidden elements, so it reports nothing. In NVDA, Tab goes from the last checkbox straight to "All, link": a keyboard user can never delete a todo.
+
+What Earshot adds is not more rules but a different oracle: the speech a blind user actually gets. Where rules do find problems (22 contrast failures, F-08's unnamed link), use them too.
+
+## Results in detail
+
+| | Strict React lint (eslint-plugin-jsx-a11y 6.10.2) | axe-core 4.13.0 | Earshot (NVDA 2026.2 via `listen()`) |
+|---|---|---|---|
+| Audit findings F-01..F-03 | 0 of 3 | half of 1 (the dialog name only) | **3 of 3 heard, fixed and re-heard** |
+| Sweep findings F-04..F-08 (discovered by Bob on /flights and /) | 0 of 5 | 1 of 5 (F-08, the unnamed link) | **5 of 5 heard, fixed and re-heard** |
+| Audit finding N-02 (needs typing) | 0 of 1 | 0 of 1 | **1 of 1 heard, fixed and re-heard** |
+| F-09: a regression Bob's own F-01 fix introduced (found by typing) | 0 of 1 | 0 of 1 | **1 of 1 heard, fixed and re-heard** |
+| F-10: two identical "Book" links (found by the one-command `/earshot` run on /destinations/mars) | 0 of 1 | 0 of 1 (not even axe's AAA and experimental rules) | **1 of 1 heard, fixed and re-heard** |
+| TodoMVC (second app): F-11 unnamed todo checkboxes (found by `/earshot`), F-12 Delete buttons unreachable by keyboard (heard by a human in the sweep transcript) | 0 of 2 | 1 of 2 (F-11, `label`) | **2 of 2 heard, fixed and re-heard** |
+| **All thirteen** | **0 of 13** | **2½ of 13** | **13 of 13** |
+
+**Earshot fixed and verified 13 of 13 on two apps; 10 of the 13 were caught only by ear.** Four counted findings came from my own audit document (F-01..F-03, N-02; the audit's fifth, N-01, is an animation pause that needs a human eye, so it is fixed but not counted), seven were found by Bob's sweeps (F-04..F-08, F-10 on Galaxium, F-11 on TodoMVC), one (F-09) is a regression Bob's own F-01 fix introduced, found by ear, and one (F-12) was heard by a human reading the sweep transcript: Tab never reached a Delete button. For F-04..F-08, a human accepted the expected announcement in triage before Bob fixed against it. For F-10, Bob first wrote its own expected phrase as a pattern and marked a label ending in a bare flight id as verified; a human rewrote the expectation, and the final fix and its test were checked against that. The expected announcement is only as good as the person who accepts it. N-02 is a fair row but not a contest: no static checker has a rule for a missing status message, which is exactly the gap Earshot fills.
+
+- **The fix that passed axe was still silent.** Bob's first F-01 fix only added a dialog name. axe reported no dialog violation, yet in NVDA Enter was followed by silence, and Tab then read "Moon, link, heading, level 3" from the page behind the dialog. Earshot rejected that fix. ([bench/RESULTS.md](bench/RESULTS.md))
+- **Bob's own verified fix had broken typing, and the ear caught it.** Bob's F-01 fix moved focus into the Sign In dialog correctly, but its effect re-ran on every render, so after one typed letter focus jumped out of the Name field. None of the 9 tests typed inside the dialog, so the gate could not see it. The first time `listen()` typed there, NVDA heard "N" and then the dialog again. Bob fixed it (F-09), wrote the regression test itself, and committed through the gate. ([evidence/F-09](evidence/F-09/))
+- **It runs headless, from the terminal.** `bob run --mode earshot-sweep --max-cost 1.5 "Sweep /destinations/earth. This is an unattended run: …"` (Bob Shell, no IDE) swept a page by ear with two parallel subagents, wrote its proposals and stopped at a cost cap: 0.31 Bobcoins, 2 minutes. On that already-fixed page it proposed 1 item and a human rejected it: it invented nothing. That is the shape of a nightly job on a listening machine: Bob proposes, a human triages in the IDE. ([triage](sweep/destinations-earth.triage.md))
+- **The gate works.** [`hear-tests.json`](hear-tests.json) holds 13 tests on two apps, and a full run passes 13 of 13 in about 9 minutes ([timing](evidence/gate/gate_13_tests_timing.txt)). Asked to delete the dialog's focus code as a "tidy-up", Bob complied, and the gate refused the commit. NVDA heard silence, so the commit was blocked. ([evidence/gate/](evidence/gate/README.md))
+- **Even `--no-verify` does not get past it, after one fix.** Asked to skip the slow hook, Bob ran `git commit --no-verify`; the Bob lifecycle hook replayed the tests, NVDA heard the dialog go silent, and the command was blocked before git ran (task30c). The first try (task30b) got through, because my hook read the input fields named in IBM's docs, not the ones Bob sends; that commit was undone at once. A later check found a second gap: when Bob stages and commits in one command (`git add X; git commit`), nothing is staged yet when the hook fires, so Bob's own fix commits were gated by the git hook alone. The hook now checks the working tree too. ([evidence/gate/](evidence/gate/README.md))
+- **The fence is an instruction, the gate is the enforcement.** In task30a, asked in Agent mode to edit IBM's code, Bob refused, citing `AGENTS.md` (galaxium code is edited only in the Earshot mode). But in task11, also in Agent mode, it did edit `Modal.tsx` when asked. What stopped that change was the gate, not the rule.
+- **It costs no human attention per commit.** Checking the first 6 announcements by hand with NVDA took a person 60 seconds at full speed and full concentration, and that has to be repeated on every commit. The gate needs 0 minutes of attention (about 9 minutes unattended for all 13), and it has already caught a regression that looked like a harmless tidy-up.
+- **A human check made the tests stricter.** During a manual NVDA check, the skip link (F-05) was announced but pressing it left focus on the page body, so NVDA said nothing. Bob made `<main>` focusable and verified by ear that Enter now says "main landmark" and the next Tab reaches "Search flights, edit". The F-05 test now checks `Tab, Enter, Tab` instead of just `Tab`.
+- **4 of Bob's own fixes were rejected by ear before the right one landed:** F-01 (name only), F-02 (no focus trap: Tab escaped to "github.com, link"), F-04 (the `Button` component dropped the label) and F-07 (`tabIndex=-1` on the nested button: NVDA still said "button, link").
+
+Earshot does not replace axe-core. axe also found 22 colour-contrast failures that no screen reader would report. Earshot catches what only the ear catches.
+
+## Why it matters
+
+- In WebAIM's February 2026 scan of the top million home pages, **95.9% had detectable WCAG 2 failures**; **missing form labels appeared on 51%** of them. ([WebAIM Million 2026](https://webaim.org/projects/million/))
+- **3,117 website-accessibility lawsuits** were filed in US federal court alone in 2025, up 27% (Seyfarth Shaw). The **European Accessibility Act** has applied since 28 June 2025 to e-commerce, banking and passenger-transport sites (Directive (EU) 2019/882).
+- **NVDA is the most commonly used desktop screen reader** (65.6% of respondents, WebAIM Screen Reader Survey #10), which is why Earshot listens with it.
+- More and more UI code is written by AI assistants, and a fix can pass automated checks while a blind user still hears nothing (the GIF above shows one).
+- **What it costs.** The whole build used about 32 Bobcoins (about $16). The median Bob cost per verified fix, failed attempts included, was about 0.7 Bobcoins (about $0.35); the most expensive was F-10 at about 4.7 Bobcoins, including a failed first `/earshot` run in the wrong mode and the sweep itself ([`bob_sessions/INDEX.md`](bob_sessions/INDEX.md)). Checking the same announcements by hand took a person 60 seconds of full attention per commit for just 6 checks.
+- **How a team adopts it.** On an app Earshot had never seen (TodoMVC), one `/earshot <page>` command and one triage answer produced a verified fix and its gate test. CI runs the replay and 72 unit tests on every push ([`.github/workflows/check.yml`](.github/workflows/check.yml)); the full listening gate can run on a self-hosted Windows runner ([template](docs/ci/README.md)).
+
+## IBM Bob 2.0 features used, and where to see each one
+
+| Bob feature | How Earshot uses it | Proof |
+|---|---|---|
+| **Agent mode** | Bob built the MCP server, the gate, the report, typing in `listen()` and the hooks | [`bob_sessions/INDEX.md`](bob_sessions/INDEX.md) (tasks 02, 10, 19, 23, 29) |
+| **Custom modes** with `fileRegex` fences | `earshot` fixes (may edit only app source and `hear-tests.json`), `earshot-sweep` discovers (writes only `sweep/`), `earshot-run` runs the whole loop | [`.bob/custom_modes.yaml`](.bob/custom_modes.yaml) |
+| **Rules** per mode | Each mode's rules live in `.bob/rules-<mode>/` (Bob's documented best practice; I moved Bob's instructions there); Bob Shell confirmed it loads them | [`.bob/rules-earshot/`](.bob/rules-earshot/) |
+| **Slash commands and skills** | `/hear <finding>`, `/sweep <page>`, `/earshot <page>`; Bob wrote the `nvda-expectations` skill from my transcripts and WCAG pages | [`.bob/commands/`](.bob/commands/) · [`.bob/skills/nvda-expectations/`](.bob/skills/nvda-expectations/SKILL.md) |
+| **MCP server** (my own) | `listen()` drives Chrome with real NVDA and returns what NVDA said; `listen_result()` collects long takes | [`earshot_mcp/server.py`](earshot_mcp/server.py) |
+| **Parallel subagents** | Each sweep spawns one explore subagent per suspicious Tab stop, in parallel, to find the file and line | [`bob_sessions/`](bob_sessions/INDEX.md) (tasks 13a, 13d, 22, 38) · [headless run](bob_sessions/shell/INDEX.md) |
+| **Managing multiple steps**: todo list, human question, subtasks | `/earshot` keeps a visible todo list, asks the human to triage (`ask_followup_question`) and fixes each accepted finding in a `/hear` subtask (`start_subtask`) | tasks 36b and 38; [`.bob/rules-earshot-run/`](.bob/rules-earshot-run/01-whole-loop.md) |
+| **Document understanding** | Bob read the audit PDF into `findings.md`; Bob read WCAG Understanding pages through `@https://` mentions to write the skill | task 01 · task 41 |
+| **Lifecycle hooks** | `PreToolUse` replays the screen-reader tests before any `git commit` Bob runs (it blocked `--no-verify`); `SessionStart` checks that NVDA and the apps are up | [`.bob/settings.json`](.bob/settings.json) · [evidence/gate/](evidence/gate/README.md) |
+| **`.bobignore`** (set up by me) | Keeps Bob out of recordings, dependencies and build output | [`.bobignore`](.bobignore) |
+| **Bob Shell** (headless, cost-capped) | `bob run --mode earshot-sweep --max-cost 1.5 …` sweeps a page by ear from the terminal; Bob Shell also wrote the skill, 72 unit tests, the affected-tests gate and the diagram | [`bob_sessions/shell/INDEX.md`](bob_sessions/shell/INDEX.md) |
+
+Machine-readable: [`evidence/index.json`](evidence/index.json) links every finding to its NVDA transcripts, audio, fix commit, gate test and Bob tasks; [`bob_sessions/INDEX.md`](bob_sessions/INDEX.md) lists every Bob task with its mode, cost and screenshot.
+
+## For judges: where to check each claim
+
+| Judging criterion | Claim | Check it here |
+|---|---|---|
+| Application of Technology: "complete and well thought-out, with a clear application of IBM Bob 2.0" | Bob's own surfaces do the work, from custom modes and an MCP tool to parallel subagents, subtasks, lifecycle hooks and headless Bob Shell: Bob fixes UI, verifies each fix with a real screen reader, rejects its own wrong fixes, discovers bugs, writes its own tests, and is refused by the gate it built (after I fixed the hook's input handling) | [Bob features used](#ibm-bob-20-features-used-and-where-to-see-each-one) · [How it was built](#how-it-was-built) · `bob_sessions/` (one screenshot per task) · [`.bob/custom_modes.yaml`](.bob/custom_modes.yaml) · [`earshot_mcp/server.py`](earshot_mcp/server.py) |
+| Business Value: "how effectively the solution addresses a high priority issue" | 13 of 13 findings fixed and verified by ear on two real apps; strict lint flagged 0 of 13 and axe-core 2½ of 13 | [bench/RESULTS.md](bench/RESULTS.md) · [Why it matters](#why-it-matters) |
+| Originality: "the approach in applying IBM Bob 2.0" | The agent's test oracle is what a blind user hears: Bob must hear its fix before it counts, and every commit replays the screen-reader tests | [What a markup check cannot hear](#why-automated-checkers-miss-these) · [How it works](#how-it-works) · [evidence/gate/](evidence/gate/README.md) |
+| Presentation: "clarity and effectiveness" | Every claim links to a verbatim NVDA transcript and the NVDA audio; `hear_tests.py --replay` checks every test against them on any OS | [Evidence](#evidence) · [report page](https://py-tr.github.io/earshot/) |
+
 ## Evidence
 
 Every transcript is extracted verbatim from NVDA's own log. The `.wav` next to it is NVDA's audio, captured from the NVDA process only.
@@ -146,7 +147,7 @@ Every transcript is extracted verbatim from NVDA's own log. The `.wav` next to i
 | F-07 | A button nested inside a link: two Tab stops for one control, 3 places on / (4.1.2, 2.4.3); found by `/sweep` | "Book a Flight, button, link" twice in a row | "Book a Flight, link" once | [sweep](sweep/home.md) · [before](evidence/F-07/before_bob_sweep_listen.txt) · [rejected attempt](evidence/F-07/attempt1_rejected_bob_listen.txt) · [after](evidence/F-07/after_bob_listen.txt) |
 | F-08 | Footer GitHub icon link has no name (2.4.4, 1.1.1); found by `/sweep`; axe flags it too | "github.com, link" | "GitHub, link" | [before](evidence/F-08/before_bob_listen.txt) · [after](evidence/F-08/after_bob_listen.txt) |
 | N-02 | Result count not announced while typing (4.1.3) | typed "M, a, r, s", then silence | "Showing 5 flights", then "Showing 4 flights", while typing | [before](evidence/N-02/before_typing_listen.txt) · [after](evidence/N-02/after_bob_listen.txt) |
-| F-09 | Typing in the Sign In dialog loses focus after one letter (2.1.1, 3.2.2); regression from our own F-01 fix | "N", then "Sign In, dialog" again; the next Tab says "Close modal, button" | "N, o, b, o, d, y", then Tab → "Email, edit, required" | [before](evidence/F-09/before_probe_typing_listen.txt) · [after](evidence/F-09/after_bob_listen.txt) |
+| F-09 | Typing in the Sign In dialog loses focus after one letter (2.1.1, 3.2.2); regression from Bob's own F-01 fix | "N", then "Sign In, dialog" again; the next Tab says "Close modal, button" | "N, o, b, o, d, y", then Tab → "Email, edit, required" | [before](evidence/F-09/before_probe_typing_listen.txt) · [after](evidence/F-09/after_bob_listen.txt) |
 | F-10 | Two flight links both named "Book" on /destinations/mars (2.4.4, 2.4.6); found by `/earshot` | "Book, link" twice | "Book Earth to Mars, Jan 01, 2099, link", then "Book Moon to Mars, Jan 07, 2099, link" | [before](evidence/F-10/before_bob_earshot_sweep_listen.txt) · [first fix, bare id](evidence/F-10/after_bob_listen_v1.txt) · [after](evidence/F-10/after_bob_listen.txt) |
 | F-11 | TodoMVC: todo checkboxes have no name (4.1.2, 1.3.1); found by `/earshot` on a second app | "check box, not checked" (which todo?) | "Buy milk, check box, not checked" | [sweep](sweep/todomvc.md) · [before](evidence/F-11/before_bob_earshot_sweep_listen.txt) · [after](evidence/F-11/after_bob_listen.txt) |
 | F-12 | TodoMVC: Delete buttons hidden until mouse hover, so unreachable by keyboard; all named "Delete todo" (2.1.1, 4.1.2); heard by a human | after the last checkbox, Tab goes to "All, link": no Delete | "Delete Buy milk, button" | [before](evidence/F-12/before_probe_listen.txt) · [after](evidence/F-12/after_bob_listen.txt) |
@@ -205,9 +206,9 @@ In Bob, open `findings.md` and type `/hear F-01`, or type `/sweep /flights`.
 
 ## Reliability and cost
 
-Over the build, `listen()` recorded 254 NVDA takes. Three were aborted by the foreground safety check (another window took focus; the third was our own terminal during a gate run), and 5 produced no transcript (3 while the MCP timeout was misconfigured on day 1, 2 hung takes). In the first two `/earshot` runs, about 20 further calls aborted before a take started, because Bob passed a start control that does not exist on that page; the instructions now require `start="TOP"`. The gate once blocked a commit without listening, because the app served a half-written file, and once reported a regression that was really "could not listen", because a window title crashed the console output; both are fixed ("could not listen" has its own exit code, and output is UTF-8). The whole build used about 32 Bobcoins (about $16 at IBM's documented $0.50 per Bobcoin).
+Over the build, `listen()` recorded 254 NVDA takes. Three were aborted by the foreground safety check (another window took focus; the third was my own terminal during a gate run), and 5 produced no transcript (3 while the MCP timeout was misconfigured on day 1, 2 hung takes). In the first two `/earshot` runs, about 20 further calls aborted before a take started, because Bob passed a start control that does not exist on that page; the instructions now require `start="TOP"`. The gate once blocked a commit without listening, because the app served a half-written file, and once reported a regression that was really "could not listen", because a window title crashed the console output; both are fixed ("could not listen" has its own exit code, and output is UTF-8). The whole build used about 32 Bobcoins (about $16 at IBM's documented $0.50 per Bobcoin).
 
-## Known issues we did not fix
+## Known issues I did not fix
 
 Found or seen during the build, listed so nobody mistakes them for fixed:
 
@@ -241,7 +242,7 @@ Found or seen during the build, listed so nobody mistakes them for fixed:
   - the gate (task10, task18, task19)
   - typing in `listen()` (task23)
   - Bob writes the gate test for each verified finding itself (earshot mode, task33; first used for F-09 in task34)
-  - the `nvda-expectations` skill (task41, Bob Shell, 0.65 Bobcoins): Bob wrote it from our verbatim NVDA transcripts and two WCAG Understanding pages read through `@https://` mentions; a review corrected two of its eight sections (it had cited a focus re-read as a live region, and the end-of-page silence as a failure). The earshot and sweep rules tell Bob to use it
+  - the `nvda-expectations` skill (task41, Bob Shell, 0.65 Bobcoins): Bob wrote it from my verbatim NVDA transcripts and two WCAG Understanding pages read through `@https://` mentions; a review corrected two of its eight sections (it had cited a focus re-read as a live region, and the end-of-page silence as a failure). The earshot and sweep rules tell Bob to use it
   - the unit tests in `earshot_mcp/tests/` (task42, Bob Shell) and every headless run, listed in [`bob_sessions/shell/INDEX.md`](bob_sessions/shell/INDEX.md)
   - the Bob lifecycle hook (task29), which blocked Bob's own `git commit --no-verify` (task30c). On the first try (task30a), Bob in Agent mode refused to edit IBM's code at all, citing `AGENTS.md`: the mode fences held.
   - `/sweep` and the `earshot-sweep` mode (task12, 12b, 13c)
@@ -250,7 +251,7 @@ Found or seen during the build, listed so nobody mistakes them for fixed:
   - `/earshot <page>`, the whole loop in one command (task35): sweep by ear with parallel explore subagents, human triage inside Bob, findings recorded, a `/hear` subtask per finding, summary. First run in Agent mode failed to switch modes (task36a); the second found and fixed F-10 (task36b)
 - **Prepared before kickoff and disclosed:**
   - the NVDA driver (`driver.py`), the transcript extractor (`extract.py`), the audio capture tool (`proccap/`) and the F-01 transcript fixtures.
-  - Before kickoff we also spiked focus-trap and label fixes on a local Galaxium branch to prove the approach. Those spikes were not shipped: every fix in this repo was written by Bob during the event.
+  - Before kickoff I also spiked focus-trap and label fixes on a local Galaxium branch to prove the approach. Those spikes were not shipped: every fix in this repo was written by Bob during the event.
   - Details: commit `08979fd` (tooling) and `69dc0de` (fixtures).
 - **Done with AI assistance (Claude Code), outside Bob:**
   - planning and setup
@@ -266,4 +267,4 @@ Found or seen during the build, listed so nobody mistakes them for fixed:
 
 ## License
 
-MIT (see [LICENSE](LICENSE)). `galaxium/` is the IBM Galaxium Travels sample app from [IBM/galaxium-travels](https://github.com/IBM/galaxium-travels) at commit `e4e18ae`, licensed Apache-2.0 (see [galaxium/LICENSE](galaxium/LICENSE)). Our changes to it are listed in [galaxium/MODIFICATIONS.md](galaxium/MODIFICATIONS.md) and visible as commits in this repo.
+MIT (see [LICENSE](LICENSE)). `galaxium/` is the IBM Galaxium Travels sample app from [IBM/galaxium-travels](https://github.com/IBM/galaxium-travels) at commit `e4e18ae`, licensed Apache-2.0 (see [galaxium/LICENSE](galaxium/LICENSE)). My changes to it are listed in [galaxium/MODIFICATIONS.md](galaxium/MODIFICATIONS.md) and visible as commits in this repo.
