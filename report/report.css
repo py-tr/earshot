@@ -41,6 +41,72 @@ audio:focus-visible {
 .site-header h1 { font-size: 1.5rem; font-weight: 700; }
 .site-header .meta { color: var(--muted); font-size: 0.875rem; margin-top: 0.25rem; }
 
+/* Scoreboard */
+.scoreboard { margin-bottom: 1.5rem; }
+
+.scoreboard-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 520px) {
+  .scoreboard-tiles { grid-template-columns: 1fr; }
+}
+
+.scoreboard-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.1rem 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  border-radius: 6px;
+}
+
+.scoreboard-number {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.scoreboard-caption {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* F-01 waveform section */
+.f01-section {
+  margin-bottom: 2rem;
+}
+
+.f01-section h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.f01-figure {
+  margin: 0 0 0.75rem;
+}
+
+.f01-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.f01-figure figcaption {
+  margin-top: 0.35rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
 /* Banner */
 .banner {
   margin-bottom: 2rem;

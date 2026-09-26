@@ -145,7 +145,7 @@ In Bob, open `findings.md` and type `/hear F-01`, or type `/sweep /flights`.
   - `findings.md` from the PDF (task01)
   - the MCP server, the `earshot` mode and `/hear` (task02, 02b–02i)
   - all UI fixes: F-01 task03 attempt 7, F-02 task05, F-03 task06, N-01 task07, F-04 task15, F-05 task16 and task21, F-06 task17, F-07 task24 and task25, F-08 task26, N-02 task27
-  - the report page (task04, 09, 20)
+  - the report page (task04, 09, 20, 28)
   - the gate (task10, task18, task19)
   - typing in `listen()` (task23)
   - `/sweep` and the `earshot-sweep` mode (task12, 12b, 13c)

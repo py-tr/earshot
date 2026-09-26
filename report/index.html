@@ -17,10 +17,44 @@
       </p>
     </header>
 
+    <section class="scoreboard" aria-labelledby="scoreboard-heading">
+      <h2 id="scoreboard-heading" class="visually-hidden">Summary</h2>
+      <div class="scoreboard-tiles">
+        <div class="scoreboard-tile">
+          <span class="scoreboard-number">9 / 9</span>
+          <span class="scoreboard-caption">findings fixed and verified by ear (real NVDA)</span>
+        </div>
+        <div class="scoreboard-tile">
+          <span class="scoreboard-number">1½ / 9</span>
+          <span class="scoreboard-caption">flagged by strict React lint and axe-core</span>
+        </div>
+        <div class="scoreboard-tile">
+          <span class="scoreboard-number">4 + 1</span>
+          <span class="scoreboard-caption">of Bob's own fixes rejected by ear · commit blocked by the gate</span>
+        </div>
+      </div>
+    </section>
+
     <div class="banner" role="note" aria-label="Summary">
       <p>Automated checks flagged 1½ of 9 findings. Earshot verified 9 of 9 with a real screen reader (NVDA); 7 of the 9 were caught only by ear.</p>
       <p>5 were discovered by Bob's own sweep on two pages · 4 of Bob's own fixes were rejected by ear · every commit is gated by 9 screen-reader tests. <a href="https://github.com/py-tr/earshot/blob/main/bench/RESULTS.md">How we measured</a></p>
     </div>
+
+    <section class="f01-section" aria-labelledby="f01-heading">
+      <h2 id="f01-heading">Hear the difference: F-01, the Sign In dialog</h2>
+      <figure class="f01-figure">
+        <img src="f01_before.svg"
+             alt="Before the fix: after Enter, NVDA says nothing; after Tab it reads Moon, link, heading, level 3 from the page behind the dialog"
+             width="100%">
+        <figcaption>Before: Enter → silence. Tab → the page behind the dialog.</figcaption>
+      </figure>
+      <figure class="f01-figure">
+        <img src="f01_after.svg"
+             alt="After the fix: after Enter, NVDA says Sign In, dialog; after Tab it says Close modal, button"
+             width="100%">
+        <figcaption>After Bob's fix: Enter → "Sign In, dialog".</figcaption>
+      </figure>
+    </section>
 
     <main>
       <h2 class="visually-hidden">Findings</h2>
