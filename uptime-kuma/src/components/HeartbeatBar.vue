@@ -6,16 +6,13 @@
                 class="heartbeat-canvas"
                 :width="canvasWidth"
                 :height="canvasHeight"
-                :aria-label="canvasAriaLabel"
-                role="img"
-                tabindex="0"
+                aria-hidden="true"
+                tabindex="-1"
                 @mousemove="handleMouseMove"
                 @mouseleave="hideTooltip"
                 @click="handleClick"
-                @keydown="handleKeydown"
-                @focus="handleFocus"
-                @blur="handleBlur"
             />
+            <span class="heartbeat-sr-only">{{ canvasAriaLabel }}</span>
         </div>
         <div
             v-if="!$root.isMobile && size !== 'small' && beatList.length > 4 && $root.styleElapsedTime !== 'none'"
@@ -850,5 +847,16 @@ export default {
     .dark & {
         background-color: #333;
     }
+}
+.heartbeat-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 </style>

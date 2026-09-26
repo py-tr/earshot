@@ -178,5 +178,18 @@
       "Status Pages, link"
     ],
     "forbid": []
+  },
+  {
+    "id": "F-14",
+    "path": "http://localhost:3000/dashboard",
+    "start": "TOP",
+    "key_script": "Tab ×16",
+    "expect": [
+      "100%, Galaxium, Heartbeat history:",
+      "100%, TodoMVC, Heartbeat history:"
+    ],
+    "forbid": [
+      "graphic"
+    ]
   }
 ]
