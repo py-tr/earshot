@@ -1,7 +1,8 @@
 """
 Bob PreToolUse hook – puts the Earshot gate in front of git commits.
 
-stdin: JSON with keys "tool" and "input" (input.command is the shell command).
+stdin: JSON with keys "tool_name", "tool_input", "tool_use_id", "session_id",
+       "cwd", and "hook_event_name" (tool_input.command is the shell command).
 Exit 0  → allow the command to proceed.
 Exit 2  → block the command (Bob honours this for PreToolUse hooks).
 """

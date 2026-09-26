@@ -184,6 +184,35 @@ def _run_hook(stdin_bytes: bytes) -> subprocess.CompletedProcess:
     )
 
 
+class TestBobHookExactEvidencePayload(unittest.TestCase):
+    """Feed the exact JSON from evidence/gate/bob_hook_call_stdin.txt and assert exit 0.
+
+    The working tree has no frontend changes (this test file itself is not under
+    any app source directory), so the hook must exit 0 (no tests to run).
+    """
+
+    # Exact payload recorded from Bob in evidence/gate/bob_hook_call_stdin.txt
+    # (username replaced with a placeholder; the hook only reads tool_input.command).
+    _EVIDENCE_JSON = (
+        '{"session_id":"7e0ea1105aeabe7b3f6b104687c4902c",'
+        '"cwd":"c:\\\\Users\\\\testuser\\\\Documents\\\\Work\\\\Hackathons\\\\ibm-bob\\\\earshot",'
+        '"hook_event_name":"PreToolUse",'
+        '"tool_name":"execute_command",'
+        '"tool_input":{"command":"git commit --no-verify -m \\"refactor: tidy up Modal\\""},'
+        '"tool_use_id":"tooluse_vH23JZBw1fn31DSl4eHsgf"}'
+    )
+
+    def test_evidence_payload_parses_and_exits_0(self):
+        """Hook must parse the evidence payload, identify it as a git commit,
+        find no frontend files changed in the working tree, and exit 0."""
+        result = _run_hook(self._EVIDENCE_JSON.encode())
+        self.assertEqual(
+            result.returncode, 0,
+            f"Expected exit 0 for evidence payload, got {result.returncode}. "
+            f"stderr: {result.stderr!r}",
+        )
+
+
 class TestBobHookSubprocess(unittest.TestCase):
 
     def test_ls_command_exits_0(self):
