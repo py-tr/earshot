@@ -10,7 +10,7 @@ I tried it on three real apps I didn't write: IBM's own Galaxium Travels sample 
 
 **One real bug, start to finish (F-01 of 15):**
 
-![Blind people "read" websites by ear, with a screen reader (NVDA). The problem: apps often break for screen readers. For example, BEFORE: pressing Enter opens a Sign In window, and the screen reader says nothing. IBM Bob fixes the code, then checks it by ear with Earshot, the screen-reader testing tool I built. AFTER: the same key makes NVDA say "Sign In, dialog". 13 different accessibility bugs, all fixed by Bob in two real web apps, each verified by ear with Earshot; automated checkers (lint and axe) flagged only 2½.](report/f01_before_after.gif)
+![Blind people "read" websites by ear, with a screen reader (NVDA). The problem: apps often break for screen readers. For example, BEFORE: pressing Enter opens a Sign In window, and the screen reader says nothing. IBM Bob fixes the code, then checks it by ear with Earshot, the screen-reader testing tool I built. AFTER: the same key makes NVDA say "Sign In, dialog". 15 different accessibility bugs, all fixed by Bob in three real web apps, each verified by ear with Earshot; automated checkers (lint and axe) flagged only 3½.](report/f01_before_after.gif)
 
 *Captions show what NVDA said; the [report page](https://py-tr.github.io/earshot/) has the real audio and waveforms.*
 

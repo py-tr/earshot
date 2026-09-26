@@ -6,11 +6,12 @@ os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))  # repo
 TASKS = {  # finding -> Bob tasks that fixed/verified it (from bob_sessions/INDEX.md)
     'F-01': ['03g'], 'F-02': ['05'], 'F-03': ['06'], 'N-01': ['07'], 'N-02': ['08', '23', '27'],
     'F-04': ['13a', '13b', '13d', '15'], 'F-05': ['13a', '16', '21'], 'F-06': ['13d', '17'],
-    'F-07': ['22', '24', '25'], 'F-08': ['22', '26'], 'F-09': ['34'], 'F-10': ['36b', '37'], 'F-11': ['38'], 'F-12': ['39'],
+    'F-07': ['22', '24', '25'], 'F-08': ['22', '26'], 'F-09': ['34'], 'F-10': ['36b', '37'], 'F-11': ['38'], 'F-12': ['39'], 'F-13': ['46'], 'F-14': ['46', '48', '49'],
 }
 SOURCE = {'F-01': 'audit', 'F-02': 'audit', 'F-03': 'audit', 'N-01': 'audit', 'N-02': 'audit',
           'F-04': 'bob-sweep /flights', 'F-05': 'bob-sweep /flights', 'F-06': 'bob-sweep /flights',
-          'F-07': 'bob-sweep /', 'F-08': 'bob-sweep /', 'F-09': 'regression in our own F-01 fix, found by ear while typing', 'F-10': 'bob /earshot run on /destinations/mars', 'F-11': 'bob /earshot run on TodoMVC (second app)', 'F-12': 'heard by a human in the TodoMVC sweep transcript'}
+          'F-07': 'bob-sweep /', 'F-08': 'bob-sweep /', 'F-09': "regression in Bob's own F-01 fix, found by ear while typing", 'F-10': 'bob /earshot run on /destinations/mars', 'F-11': 'bob /earshot run on TodoMVC (second app)', 'F-12': 'heard by a human in the TodoMVC sweep transcript',
+          'F-13': 'bob /earshot run on Uptime Kuma (third app)', 'F-14': 'bob /earshot run on Uptime Kuma (third app)'}
 DECIDED = {'N-01': 'ear + human eye (the animation stopping is visual)'}
 
 tests = {t['id']: t for t in json.load(open('hear-tests.json', encoding='utf8'))}
@@ -25,7 +26,7 @@ for line in open('findings.md', encoding='utf8'):
     files = sorted(os.listdir(folder)) if os.path.isdir(folder) else []
     def pick(pred):
         return [f'{folder}/{f}' for f in files if pred(f)]
-    commits = subprocess.run(['git', 'log', '--format=%h %s', '--grep', fid, '--', 'galaxium/', 'todomvc/src/'],
+    commits = subprocess.run(['git', 'log', '--format=%h %s', '--grep', fid, '--', 'galaxium/', 'todomvc/src/', 'uptime-kuma/src/'],
                              capture_output=True, text=True, encoding='utf8').stdout.strip().splitlines()
     rec = {
         'id': fid,
@@ -41,6 +42,7 @@ for line in open('findings.md', encoding='utf8'):
         'audio': pick(lambda f: f.endswith('.wav')),
         'fix_commits': commits,
         'gate_test': tests.get(fid),
+        'guard_tests': [t for k, t in tests.items() if k.startswith(fid) and k != fid],
         'bob_tasks': TASKS.get(fid, []),
         'bob_screenshots': sorted(f'bob_sessions/{s}' for s in shots
                                   if any(re.match(rf'pytr_task{t}(_|$)', s) or (t == '03g' and 'attempt7' in s) for t in TASKS.get(fid, []))),
@@ -49,10 +51,11 @@ for line in open('findings.md', encoding='utf8'):
 
 manifest = {
     'project': 'Earshot: screen-reader tests for AI-written UI',
-    'app': 'IBM Galaxium Travels sample app (galaxium/, Apache-2.0, upstream e4e18ae); TodoMVC React (todomvc/, MIT, upstream ff43b02)',
+    'app': 'IBM Galaxium Travels sample app (galaxium/, Apache-2.0, upstream e4e18ae); TodoMVC React (todomvc/, MIT, upstream ff43b02); Uptime Kuma 2.5.5 (uptime-kuma/, MIT, upstream c98982a)',
     'screen_reader': 'NVDA 2026.2 (real, not simulated); transcripts are verbatim from NVDA\'s log, audio is NVDA-process-only',
     'summary': {'findings': sum(1 for r in records if r['id'] != 'N-01'), 'verified_by_ear': sum(1 for r in records if r['id'] != 'N-01' and r['verified_by'].startswith('ear')),
-                'not_counted': ['N-01 (animation pause: fixed and heard, but whether the motion stops needs a human eye)'],
+                'not_counted': ['N-01 (animation pause: fixed and heard, but whether the motion stops needs a human eye)',
+                                'F-14b (a regression-guard test for F-14, listed under F-14 as guard_tests, not a separate finding)'],
                 'gate_tests': len(tests), 'benchmark': 'bench/RESULTS.md'},
     'gate_evidence': sorted(f'evidence/gate/{f}' for f in os.listdir('evidence/gate')),
     'findings': records,

@@ -1,14 +1,15 @@
 {
   "project": "Earshot: screen-reader tests for AI-written UI",
-  "app": "IBM Galaxium Travels sample app (galaxium/, Apache-2.0, upstream e4e18ae); TodoMVC React (todomvc/, MIT, upstream ff43b02)",
+  "app": "IBM Galaxium Travels sample app (galaxium/, Apache-2.0, upstream e4e18ae); TodoMVC React (todomvc/, MIT, upstream ff43b02); Uptime Kuma 2.5.5 (uptime-kuma/, MIT, upstream c98982a)",
   "screen_reader": "NVDA 2026.2 (real, not simulated); transcripts are verbatim from NVDA's log, audio is NVDA-process-only",
   "summary": {
-    "findings": 13,
-    "verified_by_ear": 13,
+    "findings": 15,
+    "verified_by_ear": 15,
     "not_counted": [
-      "N-01 (animation pause: fixed and heard, but whether the motion stops needs a human eye)"
+      "N-01 (animation pause: fixed and heard, but whether the motion stops needs a human eye)",
+      "F-14b (a regression-guard test for F-14, listed under F-14 as guard_tests, not a separate finding)"
     ],
-    "gate_tests": 13,
+    "gate_tests": 16,
     "benchmark": "bench/RESULTS.md"
   },
   "gate_evidence": [
@@ -64,6 +65,7 @@
           "galaxium/booking_system_frontend/src/components/common/Input.tsx"
         ]
       },
+      "guard_tests": [],
       "bob_tasks": [
         "03g"
       ],
@@ -112,6 +114,7 @@
           "galaxium/booking_system_frontend/src/components/common/Input.tsx"
         ]
       },
+      "guard_tests": [],
       "bob_tasks": [
         "05"
       ],
@@ -157,6 +160,7 @@
           "galaxium/booking_system_frontend/src/components/common/Input.tsx"
         ]
       },
+      "guard_tests": [],
       "bob_tasks": [
         "06"
       ],
@@ -184,6 +188,7 @@
         "2215fec N-01: pause/resume control for the animated starfield (announced by NVDA; motion stop confirmed visually by a human)"
       ],
       "gate_test": null,
+      "guard_tests": [],
       "bob_tasks": [
         "07"
       ],
@@ -224,6 +229,7 @@
         ],
         "forbid": []
       },
+      "guard_tests": [],
       "bob_tasks": [
         "08",
         "23",
@@ -266,6 +272,7 @@
         ],
         "forbid": []
       },
+      "guard_tests": [],
       "bob_tasks": [
         "13a",
         "13b",
@@ -320,6 +327,7 @@
         ],
         "forbid": []
       },
+      "guard_tests": [],
       "bob_tasks": [
         "13a",
         "16",
@@ -364,6 +372,7 @@
         ],
         "forbid": []
       },
+      "guard_tests": [],
       "bob_tasks": [
         "13d",
         "17"
@@ -419,6 +428,7 @@
           "button, link"
         ]
       },
+      "guard_tests": [],
       "bob_tasks": [
         "22",
         "24",
@@ -464,6 +474,7 @@
           "github.com"
         ]
       },
+      "guard_tests": [],
       "bob_tasks": [
         "22",
         "26"
@@ -477,7 +488,7 @@
       "id": "F-09",
       "wcag": "2.1.1 Keyboard (A); 3.2.2 On Input (A)",
       "component": "Sign In dialog: after each typed letter, focus jumps out of the Name field to the dialog, so only the first letter is typed. REGRESSION introduced by our own F-01 fix (commit 47b9252: the focus-on-open effect re-runs on every render because",
-      "source": "regression in our own F-01 fix, found by ear while typing",
+      "source": "regression in Bob's own F-01 fix, found by ear while typing",
       "key_script": "Enter, Tab, Tab, Type \"Nobody\", Tab",
       "expected": "After typing, the Name field keeps focus and holds \"Nobody\"; the next Tab says \"Email, edit, required\" (not \"Close modal, button\")",
       "verified_by": "ear (NVDA transcript)",
@@ -511,6 +522,7 @@
           "galaxium/booking_system_frontend/src/components/common/Input.tsx"
         ]
       },
+      "guard_tests": [],
       "bob_tasks": [
         "34"
       ],
@@ -556,6 +568,7 @@
           "Book, link"
         ]
       },
+      "guard_tests": [],
       "bob_tasks": [
         "36b",
         "37"
@@ -600,6 +613,7 @@
           "list, with 2 items, check box, not checked"
         ]
       },
+      "guard_tests": [],
       "bob_tasks": [
         "38"
       ],
@@ -641,11 +655,120 @@
           "All, link"
         ]
       },
+      "guard_tests": [],
       "bob_tasks": [
         "39"
       ],
       "bob_screenshots": [
         "bob_sessions/pytr_task39_hear_f12_summary.png"
+      ]
+    },
+    {
+      "id": "F-13",
+      "wcag": "4.1.2 Name, Role, Value (A)",
+      "component": "Uptime Kuma dashboard: SVG logo <object> element has no accessible name and is a silent focusable tab stop (source: Bob sweep uptime-kuma S-01, human-accepted)",
+      "source": "bob /earshot run on Uptime Kuma (third app)",
+      "key_script": "page http://localhost:3000/dashboard, from top: Tab ×2",
+      "expected": "The logo object element is skipped or has aria-hidden=\"true\" so Tab ×2 reaches the next meaningful control (\"Status Pages, link\") with no silent stop",
+      "verified_by": "ear (NVDA transcript)",
+      "before": [],
+      "rejected_attempts": [
+        "evidence/F-13/attempt1_rejected_aria_hidden_only_bob_listen.txt"
+      ],
+      "after": [
+        "evidence/F-13/after_bob_listen.txt"
+      ],
+      "audio": [
+        "evidence/F-13/after_bob_listen.wav",
+        "evidence/F-13/attempt1_rejected_aria_hidden_only_bob_listen.wav"
+      ],
+      "fix_commits": [
+        "ead8170 F-13: add aria-hidden and tabindex=-1 to logo object elements to remove silent tab stop (verified by NVDA)"
+      ],
+      "gate_test": {
+        "id": "F-13",
+        "path": "http://localhost:3000/dashboard",
+        "start": "TOP",
+        "key_script": "Tab ×2",
+        "expect": [
+          "Status Pages, link"
+        ],
+        "forbid": []
+      },
+      "guard_tests": [],
+      "bob_tasks": [
+        "46"
+      ],
+      "bob_screenshots": [
+        "bob_sessions/pytr_task46_earshot_run_uptime_kuma_summary.png",
+        "bob_sessions/pytr_task46_hear_f13_subtask_summary.png",
+        "bob_sessions/pytr_task46_hear_f14_subtask_summary.png"
+      ]
+    },
+    {
+      "id": "F-14",
+      "wcag": "4.1.2 Name, Role, Value (A); 2.4.3 Focus Order (A)",
+      "component": "Uptime Kuma dashboard: heartbeat canvas has tabindex=\"0\" inside a router-link anchor, creating a duplicate focusable stop that announces both \"graphic\" and \"link\" (source: Bob sweep uptime-kuma S-08, human-accepted)",
+      "source": "bob /earshot run on Uptime Kuma (third app)",
+      "key_script": "page http://localhost:3000/dashboard, from top: Tab ×16",
+      "expected": "The heartbeat bar canvas is not a separate tab stop; Tab ×15 announces \"100%, Galaxium, Heartbeat history: 15 checks, 15 up, 0 down, link\" and Tab ×16 moves directly to the TodoMVC monitor link",
+      "verified_by": "ear (NVDA transcript)",
+      "before": [
+        "evidence/F-14/before_bob_earshot_sweep_listen.txt"
+      ],
+      "rejected_attempts": [
+        "evidence/F-14/attempt1_rejected_no_heartbeat_name_bob_listen.txt"
+      ],
+      "after": [
+        "evidence/F-14/after_bob_listen.txt"
+      ],
+      "audio": [
+        "evidence/F-14/after_bob_listen.wav",
+        "evidence/F-14/attempt1_rejected_no_heartbeat_name_bob_listen.wav",
+        "evidence/F-14/before_bob_earshot_sweep_listen.wav"
+      ],
+      "fix_commits": [
+        "b52c1f7 fix(F-14b): bind canvas handlers plainly so Vue calls them outside links",
+        "c3bd27d fix(F-14): restore canvas keyboard access outside links via inLink prop",
+        "012cd1b F-14: remove tabindex=0 from heartbeat canvas, expose label via sr-only span (verified by NVDA)"
+      ],
+      "gate_test": {
+        "id": "F-14",
+        "path": "http://localhost:3000/dashboard",
+        "start": "TOP",
+        "key_script": "Tab ×16",
+        "expect": [
+          "Galaxium, Heartbeat history:",
+          "TodoMVC, Heartbeat history:"
+        ],
+        "forbid": [
+          "graphic"
+        ]
+      },
+      "guard_tests": [
+        {
+          "id": "F-14b",
+          "path": "http://localhost:3000/dashboard/1",
+          "start": "TOP",
+          "key_script": "Tab ×22",
+          "expect": [
+            "Heartbeat history:",
+            "graphic"
+          ],
+          "forbid": []
+        }
+      ],
+      "bob_tasks": [
+        "46",
+        "48",
+        "49"
+      ],
+      "bob_screenshots": [
+        "bob_sessions/pytr_task46_earshot_run_uptime_kuma_summary.png",
+        "bob_sessions/pytr_task46_hear_f13_subtask_summary.png",
+        "bob_sessions/pytr_task46_hear_f14_subtask_summary.png",
+        "bob_sessions/pytr_task48_f14_followup_summary.png",
+        "bob_sessions/pytr_task49_f14_handler_fix_summary.png"
       ]
     }
   ]
