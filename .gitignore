@@ -137,3 +137,7 @@ takes/*.png
 # Earshot takes: raw NVDA recordings stay local; curated copies live in evidence/
 takes/*
 !takes/.gitkeep
+
+# TodoMVC second app: dependencies and build output
+todomvc/node_modules/
+todomvc/dist/

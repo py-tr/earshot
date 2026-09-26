@@ -201,6 +201,7 @@ In Bob, open `findings.md` and type `/hear F-01`, or type `/sweep /flights`.
   - the draft of the self-authored audit PDF
   - the benchmark scripts (`bench/`)
   - driver fixes during the event (watchdog, focus labels, `--path` / `--start`)
+  - the evidence manifest (`evidence/make_index.py`), the Bob task index and the `--replay` mode of the gate runner
   - review of every Bob diff, a headless visual check (it caught F-07's full-width button, which Bob then fixed in task25), gate-test updates and the evidence files
   - these write-ups
 - **The human** triaged every sweep proposal, approved every change, made the visual check for N-01, and committed Bob's verified fixes (Bob verified each fix by ear; from F-04 on, the commits also had to pass the Earshot gate).
