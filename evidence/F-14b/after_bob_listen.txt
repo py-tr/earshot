@@ -1,0 +1,73 @@
+# NVDA speech/input log for the 'listen' take (take_20260927T011130), extracted verbatim from NVDA's own log (log level: input/output).
+# Clip time 0.00 s = 01:11:47.050 local (2026-09-27). Format: [clip seconds, from NVDA log timestamp] original NVDA log line.
+# Only 'Input:' and 'Speaking' records are listed; LangChangeCommand/CancellableSpeech are NVDA-internal markers, kept verbatim.
+# Note: the timestamp is when NVDA queued the speech; audio can start slightly later if earlier speech is still playing.
+# DOM focus after each key (document.activeElement sampled over CDP ~0.3 s before the next key; not from NVDA):
+#   TAB @ 1.06s -> A "Uptime Kuma" [page]
+#   TAB @ 3.06s -> A "Status Pages" [page]
+#   TAB @ 5.06s -> A "Dashboard" [page]
+#   TAB @ 7.06s -> A "Add New Monitor" [page]
+#   TAB @ 9.06s -> INPUT "Search monitored sites" [page]
+#   TAB @ 11.06s -> INPUT "Select all monitors" [page]
+#   TAB @ 13.06s -> BUTTON "Status" [page]
+#   TAB @ 15.06s -> DIV "Up2" [page]
+#   TAB @ 17.06s -> DIV "Down0" [page]
+#   TAB @ 19.06s -> DIV "Pending0" [page]
+#   TAB @ 21.06s -> DIV "Maintenance0" [page]
+#   TAB @ 23.06s -> DIV "Running2" [page]
+#   TAB @ 25.05s -> DIV "Paused0" [page]
+#   TAB @ 27.06s -> BUTTON "Tags" [page]
+#   TAB @ 29.05s -> A "100%GalaxiumHeartbeat history: 30 checks, 30 up, 0" [page]
+#   TAB @ 31.05s -> A "100%TodoMVCHeartbeat history: 30 checks, 30 up, 0 " [page]
+#   TAB @ 33.06s -> A "http://localhost:5173/" [page]
+#   TAB @ 35.06s -> BUTTON "Pause" [page]
+#   TAB @ 37.06s -> A "Edit" [page]
+#   TAB @ 39.05s -> A "Clone" [page]
+#   TAB @ 41.06s -> BUTTON "Delete" [page]
+#   TAB @ 43.06s -> CANVAS "Heartbeat history: 44 checks, 44 up, 0 down" [page]
+
+[  1.01s] Input: kb(desktop):tab
+[  1.10s] Speaking [LangChangeCommand ('en_US'), 'banner landmark', 'Uptime Kuma', 'link']
+[  3.01s] Input: kb(desktop):tab
+[  3.09s] Speaking [LangChangeCommand ('en_US'), 'list', 'with 3 items', ' Status Pages', 'link']
+[  5.01s] Input: kb(desktop):tab
+[  5.07s] Speaking [LangChangeCommand ('en_US'), ' Dashboard', 'link']
+[  7.01s] Input: kb(desktop):tab
+[  7.06s] Speaking [LangChangeCommand ('en_US'), 'main landmark', ' Add New Monitor', 'link']
+[  9.01s] Input: kb(desktop):tab
+[  9.07s] Speaking [LangChangeCommand ('en_US'), 'form landmark', CancellableSpeech (still valid)]
+[  9.08s] Speaking [LangChangeCommand ('en_US'), 'Search monitored sites', 'edit', CancellableSpeech (still valid), 'Search…', CancellableSpeech (still valid), 'blank']
+[ 11.01s] Input: kb(desktop):tab
+[ 11.05s] Speaking [LangChangeCommand ('en_US'), 'Select all monitors', 'check box', 'not checked']
+[ 13.01s] Input: kb(desktop):tab
+[ 13.05s] Speaking [LangChangeCommand ('en_US'), 'Status', 'button']
+[ 15.01s] Input: kb(desktop):tab
+[ 15.07s] Speaking [LangChangeCommand ('en_US'), 'list', 'with 7 items', 'clickable', 'Up2']
+[ 17.01s] Input: kb(desktop):tab
+[ 17.07s] Speaking [LangChangeCommand ('en_US'), 'clickable', 'Down0']
+[ 19.01s] Input: kb(desktop):tab
+[ 19.06s] Speaking [LangChangeCommand ('en_US'), 'clickable', 'Pending0']
+[ 21.01s] Input: kb(desktop):tab
+[ 21.06s] Speaking [LangChangeCommand ('en_US'), 'clickable', 'Maintenance0']
+[ 23.01s] Input: kb(desktop):tab
+[ 23.07s] Speaking [LangChangeCommand ('en_US'), 'clickable', ' Running2']
+[ 25.00s] Input: kb(desktop):tab
+[ 25.07s] Speaking [LangChangeCommand ('en_US'), 'clickable', ' Paused0']
+[ 27.01s] Input: kb(desktop):tab
+[ 27.06s] Speaking [LangChangeCommand ('en_US'), 'Tags', 'button']
+[ 29.00s] Input: kb(desktop):tab
+[ 29.07s] Speaking [LangChangeCommand ('en_US'), '100%', 'Galaxium', 'Heartbeat history: 30 checks, 30 up, 0 down', 'same page', 'link', 'current page']
+[ 31.00s] Input: kb(desktop):tab
+[ 31.06s] Speaking [LangChangeCommand ('en_US'), '100%', 'TodoMVC', 'Heartbeat history: 30 checks, 30 up, 0 down', 'link']
+[ 33.00s] Input: kb(desktop):tab
+[ 33.06s] Speaking [LangChangeCommand ('en_US'), 'http://localhost:5173/', 'link']
+[ 35.01s] Input: kb(desktop):tab
+[ 35.07s] Speaking [LangChangeCommand ('en_US'), ' Pause', 'button']
+[ 37.01s] Input: kb(desktop):tab
+[ 37.07s] Speaking [LangChangeCommand ('en_US'), ' Edit', 'link']
+[ 39.00s] Input: kb(desktop):tab
+[ 39.06s] Speaking [LangChangeCommand ('en_US'), ' Clone', 'link']
+[ 41.01s] Input: kb(desktop):tab
+[ 41.04s] Speaking [LangChangeCommand ('en_US'), ' Delete', 'button']
+[ 43.01s] Input: kb(desktop):tab
+[ 43.03s] Speaking [LangChangeCommand ('en_US'), 'Heartbeat history: 44 checks, 44 up, 0 down', 'graphic', 'clickable']
