@@ -35,9 +35,9 @@
 
       <section aria-labelledby="gate-heading">
         <h2 id="gate-heading">Gate</h2>
-        <p>Every UI commit runs all 6 screen-reader hear-tests as a git pre-commit hook (<code>.githooks/pre-commit</code> → <code>earshot_mcp/hear_tests.py</code>); if any test fails the commit is blocked and nothing reaches HEAD.</p>
+        <p>Every UI commit runs all 9 screen-reader hear-tests as a git pre-commit hook (<code>.githooks/pre-commit</code> → <code>earshot_mcp/hear_tests.py</code>); if any test fails the commit is blocked and nothing reaches HEAD.</p>
         <p>When Bob tried to "tidy up" the focus-management code in Modal.tsx (removing <code>tabIndex={-1}</code>, <code>returnFocusRef</code>, and the <code>setTimeout</code> focus call), the gate caught it immediately:</p>
-<pre><code>PS&gt; git -C earshot commit -m "refactor: simplify Modal"
+<pre><code>$ git commit -m "refactor: tidy up Modal"
 FAIL F-01: missing 'Sign In, dialog'
   said: Moon, link, heading, level 3
 FAIL F-02: missing 'Register, button'
@@ -50,8 +50,11 @@ FAIL F-03: missing 'Close modal, button'
 PASS F-04
 PASS F-05
 PASS F-06
+PASS F-07
+PASS F-08
+PASS N-02
 BLOCKED by Earshot: this change breaks what a screen reader hears.</code></pre>
-<p class="note">Verbatim terminal output (trimmed where marked with ...); the full transcripts are in <code>evidence/gate/</code>. Without the focus handling, focus never entered the dialog, so all three dialog tests heard the page behind it.</p>
+<p class="note">Verbatim terminal output (trimmed where marked with ...); run 2026-09-26 with all 9 tests; the full output is <code>evidence/gate/terminal_demo_9tests.txt</code>. Without the focus handling, focus never entered the dialog, so all three dialog tests heard the page behind it.</p>
 <p class="note">Checking the first 6 announcements by hand with NVDA took a person 60 seconds at full speed, on every commit. The gate needs no attention: all 9 tests run unattended in about 6½ minutes.</p>
       </section>
     </main>

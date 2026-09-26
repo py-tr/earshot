@@ -8,3 +8,4 @@
 - **Bob's own explanation after the block:** "The commit was blocked by Earshot: removing tabIndex={-1} from the role="dialog" element breaks screen reader focus — NVDA can no longer announce the modal as a dialog (F-01 fails with 'Sign In, dialog' missing)."
 - **Nothing was committed.** HEAD unchanged; the working tree was restored afterwards.
 - **Terminal demo (2026-09-26 08:57):** the same tidy-up change re-staged; `git commit` in PowerShell ran all 6 hear-tests: F-01, F-02 and F-03 FAIL (NVDA heard silence, then 'Moon, link…'), F-04, F-05 and F-06 PASS, and the commit was BLOCKED. Transcripts: `terminal_demo_blocked_F-0x.txt`.
+- **Final run with all 9 tests (2026-09-26 14:41), on the shipped server (with typing):** the same tidy-up re-applied and committed from a script (`git commit`, hook as installed). F-01, F-02 and F-03 FAIL, F-04 to F-08 and N-02 PASS, and the commit was BLOCKED; HEAD unchanged, file restored. Verbatim output: `terminal_demo_9tests.txt`.
