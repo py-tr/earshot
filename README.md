@@ -276,4 +276,4 @@ Found or seen during the build, listed so nobody mistakes them for fixed:
 
 ## License
 
-MIT (see [LICENSE](LICENSE)). `galaxium/` is the IBM Galaxium Travels sample app from [IBM/galaxium-travels](https://github.com/IBM/galaxium-travels) at commit `e4e18ae`, licensed Apache-2.0 (see [galaxium/LICENSE](galaxium/LICENSE)). My changes to it are listed in [galaxium/MODIFICATIONS.md](galaxium/MODIFICATIONS.md) and visible as commits in this repo.
+MIT (see [LICENSE](LICENSE)). `galaxium/` is the IBM Galaxium Travels sample app from [IBM/galaxium-travels](https://github.com/IBM/galaxium-travels) at commit `e4e18ae`, licensed Apache-2.0 (see [galaxium/LICENSE](galaxium/LICENSE)). My changes to it are listed in [galaxium/MODIFICATIONS.md](galaxium/MODIFICATIONS.md) and visible as commits in this repo. `todomvc/` (TodoMVC React, MIT, upstream `ff43b02`) and `uptime-kuma/` (Uptime Kuma 2.5.5, MIT, upstream `c98982a`) are vendored unmodified, with my changes as later commits; see [NOTICE.md](NOTICE.md).
