@@ -168,5 +168,15 @@
     "forbid": [
       "All, link"
     ]
+  },
+  {
+    "id": "F-13",
+    "path": "http://localhost:3000/dashboard",
+    "start": "TOP",
+    "key_script": "Tab ×2",
+    "expect": [
+      "Status Pages, link"
+    ],
+    "forbid": []
   }
 ]
