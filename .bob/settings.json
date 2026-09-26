@@ -7,7 +7,7 @@
           {
             "type": "command",
             "command": ".venv\\Scripts\\python.exe earshot_mcp\\bob_hook.py",
-            "timeout": 0
+            "timeout": 900
           }
         ]
       }
