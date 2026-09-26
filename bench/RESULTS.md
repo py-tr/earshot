@@ -1,6 +1,6 @@
 # Benchmark: what standard automated accessibility checks catch, compared with Earshot
 
-Measured 2026-09-25 on IBM's Galaxium Travels sample app. The "original" code is the repo's scaffold commit `0a3fb4d` (upstream `e4e18ae`); the "fixed" code is `HEAD` after Bob's `/hear` fixes.
+Measured 2026-09-25/26 on IBM's Galaxium Travels sample app and on TodoMVC's React example (upstream `ff43b02`, original components in `bench/baseline/todomvc/`). The "original" code is the repo's scaffold commit `0a3fb4d` (upstream `e4e18ae`); the "fixed" code is `HEAD` after Bob's `/hear` fixes.
 
 | Finding (audit EAR-2026-09-001) | Strict React lint: eslint-plugin-jsx-a11y 6.10.2, `strict` | axe-core 4.13.0: WCAG 2.0–2.2 A/AA + best-practice, dialog open | Earshot: real NVDA 2026.2 via `listen()` |
 |---|---|---|---|

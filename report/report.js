@@ -7,7 +7,8 @@
     "pending":               ["PENDING FIX",        "badge-pending"],
     "needs-human":           ["NEEDS HUMAN",        "badge-human"],
     "fixed \u2014 confirmed by ear + human": ["FIXED + HUMAN",  "badge-verified"],
-    "verified \u2014 discovered by Bob\u2019s /sweep, accepted by a human": ["VERIFIED \u00b7 FOUND BY SWEEP", "badge-verified"]
+    "verified \u2014 discovered by Bob\u2019s /sweep, accepted by a human": ["VERIFIED \u00b7 FOUND BY SWEEP", "badge-verified"],
+    "verified \u2014 discovered by Bob\u2019s /earshot run, accepted by a human": ["VERIFIED \u00b7 FOUND BY /EARSHOT", "badge-verified"]
   };
 
   function esc(str) {

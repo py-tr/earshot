@@ -1,0 +1,17 @@
+Full gate run, 13 hear-tests on two apps, for commit 9362ebb (F-12), 2026-09-26.
+git commit started 20:44:24; each line is one NVDA take (label, page, keys, time its record was written).
+All 13 passed (PASS F-01 ... PASS F-12); the commit went through. Total: about 9 minutes.
+
+take_20260926T204424  /flights (Sign In)      ENTER,TAB                               20:45:01  F-01
+take_20260926T204502  /flights (Sign In)      ENTER,TAB*6,STAB,ESC                    20:45:52  F-02
+take_20260926T204553  /flights (Sign In)      ENTER,TAB,TAB,TAB                       20:46:33  F-03
+take_20260926T204633  /flights                TAB*10                                  20:47:15  F-04
+take_20260926T204715  /flights                TAB,ENTER,TAB                           20:47:43  F-05
+take_20260926T204743  /flights                TAB*7                                   20:48:19  F-06
+take_20260926T204819  /                       TAB*17                                  20:49:15  F-07
+take_20260926T204916  /                       TAB*17                                  20:50:12  F-08
+take_20260926T205012  /flights                TAB*7,TYPE=Mars                         20:50:49  N-02
+take_20260926T205050  /flights (Sign In)      ENTER,TAB,TAB,TYPE=Nobody,TAB           20:51:32  F-09
+take_20260926T205133  /destinations/mars      TAB*9                                   20:52:12  F-10
+take_20260926T205213  http://localhost:7002/  TAB,TYPE=Buy milk,ENTER,TYPE=Walk dog…  20:52:52  F-11
+take_20260926T205253  http://localhost:7002/  TAB,TYPE=Buy milk,ENTER,TAB*3           20:53:26  F-12

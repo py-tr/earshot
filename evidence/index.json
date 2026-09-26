@@ -3,8 +3,11 @@
   "app": "IBM Galaxium Travels sample app (galaxium/, Apache-2.0, upstream e4e18ae); TodoMVC React (todomvc/, MIT, upstream ff43b02)",
   "screen_reader": "NVDA 2026.2 (real, not simulated); transcripts are verbatim from NVDA's log, audio is NVDA-process-only",
   "summary": {
-    "findings": 14,
-    "verified_by_ear": 14,
+    "findings": 13,
+    "verified_by_ear": 13,
+    "not_counted": [
+      "N-01 (animation pause: fixed and heard, but whether the motion stops needs a human eye)"
+    ],
     "gate_tests": 13,
     "benchmark": "bench/RESULTS.md"
   },
@@ -16,6 +19,7 @@
     "evidence/gate/bob_hook_call_stdin.txt",
     "evidence/gate/bob_hook_no_verify_blocked.txt",
     "evidence/gate/bob_refactor_blocked.diff",
+    "evidence/gate/gate_13_tests_timing.txt",
     "evidence/gate/terminal_demo_9tests.txt",
     "evidence/gate/terminal_demo_blocked_F-01.txt",
     "evidence/gate/terminal_demo_blocked_F-02.txt",
@@ -54,7 +58,11 @@
           "Sign In, dialog",
           "Close modal, button"
         ],
-        "forbid": []
+        "forbid": [],
+        "watch": [
+          "galaxium/booking_system_frontend/src/components/common/Modal.tsx",
+          "galaxium/booking_system_frontend/src/components/common/Input.tsx"
+        ]
       },
       "bob_tasks": [
         "03g"
@@ -98,6 +106,10 @@
         "forbid": [
           "github.com",
           "GitHub, link"
+        ],
+        "watch": [
+          "galaxium/booking_system_frontend/src/components/common/Modal.tsx",
+          "galaxium/booking_system_frontend/src/components/common/Input.tsx"
         ]
       },
       "bob_tasks": [
@@ -139,6 +151,10 @@
         ],
         "forbid": [
           "John Doe, edit"
+        ],
+        "watch": [
+          "galaxium/booking_system_frontend/src/components/common/Modal.tsx",
+          "galaxium/booking_system_frontend/src/components/common/Input.tsx"
         ]
       },
       "bob_tasks": [
@@ -489,7 +505,11 @@
           "Name, edit, required",
           "Email, edit, required"
         ],
-        "forbid": []
+        "forbid": [],
+        "watch": [
+          "galaxium/booking_system_frontend/src/components/common/Modal.tsx",
+          "galaxium/booking_system_frontend/src/components/common/Input.tsx"
+        ]
       },
       "bob_tasks": [
         "34"
