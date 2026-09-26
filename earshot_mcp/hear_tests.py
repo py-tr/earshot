@@ -190,6 +190,13 @@ def main():
         tid = test["id"]
         keys = _normalize_keys(test["key_script"])
         test_path = test.get("path")
+        if test_path and test_path.startswith(("http://", "https://")):  # a second app: skip when it is not running
+            import urllib.request
+            try:
+                urllib.request.urlopen(test_path, timeout=3)
+            except Exception:
+                print(f"SKIP {tid}: {test_path} is not running")
+                continue
         test_start = test.get("start", "Select Seat Class")
         output = _run_take(keys, start=test_start, path=test_path)
 

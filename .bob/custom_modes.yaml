@@ -9,7 +9,7 @@ customModes:
     groups:
       - read
       - - edit
-        - fileRegex: "^(galaxium/booking_system_frontend/src/.*\\.(tsx|ts|css)|hear-tests\\.json)$"
+        - fileRegex: "^(galaxium/booking_system_frontend/src/.*\\.(tsx|ts|css)|todomvc/src/.*\\.(jsx|js|css)|hear-tests\\.json)$"
       - mcp
       - execute
     customInstructions: |
@@ -64,6 +64,9 @@ customModes:
       Start by writing a todo list with update_todo_list (Sweep, Triage, Record findings, Fix each finding, Summary) and tick items off as you go.
 
       ## Step A — Sweep
+
+      If the page is a list app that starts empty (the first Tab stop is an edit field for new items, e.g. TodoMVC), use this sweep key script instead, so there are items to hear: Tab, Type "Buy milk", Enter, Type "Walk dog", Enter, Tab ×20.
+      The page may be a full URL of another app (e.g. http://localhost:7002/); pass it as path unchanged.
 
       Derive the page slug from the path: "/" → "home", "/bookings" → "bookings", etc.
 

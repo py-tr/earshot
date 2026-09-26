@@ -40,7 +40,10 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 NVDA = os.environ['EARSHOT_NVDA']                      # path to a portable nvda.exe
 CFG = os.environ['EARSHOT_NVDA_CONFIG']                # its userConfig dir (log level input/output)
 URL = os.environ.get('EARSHOT_URL', 'http://localhost:5173/flights')
-if page_path:  # any page of the app, e.g. --path=/ or --path=/destinations/mars
+OTHER_APP = bool(page_path) and page_path.startswith(('http://', 'https://'))
+if OTHER_APP:  # a full URL: another app (e.g. the TodoMVC second app on :7002)
+    URL = page_path
+elif page_path:  # any page of the app, e.g. --path=/ or --path=/destinations/mars
     from urllib.parse import urlsplit
     _u = urlsplit(URL); URL = f"{_u.scheme}://{_u.netloc}{page_path if page_path.startswith('/') else '/' + page_path}"
 SCR = os.environ.get('EARSHOT_TAKES', os.path.join(os.path.dirname(HERE), 'takes'))
@@ -84,7 +87,8 @@ if os.path.exists(LOG): os.remove(LOG)
 meta = {'label': label, 'keyscript': keyscript, 'gap': gap, 'start': start_name, 'path': page_path, 'aborted': None}
 
 with sync_playwright() as p:
-    TITLE_RE = '.*booking_system_frontend.*Chrome.*'
+    # our Chrome window: Galaxium's title, or any Chrome window for another app (windows open before launch are excluded)
+    TITLE_RE = '.*Chrome.*' if OTHER_APP else '.*booking_system_frontend.*Chrome.*'
     _before = {h.handle for h in Desktop(backend='win32').windows(title_re=TITLE_RE)}  # the user's own tabs
     br = p.chromium.launch(channel='chrome', headless=False,
                            args=['--start-maximized', '--force-renderer-accessibility'])
