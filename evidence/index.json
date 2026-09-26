@@ -3,9 +3,9 @@
   "app": "IBM Galaxium Travels sample app (galaxium/, Apache-2.0, upstream e4e18ae)",
   "screen_reader": "NVDA 2026.2 (real, not simulated); transcripts are verbatim from NVDA's log, audio is NVDA-process-only",
   "summary": {
-    "findings": 11,
-    "verified_by_ear": 11,
-    "gate_tests": 10,
+    "findings": 12,
+    "verified_by_ear": 12,
+    "gate_tests": 11,
     "benchmark": "bench/RESULTS.md"
   },
   "gate_evidence": [
@@ -96,7 +96,8 @@
           "Select Seat Class"
         ],
         "forbid": [
-          "github.com"
+          "github.com",
+          "GitHub, link"
         ]
       },
       "bob_tasks": [
@@ -495,6 +496,53 @@
       ],
       "bob_screenshots": [
         "bob_sessions/pytr_task34_hear_f09_summary.png"
+      ]
+    },
+    {
+      "id": "F-10",
+      "wcag": "2.4.6 Headings and Labels (AA); 2.4.4 Link Purpose (A)",
+      "component": "/destinations/mars \"Book\" links — two flights each have an identical link name with no differentiation (source: Bob sweep destinations-mars S-01, human-accepted)",
+      "source": "bob /earshot run on /destinations/mars",
+      "key_script": "page /destinations/mars, from top: Tab ×9",
+      "expected": "Each Book link names its flight's route and date: \"Book Earth to Mars, Jan 01, 2099, link\", then \"Book Moon to Mars, Jan 07, 2099, link\" (not \"Book, link\" twice, and no bare flight ids)",
+      "verified_by": "ear (NVDA transcript)",
+      "before": [
+        "evidence/F-10/before_bob_earshot_sweep_listen.txt"
+      ],
+      "rejected_attempts": [],
+      "after": [
+        "evidence/F-10/after_bob_listen.txt",
+        "evidence/F-10/after_bob_listen_v1.txt"
+      ],
+      "audio": [
+        "evidence/F-10/after_bob_listen.wav",
+        "evidence/F-10/after_bob_listen_v1.wav",
+        "evidence/F-10/before_bob_earshot_sweep_listen.wav"
+      ],
+      "fix_commits": [
+        "fefe2c1 fix(a11y): F-10 – name Book links with route and date on /destinations/mars",
+        "acecf57 F-10: add aria-label to Book links naming flight date and ID (verified by NVDA)"
+      ],
+      "gate_test": {
+        "id": "F-10",
+        "path": "/destinations/mars",
+        "start": "TOP",
+        "key_script": "Tab ×9",
+        "expect": [
+          "Book Earth to Mars, Jan 01, 2099, link",
+          "Book Moon to Mars, Jan 07, 2099, link"
+        ],
+        "forbid": [
+          "Book, link"
+        ]
+      },
+      "bob_tasks": [
+        "36b",
+        "37"
+      ],
+      "bob_screenshots": [
+        "bob_sessions/pytr_task36b_earshot_run_mars_summary.png",
+        "bob_sessions/pytr_task37_hear_f10_label_and_test_summary.png"
       ]
     }
   ]

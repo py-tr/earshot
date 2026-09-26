@@ -11,6 +11,6 @@ Bob swept / by ear (task22; 25 Tabs from the top, real NVDA; take_20260926T10273
 
 Not proposed by Bob, noted by the human: the "Learn More" button has no action at all. It is a broken button for every user, not a screen-reader issue, so it is out of scope. The destination cards (a link containing a heading and a description) are a valid pattern, rejected the same way as on /flights.
 
-Bob's Tab numbers in `home.md` are off by two (the duplicate pairs are really Tabs 6/7, 8/9 and 18/19; github.com is Tab 20). The problems themselves match the transcript.
+Bob's Tab numbers in `home.md` are off by 2 to 9 (a 25-Tab sweep cannot reach Tab 28) (the duplicate pairs are really Tabs 6/7, 8/9 and 18/19; github.com is Tab 20). The problems themselves match the transcript.
 
 Result: **Bob proposed 4; the human accepted all 4 as 2 findings (F-07, F-08).** Across three sweep runs, Bob proposed 14 items and 5 findings were accepted (F-04..F-08).

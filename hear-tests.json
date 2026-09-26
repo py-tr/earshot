@@ -18,7 +18,8 @@
       "Select Seat Class"
     ],
     "forbid": [
-      "github.com"
+      "github.com",
+      "GitHub, link"
     ]
   },
   {
@@ -38,7 +39,9 @@
     "path": "/flights",
     "start": "TOP",
     "key_script": "Tab ×10",
-    "expect": ["Select Seat Class, Earth to Mars"],
+    "expect": [
+      "Select Seat Class, Earth to Mars"
+    ],
     "forbid": []
   },
   {
@@ -46,7 +49,11 @@
     "path": "/flights",
     "start": "TOP",
     "key_script": "Tab, Enter, Tab",
-    "expect": ["Skip to main content", "main landmark", "Search flights, edit"],
+    "expect": [
+      "Skip to main content",
+      "main landmark",
+      "Search flights, edit"
+    ],
     "forbid": []
   },
   {
@@ -54,7 +61,9 @@
     "path": "/flights",
     "start": "TOP",
     "key_script": "Tab ×7",
-    "expect": ["Search flights, edit"],
+    "expect": [
+      "Search flights, edit"
+    ],
     "forbid": []
   },
   {
@@ -62,23 +71,37 @@
     "path": "/",
     "start": "TOP",
     "key_script": "Tab ×17",
-    "expect": ["Book a Flight, link", "Explore Flights, link", "Learn More, button", "Book Your Flight Now, link"],
-    "forbid": ["button, link"]
+    "expect": [
+      "Book a Flight, link",
+      "Explore Flights, link",
+      "Learn More, button",
+      "Book Your Flight Now, link"
+    ],
+    "forbid": [
+      "button, link"
+    ]
   },
   {
     "id": "F-08",
     "path": "/",
     "start": "TOP",
     "key_script": "Tab ×17",
-    "expect": ["GitHub, link"],
-    "forbid": ["github.com"]
+    "expect": [
+      "GitHub, link"
+    ],
+    "forbid": [
+      "github.com"
+    ]
   },
   {
     "id": "N-02",
     "path": "/flights",
     "start": "TOP",
     "key_script": "Tab ×7, Type \"Mars\"",
-    "expect": ["Search flights, edit", "Showing 4 flights"],
+    "expect": [
+      "Search flights, edit",
+      "Showing 4 flights"
+    ],
     "forbid": []
   },
   {
@@ -86,7 +109,10 @@
     "path": "/flights",
     "start": "Select Seat Class",
     "key_script": "Enter, Tab, Tab, Type \"Nobody\", Tab",
-    "expect": ["Name, edit, required", "Email, edit, required"],
+    "expect": [
+      "Name, edit, required",
+      "Email, edit, required"
+    ],
     "forbid": []
   },
   {
@@ -98,6 +124,8 @@
       "Book Earth to Mars, Jan 01, 2099, link",
       "Book Moon to Mars, Jan 07, 2099, link"
     ],
-    "forbid": ["Book, link"]
+    "forbid": [
+      "Book, link"
+    ]
   }
 ]

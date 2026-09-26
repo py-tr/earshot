@@ -232,4 +232,30 @@ var EARSHOT_DATA = [
       ]
     }
   }
+  ,{
+    id: "F-10",
+    status: "verified — discovered by Bob’s /sweep, accepted by a human",
+    wcag: "2.4.4 Link Purpose (A); 2.4.6 Headings and Labels (AA)",
+    component: "/destinations/mars: two flight links both named “Book” (found by the one-command /earshot run)",
+    script: "TAB ×9 from top of /destinations/mars",
+    expected: "“Book Earth to Mars, Jan 01, 2099, link”, then “Book Moon to Mars, Jan 07, 2099, link”",
+    audio: {
+      before:   "../evidence/F-10/before_bob_earshot_sweep_listen.wav",
+      rejected: "../evidence/F-10/after_bob_listen_v1.wav",
+      after:    "../evidence/F-10/after_bob_listen.wav"
+    },
+    transcript: {
+      before: [
+        "TAB → Book, link",
+        "TAB → Book, link (which flight?)"
+      ],
+      rejected: [
+        "Bob’s first label: “Book flight Jan 01, 2099 1, link” (a bare flight id); a human rewrote the expectation"
+      ],
+      after: [
+        "TAB → Book Earth to Mars, Jan 01, 2099, link",
+        "TAB → Book Moon to Mars, Jan 07, 2099, link"
+      ]
+    }
+  }
 ];

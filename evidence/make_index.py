@@ -6,11 +6,11 @@ os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))  # repo
 TASKS = {  # finding -> Bob tasks that fixed/verified it (from bob_sessions/INDEX.md)
     'F-01': ['03g'], 'F-02': ['05'], 'F-03': ['06'], 'N-01': ['07'], 'N-02': ['08', '23', '27'],
     'F-04': ['13a', '13b', '13d', '15'], 'F-05': ['13a', '16', '21'], 'F-06': ['13d', '17'],
-    'F-07': ['22', '24', '25'], 'F-08': ['22', '26'], 'F-09': ['34'],
+    'F-07': ['22', '24', '25'], 'F-08': ['22', '26'], 'F-09': ['34'], 'F-10': ['36b', '37'],
 }
 SOURCE = {'F-01': 'audit', 'F-02': 'audit', 'F-03': 'audit', 'N-01': 'audit', 'N-02': 'audit',
           'F-04': 'bob-sweep /flights', 'F-05': 'bob-sweep /flights', 'F-06': 'bob-sweep /flights',
-          'F-07': 'bob-sweep /', 'F-08': 'bob-sweep /', 'F-09': 'regression in our own F-01 fix, found by ear while typing'}
+          'F-07': 'bob-sweep /', 'F-08': 'bob-sweep /', 'F-09': 'regression in our own F-01 fix, found by ear while typing', 'F-10': 'bob /earshot run on /destinations/mars'}
 DECIDED = {'N-01': 'ear + human eye (the animation stopping is visual)'}
 
 tests = {t['id']: t for t in json.load(open('hear-tests.json', encoding='utf8'))}
