@@ -1,5 +1,6 @@
 # Keep IBM Bob out of generated, bulky or machine-local files (gitignore syntax).
-takes/
+takes/*
+!takes/bob_hook_last.txt
 **/node_modules/
 todomvc/dist/
 .venv/
