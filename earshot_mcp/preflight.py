@@ -7,7 +7,7 @@ import sys
 import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-APPS = {"Galaxium": "http://localhost:5173/", "TodoMVC": "http://localhost:7002/"}
+APPS = {"Galaxium": "http://localhost:5173/", "TodoMVC": "http://localhost:7002/", "Uptime Kuma": "http://localhost:3000/"}
 
 
 def up(url):

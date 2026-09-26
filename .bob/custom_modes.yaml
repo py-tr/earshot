@@ -9,7 +9,7 @@ customModes:
     groups:
       - read
       - - edit
-        - fileRegex: "^(?:.*[\\\\/])?(galaxium[\\\\/]booking_system_frontend[\\\\/]src[\\\\/].*\\.(tsx|ts|css)|todomvc[\\\\/]src[\\\\/].*\\.(jsx|js|css)|hear-tests\\.json)$"
+        - fileRegex: "^(?:.*[\\\\/])?(galaxium[\\\\/]booking_system_frontend[\\\\/]src[\\\\/].*\\.(tsx|ts|css)|todomvc[\\\\/]src[\\\\/].*\\.(jsx|js|css)|uptime-kuma[\\\\/]src[\\\\/].*\\.(vue|js|scss|css)|hear-tests\\.json)$"
       - mcp
       - execute
     customInstructions: |

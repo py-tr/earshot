@@ -66,7 +66,7 @@ def main():
     changed = result.stdout.splitlines()
     frontend_changed = [
         f for f in changed
-        if f.startswith(("galaxium/booking_system_frontend/src/", "todomvc/src/"))
+        if f.startswith(("galaxium/booking_system_frontend/src/", "todomvc/src/", "uptime-kuma/src/"))
     ]
     if not frontend_changed:
         sys.exit(0)

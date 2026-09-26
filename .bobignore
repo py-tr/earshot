@@ -3,6 +3,8 @@ takes/*
 !takes/bob_hook_last.txt
 **/node_modules/
 todomvc/dist/
+uptime-kuma/data/
+uptime-kuma/dist/
 .venv/
 earshot_mcp/local.env
 *.wav

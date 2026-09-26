@@ -90,8 +90,8 @@ class TestTestApp(unittest.TestCase):
     def test_todomvc_url_subpath(self):
         self.assertEqual(_test_app({"path": "http://localhost:7002/todos"}), "todomvc")
 
-    def test_other_http_url_is_galaxium(self):
-        self.assertEqual(_test_app({"path": "http://localhost:3000/"}), "galaxium")
+    def test_other_http_url_is_uptime_kuma(self):
+        self.assertEqual(_test_app({"path": "http://localhost:3000/"}), "uptime-kuma")
 
 
 # ---------------------------------------------------------------------------

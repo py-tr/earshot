@@ -7,7 +7,7 @@ Start by writing a todo list with update_todo_list (Sweep, Triage, Record findin
 If the page is a list app that starts empty (the first Tab stop is an edit field for new items, e.g. TodoMVC), use this sweep key script instead, so there are items to hear: Tab, Type "Buy milk", Enter, Type "Walk dog", Enter, Tab ×20.
 The page may be a full URL of another app (e.g. http://localhost:7002/); pass it as path unchanged.
 
-Derive the page slug from the path: "/" → "home", "/bookings" → "bookings", etc. For a full URL of another app, use the app name (e.g. "todomvc"), never "home"; never overwrite an existing sweep file of another app.
+Derive the page slug from the path: "/" → "home", "/bookings" → "bookings", etc. For a full URL of another app, use the app name (e.g. "todomvc"), never "home"; never overwrite an existing sweep file of another app. For Uptime Kuma use the full URL http://localhost:3000/dashboard as path, start="TOP", slug "uptime-kuma".
 
 Call listen with start "TOP", gap 1.5, path=<page>, and key_script "Tab ×25", or the list-app seed script above when the page is a list app that starts empty.
 If listen replies "running", call listen_result with that label (never sleep or poll).

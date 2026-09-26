@@ -29,8 +29,10 @@ _TESTS_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 _APP_SOURCE = {
     "galaxium": "galaxium/booking_system_frontend/src/",
     "todomvc": "todomvc/src/",
+    "uptime-kuma": "uptime-kuma/src/",
 }
 _TODOMVC_URL_PREFIX = "http://localhost:7002"
+_UPTIME_KUMA_URL_PREFIX = "http://localhost:3000"
 
 
 def _load_tests():
@@ -39,10 +41,12 @@ def _load_tests():
 
 
 def _test_app(test: dict) -> str:
-    """Return 'todomvc' if the test path starts with the TodoMVC URL, else 'galaxium'."""
+    """Return the app name for a test based on its path."""
     path = test.get("path", "")
     if path.startswith(_TODOMVC_URL_PREFIX):
         return "todomvc"
+    if path.startswith(_UPTIME_KUMA_URL_PREFIX):
+        return "uptime-kuma"
     return "galaxium"
 
 
