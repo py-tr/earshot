@@ -247,6 +247,8 @@ def main():
                         help="Print which tests would run and why, then exit 0 without listening")
     parser.add_argument("--only", metavar="ID",
                         help="Run only the test with this ID")
+    parser.add_argument("--ids", metavar="ID1,ID2,...",
+                        help="Run only the tests with these comma-separated IDs")
     args = parser.parse_args()
 
     if args.replay:
@@ -262,6 +264,13 @@ def main():
         tests, reasons = _select_tests(tests, staged)
     else:
         reasons = {}
+
+    if args.ids:
+        allowed = set(args.ids.split(","))
+        tests = [t for t in tests if t["id"] in allowed]
+        if not tests:
+            print(f"No tests found for IDs {args.ids!r}")
+            sys.exit(1)
 
     if args.only:
         tests = [t for t in tests if t["id"] == args.only]
