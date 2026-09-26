@@ -10,7 +10,7 @@ Each accessibility fix was written by IBM Bob in an Earshot `/hear` task and ver
 
 | File | Change | Finding |
 |---|---|---|
-| `booking_system_frontend/src/components/common/Modal.tsx` | the dialog gets an accessible name, focus moves into it on open, focus is trapped inside, and focus returns to the opener on close | F-01, F-02 |
+| `booking_system_frontend/src/components/common/Modal.tsx` | the dialog gets an accessible name, focus moves into it on open (once per opening, so typing keeps focus), focus is trapped inside, and focus returns to the opener on close | F-01, F-02, F-09 |
 | `booking_system_frontend/src/components/common/Input.tsx` | the label is associated with its input (`useId`, `htmlFor`) | F-03 |
 | `booking_system_frontend/src/components/common/Starfield.tsx` | Pause/Resume control for the background animation | N-01 |
 | `booking_system_frontend/src/components/common/Button.tsx` | forwards `aria-label` | F-04 |

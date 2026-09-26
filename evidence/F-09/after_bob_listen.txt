@@ -1,0 +1,33 @@
+# NVDA speech/input log for the 'listen' take (take_20260926T165505), extracted verbatim from NVDA's own log (log level: input/output).
+# Clip time 0.00 s = 16:55:24.909 local (2026-09-26). Format: [clip seconds, from NVDA log timestamp] original NVDA log line.
+# Only 'Input:' and 'Speaking' records are listed; LangChangeCommand/CancellableSpeech are NVDA-internal markers, kept verbatim.
+# Note: the timestamp is when NVDA queued the speech; audio can start slightly later if earlier speech is still playing.
+# DOM focus after each key (document.activeElement sampled over CDP ~0.3 s before the next key; not from NVDA):
+#   ENTER @ 1.06s -> DIV "Sign InEnter your name and email to continueNameEm" [inside dialog]
+#   TAB @ 3.06s -> BUTTON "Close modal" [inside dialog]
+#   TAB @ 5.06s -> INPUT "John Doe" [inside dialog]
+#   TYPE @ 7.50s -> INPUT "John Doe" [inside dialog]
+#   TAB @ 9.06s -> INPUT "john@example.com" [inside dialog]
+
+[  1.00s] Input: kb(desktop):enter
+[  1.14s] Speaking [LangChangeCommand ('en_US'), 'Sign In', 'dialog', CancellableSpeech (still valid)]
+[  1.14s] Speaking [LangChangeCommand ('en_US'), 'heading', 'level 2', 'Sign In']
+[  3.01s] Input: kb(desktop):tab
+[  3.06s] Speaking [LangChangeCommand ('en_US'), 'Close modal', 'button']
+[  5.01s] Input: kb(desktop):tab
+[  5.07s] Speaking [LangChangeCommand ('en_US'), 'form landmark', CancellableSpeech (still valid)]
+[  5.08s] Speaking [LangChangeCommand ('en_US'), 'Name', 'edit', 'required', CancellableSpeech (still valid), 'John Doe', CancellableSpeech (still valid), 'blank']
+[  7.01s] Input: kb(desktop):N
+[  7.02s] Speaking [PitchCommand(offset=30), CharacterModeCommand(True), LangChangeCommand ('en_US'), 'N', PitchCommand(), EndUtteranceCommand(), CharacterModeCommand(False)]
+[  7.09s] Input: kb(desktop):o
+[  7.10s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'o', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  7.17s] Input: kb(desktop):b
+[  7.19s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'b', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  7.25s] Input: kb(desktop):o
+[  7.28s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'o', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  7.34s] Input: kb(desktop):d
+[  7.34s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'd', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  7.42s] Input: kb(desktop):y
+[  7.45s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'y', EndUtteranceCommand(), CharacterModeCommand(False)]
+[  9.01s] Input: kb(desktop):tab
+[  9.06s] Speaking [LangChangeCommand ('en_US'), 'Email', 'edit', 'required', CancellableSpeech (still valid), 'john@example.com', CancellableSpeech (still valid), 'blank']

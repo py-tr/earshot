@@ -13,8 +13,9 @@ Measured 2026-09-25 on IBM's Galaxium Travels sample app. The "original" code is
 | **F-07** a button nested inside a link: one control, two Tab stops, in 3 places on / (found by Bob's /sweep of the Home page) | not flagged | not flagged (on /, axe reports only `link-name` and `region`) | heard ("Book a Flight, button, link" twice), first fix rejected (`tabIndex=-1` on the inner button: still "button, link"), fixed, re-heard: "Book a Flight, link" once |
 | **F-08** footer GitHub icon link has no name (found by Bob's /sweep of the Home page) | not flagged | **flagged**: `link-name` | heard ("github.com, link"), fixed, re-heard: "GitHub, link" |
 | **N-02** result count not announced while typing (audit; testable by ear since `listen()` can type) | not flagged | not flagged (a missing status message cannot be seen in a static scan) | heard (typed letters echoed, then silence), fixed, re-heard: "Showing 4 flights" |
+| **F-09** typing in the Sign In dialog loses focus after one letter (regression from our own F-01 fix) | not flagged | not flagged (focus theft happens only while typing; a static scan never types) | heard ("N", then the dialog again), fixed, re-heard: "N, o, b, o, d, y", then "Email, edit, required" |
 
-**Automated checks: 1½ of 9 findings flagged (lint 0, axe-core 1½). Earshot: 9 of 9 verified by ear, 5 of them discovered by Bob's own /sweep. 7 of the 9 were caught only by ear.**
+**Automated checks: 1½ of 10 findings flagged (lint 0, axe-core 1½). Earshot: 10 of 10 verified by ear, 5 of them discovered by Bob's own /sweep, and 1 (F-09) a regression our own F-01 fix introduced. 8 of the 10 were caught only by ear.**
 (F-04..F-06 were measured on the same original-code scans, `axe_baseline.json` and `lint_baseline.json`, of /flights. F-07, F-08 and N-02 were measured on 2026-09-26: lint on the original `Home.tsx`, `Header.tsx`, `Footer.tsx` and `Flights.tsx` in `bench/baseline/` (no messages), axe-core 4.13 on / before the F-07 fix. N-01, the starfield pause, needs a human eye and is not counted.)
 
 ## The name-only fix passes axe and still fails blind users

@@ -210,4 +210,26 @@ var EARSHOT_DATA = [
       ]
     }
   }
+  ,{
+    id: "F-09",
+    status: "verified",
+    wcag: "2.1.1 Keyboard (A); 3.2.2 On Input (A)",
+    component: "Sign In dialog: a regression our own F-01 fix introduced (focus stolen on every keystroke)",
+    script: "ENTER → TAB → TAB, type “Nobody”, TAB",
+    expected: "The Name field keeps focus while typing; the next Tab says “Email, edit, required”",
+    audio: {
+      before: "../evidence/F-09/before_probe_typing_listen.wav",
+      after:  "../evidence/F-09/after_bob_listen.wav"
+    },
+    transcript: {
+      before: [
+        "TYPE → N … then “Sign In, dialog” again: focus jumped out of the Name field",
+        "TAB → Close modal, button (only “N” was typed)"
+      ],
+      after: [
+        "TYPE → N, o, b, o, d, y",
+        "TAB → Email, edit, required"
+      ]
+    }
+  }
 ];
