@@ -138,7 +138,7 @@ In Bob, open `findings.md` and type `/hear F-01`, or type `/sweep /flights`.
   - the benchmark scripts (`bench/`)
   - driver fixes during the event (watchdog, focus labels, `--path` / `--start`)
   - these write-ups
-- **The human** triaged every sweep proposal, approved every change, made the visual check for N-01, and committed Bob's verified fixes (Bob verified each fix by ear; the commits went through the Earshot gate).
+- **The human** triaged every sweep proposal, approved every change, made the visual check for N-01, and committed Bob's verified fixes (Bob verified each fix by ear; from F-04 on, the commits also had to pass the Earshot gate).
 
 ## License
 
