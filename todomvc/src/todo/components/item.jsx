@@ -36,6 +36,7 @@ export const Item = memo(function Item({ todo, dispatch }) {
                 <input
                     className="toggle"
                     type="checkbox"
+                    aria-label={title}
                     data-testid="todo-item-toggle"
                     checked={completed}
                     onChange={toggleItem}
