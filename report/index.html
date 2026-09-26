@@ -30,14 +30,14 @@
         </div>
         <div class="scoreboard-tile">
           <span class="scoreboard-number">4 + 2</span>
-          <span class="scoreboard-caption">of Bob's own fixes rejected by ear · Bob commits blocked (one with --no-verify)</span>
+          <span class="scoreboard-caption">of Bob's own fixes rejected by ear · prompted regressions refused at commit (one with --no-verify)</span>
         </div>
       </div>
     </section>
 
     <div class="banner" role="note" aria-label="Summary">
       <p>Automated checks flagged 2½ of 13 findings. Earshot verified 13 of 13 with a real screen reader (NVDA) on two real apps; 10 of the 13 were caught only by ear, including a regression in our own F-01 fix.</p>
-      <p>7 were discovered by Bob's own sweeps on two apps · 4 of Bob's own fixes were rejected by ear · every commit is gated by 13 screen-reader tests. <a href="https://github.com/py-tr/earshot/blob/main/bench/RESULTS.md">How we measured</a></p>
+      <p>7 were discovered by Bob's own sweeps on two apps · 4 of Bob's own fixes were rejected by ear · every UI commit since F-04 is gated by the screen-reader tests (13 in all). <a href="https://github.com/py-tr/earshot/blob/main/bench/RESULTS.md">How we measured</a></p>
     </div>
 
     <section class="f01-section" aria-labelledby="f01-heading">
@@ -69,7 +69,7 @@
       <section aria-labelledby="gate-heading">
         <h2 id="gate-heading">Gate</h2>
         <p>Every UI commit replays the screen-reader hear-tests it can affect (13 in all) as a git pre-commit hook (<code>.githooks/pre-commit</code> → <code>earshot_mcp/hear_tests.py</code>); if any test fails the commit is blocked and nothing reaches HEAD.</p>
-        <p>When Bob tried to "tidy up" the focus-management code in Modal.tsx (removing <code>tabIndex={-1}</code>, <code>returnFocusRef</code>, and the <code>setTimeout</code> focus call), the gate caught it immediately:</p>
+        <p>We asked Bob to "tidy up" the focus-management code in Modal.tsx (removing <code>tabIndex={-1}</code>, <code>returnFocusRef</code>, and the <code>setTimeout</code> focus call), the gate caught it immediately:</p>
 <pre><code>$ git commit -m "refactor: tidy up Modal"
 FAIL F-01: missing 'Sign In, dialog'
   said: Moon, link, heading, level 3

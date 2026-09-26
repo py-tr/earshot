@@ -1,0 +1,18 @@
+# Runs on GitHub's own Linux runners on every push and pull request: no screen reader needed.
+# It replays every hear-test against the stored NVDA transcripts (each must pass on the fixed
+# transcript and fail on every broken one) and runs the unit tests.
+name: earshot-check
+on: [push, pull_request]
+jobs:
+  replay-and-unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install mcp==2.2.0
+      - name: Replay the screen-reader tests against the stored NVDA transcripts
+        run: python earshot_mcp/hear_tests.py --replay
+      - name: Unit tests
+        run: python -m unittest discover -s earshot_mcp/tests -v

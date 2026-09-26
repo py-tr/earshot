@@ -1,0 +1,25 @@
+# TEMPLATE, not run by us: the full listening gate in CI.
+# Needs a self-hosted Windows runner (a VM is fine) with Chrome, NVDA (portable) and the app,
+# labelled [self-hosted, windows, nvda], and earshot_mcp/local.env pointing at NVDA.
+# The runner's desktop must stay free while it listens (listen() aborts if focus is stolen).
+# Copy to .github/workflows/ to enable.
+name: earshot-listening-gate
+on: [pull_request]
+jobs:
+  listen:
+    runs-on: [self-hosted, windows, nvda]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python environment
+        run: |
+          python -m venv .venv
+          .venv\Scripts\python -m pip install -r earshot_mcp\requirements.txt
+          .venv\Scripts\python -m playwright install chrome
+      - name: Start the app under test
+        run: |
+          cd galaxium\booking_system_frontend
+          npm ci
+          Start-Process -FilePath npm -ArgumentList "run","dev" -WindowStyle Hidden
+          Start-Sleep -Seconds 15
+      - name: Replay every hear-test with real NVDA
+        run: .venv\Scripts\python earshot_mcp\hear_tests.py
