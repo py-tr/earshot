@@ -242,7 +242,7 @@ Found or seen during the build, listed so nobody mistakes them for fixed:
 
 ## How it was built
 
-- **Built by IBM Bob during the event.** Every task's consumption summary is screenshotted in `bob_sessions/` (`pytr_taskNN_*`). The hackathon-provisioned account (`ibm-coding-challenge-uat`) was never received, so all tasks ran on an IBM Bob **trial account** (50 Bobcoins; about 32 used). Main pieces:
+- **Built by IBM Bob during the event.** Every task's consumption summary is screenshotted in `bob_sessions/` (`pytr_taskNN_*`). The hackathon-provisioned account (`ibm-coding-challenge-uat`) was never received, so all tasks ran on an IBM Bob **trial account** (50 Bobcoins; about 46 used). Main pieces:
   - `findings.md` from the PDF (task01)
   - the MCP server, the `earshot` mode and `/hear` (task02, 02b–02i)
   - all UI fixes: F-01 task03 attempt 7, F-02 task05, F-03 task06, N-01 task07, F-04 task15, F-05 task16 and task21, F-06 task17, F-07 task24 and task25, F-08 task26, N-02 task27, F-09 task34, F-10 task36b and task37, F-11 task38, F-12 task39
