@@ -1,0 +1,11 @@
+# Bob Shell (headless) runs
+
+Bob Shell 2.0.5, `bob run` from PowerShell in the repo root, on the same trial account as the IDE. Costs and task IDs are copied from each run's own Task Summary. Full outputs were read by the operator; key parts are summarised here.
+
+| Task | Command | Bob Shell task ID | Cost (Bobcoins) | Result |
+|---|---|---|---|---|
+| 40a | `bob run --accept-license --mode earshot --max-cost 0.2 --max-turns 3 "Do not call any tools. Say which mode you are in, and list the MCP tools and skills available to you."` | 8cfacfa7c10dbba86349873a63dbab1e | 0.020 | Reported Earshot mode, the MCP tools `listen` and `listen_result`, and the four rule files from `.bob/rules-earshot/` |
+| 40b | `bob run --mode earshot-sweep --max-cost 1.5 "Sweep /destinations/earth. Nobody can answer questions: write the sweep file and finish."` | 721434ae5b838fbe6014afd82fbaa91b | 0.696 | Swept by ear (TOP) with one explore subagent, but could not write the sweep file: Bob Shell checks the mode's fileRegex against the absolute Windows path. Our prompt was also misread as a feature request. Fences fixed afterwards |
+| 40c | `bob run --mode earshot-sweep --max-cost 1.5 "Sweep /destinations/earth. This is an unattended run: do not ask the user anything; write the sweep file and finish."` | f09c43dea5d3a2821c4be6dc10670830 | 0.312 | Swept by ear with two parallel explore subagents, wrote `sweep/destinations-earth.md`: 1 proposal, rejected in triage |
+| 41 | `bob run --mode agent --max-cost 2.5 "Create a Bob skill at .bob/skills/nvda-expectations/SKILL.md …"` | 372a7a1268f99a0fc19eb11c06eae2d | 0.652 | Wrote the nvda-expectations skill from our transcripts and two WCAG pages; two sections corrected in review |
+| 42 | `bob run --mode agent --max-cost 1 "Add fast unit tests using only the Python standard library unittest …"` | 9f088e23a17999d93533956f26ca53d3 | 1.05 (cap 1.00 reached at the end) | Wrote `earshot_mcp/tests/` (50 tests, all pass in under a second). A mutation check (Shift+Tab mapped to Tab) made 3 of them fail |

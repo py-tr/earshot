@@ -4,6 +4,7 @@
 ```
 pip install mcp==2.2.0
 python earshot_mcp/hear_tests.py --replay
+python -m unittest discover -s earshot_mcp/tests
 ```
 Every test must pass on its stored fixed transcript and fail on every broken one in `evidence/<ID>/`.
 

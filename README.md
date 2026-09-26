@@ -30,9 +30,10 @@ The three numbers: **13 of 13 fixed and verified by ear · 2½ of 13 flagged by 
 git clone https://github.com/py-tr/earshot && cd earshot
 pip install mcp==2.2.0
 python earshot_mcp/hear_tests.py --replay
+python -m unittest discover -s earshot_mcp/tests
 ```
 
-This replays every gate test against the NVDA transcripts stored in `evidence/`. Each test must **pass on the fixed transcript and fail on every broken one** (the original bug and Bob's rejected fixes), so you can see that each test tells broken from fixed. Expected output: 13 lines of `PASS`, in under a second. The live run with real NVDA needs Windows (see [Setup](#setup-windows-only)).
+The first command replays every gate test against the NVDA transcripts stored in `evidence/`. Each test must **pass on the fixed transcript and fail on every broken one** (the original bug and Bob's rejected fixes), so you can see that each test tells broken from fixed. Expected output: 13 lines of `PASS`, in under a second. The second runs 50 unit tests of the key parser, the pass/fail logic, `hear-tests.json` and the Bob hook (written by Bob in Bob Shell, task42). The live run with real NVDA needs Windows (see [Setup](#setup-windows-only)).
 
 ## Result
 
@@ -208,6 +209,7 @@ Found or seen during the build, listed so nobody mistakes them for fixed:
   - typing in `listen()` (task23)
   - Bob writes the gate test for each verified finding itself (earshot mode, task33; first used for F-09 in task34)
   - the `nvda-expectations` skill (task41, Bob Shell, 0.65 Bobcoins): Bob wrote it from our verbatim NVDA transcripts and two WCAG Understanding pages read through `@https://` mentions; a review corrected two of its eight sections (it had cited a focus re-read as a live region, and the end-of-page silence as a failure). The earshot and sweep rules tell Bob to use it
+  - the unit tests in `earshot_mcp/tests/` (task42, Bob Shell) and every headless run, listed in [`bob_sessions/shell/INDEX.md`](bob_sessions/shell/INDEX.md)
   - the Bob lifecycle hook (task29), which blocked Bob's own `git commit --no-verify` (task30c). On the first try (task30a), Bob in Agent mode refused to edit IBM's code at all, citing `AGENTS.md`: the mode fences held.
   - `/sweep` and the `earshot-sweep` mode (task12, 12b, 13c)
   - page-aware `/hear` (task14)
