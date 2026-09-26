@@ -6,7 +6,8 @@
     "verified":              ["VERIFIED",           "badge-verified"],
     "pending":               ["PENDING FIX",        "badge-pending"],
     "needs-human":           ["NEEDS HUMAN",        "badge-human"],
-    "fixed \u2014 confirmed by ear + human": ["FIXED + HUMAN",  "badge-verified"]
+    "fixed \u2014 confirmed by ear + human": ["FIXED + HUMAN",  "badge-verified"],
+    "verified \u2014 discovered by Bob\u2019s /sweep, accepted by a human": ["VERIFIED \u00b7 FOUND BY SWEEP", "badge-verified"]
   };
 
   function esc(str) {

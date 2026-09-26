@@ -89,18 +89,20 @@ var EARSHOT_DATA = [
     status: "verified \u2014 discovered by Bob\u2019s /sweep, accepted by a human",
     wcag: "2.4.1 Bypass Blocks (A)",
     component: "Every page (no skip link)",
-    script: "TAB from top",
-    expected: "\u201cSkip to main content, same page, link\u201d as first tab stop",
+    script: "TAB, ENTER, TAB from top of /flights",
+    expected: "\u201cSkip to main content, same page, link\u201d as first tab stop; Enter moves focus into main",
     audio: {
       before: "../evidence/F-05/before_probe_listen.wav",
-      after:  "../evidence/F-05/after_bob_listen.wav"
+      after:  "../evidence/F-05/after_skip_focus_listen.wav"
     },
     transcript: {
       before: [
         "first TAB \u2192 Pause animation, button (no skip link)"
       ],
       after: [
-        "first TAB \u2192 Skip to main content, same page, link"
+        "first TAB \u2192 Skip to main content, same page, link",
+        "ENTER \u2192 main landmark, heading, level 1, Available Flights",
+        "TAB \u2192 Search flights, edit (header skipped)"
       ]
     }
   },

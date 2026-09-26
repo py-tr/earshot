@@ -1,7 +1,7 @@
 # Earshot: screen-reader tests for AI-written UI
 
 IBM Bob fixes the UI, a real screen reader (NVDA) checks every fix by ear, and a pre-commit gate blocks any change that breaks what a blind user hears.
-Tested on IBM's own Galaxium Travels sample app. Nothing was planted.
+Tested on IBM's own Galaxium Travels sample app. Nothing was planted: the bugs are IBM's; the audit document is ours.
 
 **Report page:** https://py-tr.github.io/earshot/ · **Video (3 min):** [VIDEO URL]
 
@@ -16,6 +16,8 @@ Tested on IBM's own Galaxium Travels sample app. Nothing was planted.
 - **The fix that passed axe was still silent.** Bob's first F-01 fix only added a dialog name. axe reported no dialog violation, yet in NVDA Enter was followed by silence, and Tab then read "Moon, link, heading, level 3" from the page behind the dialog. Earshot rejected that fix. ([bench/RESULTS.md](bench/RESULTS.md))
 - **6 of 6 findings resolved and verified by NVDA.** Three (F-01..F-03) came from the audit PDF. Three (F-04..F-06) were discovered by Bob's `/sweep` and accepted by a human.
 - **The gate works.** [`hear-tests.json`](hear-tests.json) holds 6 tests, and a full run passes 6 of 6 in about 4 min 40 s. It refused Bob's own "tidy-up" of `Modal.tsx`, which removed the dialog's focus management. NVDA heard silence, so the commit was blocked. ([evidence/gate/](evidence/gate/README.md))
+- **It costs no human attention per commit.** Checking the same 6 announcements by hand with NVDA took a person 60 seconds at full speed and full concentration, and that has to be repeated on every commit. The gate needs 0 minutes of attention (about 4 min 40 s unattended), and it has already caught a regression that looked like a harmless tidy-up.
+- **A human check made the tests stricter.** During a manual NVDA check, the skip link (F-05) was announced but pressing it left focus on the page body, so NVDA said nothing. Bob made `<main>` focusable and verified by ear that Enter now says "main landmark" and the next Tab reaches "Search flights, edit". The F-05 test now checks `Tab, Enter, Tab` instead of just `Tab`.
 - **3 of Bob's own fixes were rejected by ear before the right one landed:** F-01 (name only), F-02 (no focus trap: Tab escaped to "github.com, link") and F-04 (the `Button` component dropped the label).
 
 Earshot does not replace axe-core. axe also found 22 colour-contrast failures that no screen reader would report. Earshot catches what only the ear catches.
@@ -54,7 +56,7 @@ Every transcript is extracted verbatim from NVDA's own log. The `.wav` next to i
 | F-02 | Tab escapes the open dialog (2.4.3) | Tab → "content info landmark, github.com, link" (Bob's first fix, rejected) | Tab wraps to "Close modal, button"; Escape returns to "Select Seat Class" | [rejected attempt](evidence/F-02/attempt1_rejected_bob_listen.txt) · [after](evidence/F-02/after_bob_listen.txt) |
 | F-03 | Fields named by placeholder (1.3.1, 4.1.2) | "John Doe, edit" | "Name, edit, required" / "Email, edit, required" | [before](evidence/F-03/before_bob_listen_from_F02_run.txt) · [after](evidence/F-03/after_bob_listen.txt) |
 | F-04 | Nine identical booking buttons (2.4.6, 1.3.1); found by `/sweep` | "Select Seat Class, button" ×9 | "Select Seat Class, Earth to Mars, button" | [sweep](sweep/flights.md) · [rejected attempt](evidence/F-04/attempt1_rejected_bob_listen.txt) · [after](evidence/F-04/after_bob_listen.txt) |
-| F-05 | No skip link (2.4.1); found by `/sweep` | first Tab → "Pause animation, button" | first Tab → "Skip to main content, same page, link" | [before](evidence/F-05/before_probe_listen.txt) · [after](evidence/F-05/after_bob_listen.txt) |
+| F-05 | No skip link (2.4.1); found by `/sweep` | first Tab → "Pause animation, button" | first Tab → "Skip to main content, same page, link"; Enter → "main landmark"; next Tab → "Search flights, edit" | [before](evidence/F-05/before_probe_listen.txt) · [after](evidence/F-05/after_bob_listen.txt) · [skip link moves focus](evidence/F-05/after_skip_focus_listen.txt) |
 | F-06 | Search field named only by its placeholder (1.3.1, 4.1.2, 3.3.2); found by `/sweep` | "Search by origin or destination..., edit" | "Search flights, edit" | [before](evidence/F-06/before_bob_sweep_listen.txt) · [after](evidence/F-06/after_bob_listen.txt) |
 | N-01 | Starfield animation cannot be paused (2.2.2) | no control | "Pause animation, button"; a human confirmed by eye that the motion stops | [ear check](evidence/N-01/ear_check_bob_listen.txt) |
 | N-02 | Result count not announced (4.1.3) | NEEDS HUMAN: `listen()` cannot type yet | open | [findings.md](findings.md) |
