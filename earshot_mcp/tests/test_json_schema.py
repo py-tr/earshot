@@ -55,10 +55,11 @@ _normalize_keys = _server_mod._normalize_keys
 with open(_HEAR_TESTS_JSON, encoding="utf-8") as _f:
     _TESTS = json.load(_f)
 
-# Extract IDs from findings.md: any token matching ^[A-Z]-\d+ at the start of a line
+# Extract IDs from findings.md: any token matching ^[A-Z]-\d+ (optionally a lowercase suffix,
+# e.g. F-14b for a regression guard of F-14) at the start of a line
 with open(_FINDINGS_MD, encoding="utf-8") as _f:
     _findings_content = _f.read()
-_FINDINGS_IDS = set(re.findall(r"^([A-Z]-\d+)\s*\|", _findings_content, re.MULTILINE))
+_FINDINGS_IDS = set(re.findall(r"^([A-Z]-\d+[a-z]?)\s*\|", _findings_content, re.MULTILINE))
 
 
 # ---------------------------------------------------------------------------
