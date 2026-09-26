@@ -27,6 +27,10 @@ _KEY_MAP = {
 }
 # Tokens already in driver format (pass-through)
 _DRIVER_TOKENS = {"ENTER", "TAB", "STAB", "ESC"}
+# Regex for a valid TYPE=<text> driver token
+_TYPE_TOKEN_RE = re.compile(r"^TYPE=[A-Za-z0-9 .\-']+$")
+# Allowed characters inside Type "..." text
+_TYPE_TEXT_RE = re.compile(r"^[A-Za-z0-9 .\-']+$")
 
 # State for background takes
 _results: dict = {}           # label -> result text (or None while running)
@@ -36,17 +40,24 @@ _state_lock = threading.Lock()
 
 
 def _normalize_keys(text: str) -> str:
-    """Convert findings.md key_script format to the driver's format."""
-    # If already fully in driver format, pass through unchanged
-    driver_tokens = set(_DRIVER_TOKENS)
-    # Check if it's already driver format: tokens are DRIVER_TOKENS optionally followed by *N
+    """Convert findings.md key_script format to the driver's format.
+
+    Supported tokens (comma-separated, each optionally followed by ×N / xN / *N):
+      Enter, Tab, Shift+Tab, Escape   — mapped to ENTER / TAB / STAB / ESC
+      Type "<text>" or Type <text>    — mapped to TYPE=<text>; text may contain
+                                        letters, digits, spaces, and . - '
+    """
+    # If already fully in driver format, pass through unchanged.
+    # Driver format: DRIVER_TOKENS optionally followed by *N, or TYPE=<text>.
     already_driver = True
     for tok in text.split(","):
         tok = tok.strip()
         if not tok:
             continue
         base, _, repeat = tok.partition("*")
-        if base in driver_tokens and (not repeat or repeat.isdigit()):
+        if base in _DRIVER_TOKENS and (not repeat or repeat.isdigit()):
+            continue
+        if _TYPE_TOKEN_RE.match(tok):
             continue
         already_driver = False
         break
@@ -59,6 +70,19 @@ def _normalize_keys(text: str) -> str:
         raw = raw.strip()
         if not raw:
             continue
+
+        # --- Type "<text>" or Type <text> token (no repeat suffix allowed) ---
+        type_m = re.match(r'^[Tt]ype\s+"([^"]+)"$', raw) or re.match(r'^[Tt]ype\s+(\S[^×x\*]*)$', raw)
+        if type_m:
+            type_text = type_m.group(1).strip()
+            if not _TYPE_TEXT_RE.match(type_text):
+                raise ValueError(
+                    f"Type text {type_text!r} contains disallowed characters; "
+                    "allowed: letters, digits, spaces, and . - '"
+                )
+            result.append(f"TYPE={type_text}")
+            continue
+
         # Detect repeat suffix: ×N, xN, or *N (at the end)
         repeat_m = re.search(r"[×x\*](\d+)$", raw)
         if repeat_m:
@@ -70,7 +94,10 @@ def _normalize_keys(text: str) -> str:
 
         key_lower = key_part.lower()
         if key_lower not in _KEY_MAP:
-            raise ValueError(key_part)
+            raise ValueError(
+                f"unknown key {key_part!r}; allowed: Enter, Tab, Shift+Tab, Escape "
+                "(optional ×N), Type \"<text>\""
+            )
         driver_key = _KEY_MAP[key_lower]
         if repeat:
             result.append(f"{driver_key}*{repeat}")
@@ -201,15 +228,15 @@ def _run_take(label: str, keys: str, start: str, gap: float, path: str = "/fligh
 
 @server.tool(structured_output=False)
 def listen(key_script: str, start: str = "Select Seat Class", gap: float = 2.0, path: str = "/flights") -> str:
-    """key_script uses findings.md format e.g. "Tab ×5"; path is the page URL path to load.
+    """key_script uses findings.md format e.g. "Tab ×5, Type \"Mars\""; path is the page URL path to load.
+    Supported tokens (comma-separated, each optionally ×N): Enter, Tab, Shift+Tab, Escape, Type "<text>".
     Returns what NVDA said, one line per key and per phrase."""
     global _current_label
 
     try:
         key_script = _normalize_keys(key_script)
     except ValueError as exc:
-        token = str(exc)
-        return f"error: unknown key '{token}'; allowed: Enter, Tab, Shift+Tab, Escape (optional ×N)"
+        return f"error: {exc}"
 
     with _state_lock:
         if _current_label is not None:

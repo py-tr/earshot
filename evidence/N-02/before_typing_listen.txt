@@ -1,0 +1,37 @@
+# NVDA speech/input log for the 'listen' take (take_20260926T132346), extracted verbatim from NVDA's own log (log level: input/output).
+# Clip time 0.00 s = 13:24:02.154 local (2026-09-26). Format: [clip seconds, from NVDA log timestamp] original NVDA log line.
+# Only 'Input:' and 'Speaking' records are listed; LangChangeCommand/CancellableSpeech are NVDA-internal markers, kept verbatim.
+# Note: the timestamp is when NVDA queued the speech; audio can start slightly later if earlier speech is still playing.
+# DOM focus after each key (document.activeElement sampled over CDP ~0.3 s before the next key; not from NVDA):
+#   TAB @ 1.06s -> A "Skip to main content" [page]
+#   TAB @ 3.56s -> BUTTON "Pause animation" [page]
+#   TAB @ 6.06s -> A "Galaxium Travels" [page]
+#   TAB @ 8.55s -> A "Home" [page]
+#   TAB @ 11.06s -> A "Flights" [page]
+#   TAB @ 13.55s -> BUTTON "Login" [page]
+#   TAB @ 16.06s -> INPUT "Search flights" [page]
+#   TYPE @ 18.83s -> INPUT "Search flights" [page]
+
+[  1.01s] Input: kb(desktop):tab
+[  1.08s] Speaking [LangChangeCommand ('en_US'), 'clickable', 'Skip to main content', 'same page', 'link']
+[  3.51s] Input: kb(desktop):tab
+[  3.55s] Speaking [LangChangeCommand ('en_US'), 'Pause animation', 'button']
+[  6.01s] Input: kb(desktop):tab
+[  6.06s] Speaking [LangChangeCommand ('en_US'), 'banner landmark', 'Galaxium Travels', 'link']
+[  8.50s] Input: kb(desktop):tab
+[  8.54s] Speaking [LangChangeCommand ('en_US'), 'navigation landmark', 'Home', 'link']
+[ 11.00s] Input: kb(desktop):tab
+[ 11.04s] Speaking [LangChangeCommand ('en_US'), 'Flights', 'same page', 'link']
+[ 13.50s] Input: kb(desktop):tab
+[ 13.54s] Speaking [LangChangeCommand ('en_US'), 'Login', 'button']
+[ 16.01s] Input: kb(desktop):tab
+[ 16.05s] Speaking [LangChangeCommand ('en_US'), 'main landmark', CancellableSpeech (still valid)]
+[ 16.06s] Speaking [LangChangeCommand ('en_US'), 'Search flights', 'edit', CancellableSpeech (still valid), 'Search by origin or destination...', CancellableSpeech (still valid), 'blank']
+[ 18.50s] Input: kb(desktop):M
+[ 18.52s] Speaking [PitchCommand(offset=30), CharacterModeCommand(True), LangChangeCommand ('en_US'), 'M', PitchCommand(), EndUtteranceCommand(), CharacterModeCommand(False)]
+[ 18.59s] Input: kb(desktop):a
+[ 18.60s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'a', EndUtteranceCommand(), CharacterModeCommand(False)]
+[ 18.67s] Input: kb(desktop):r
+[ 18.68s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 'r', EndUtteranceCommand(), CharacterModeCommand(False)]
+[ 18.75s] Input: kb(desktop):s
+[ 18.76s] Speaking [CharacterModeCommand(True), LangChangeCommand ('en_US'), 's', EndUtteranceCommand(), CharacterModeCommand(False)]

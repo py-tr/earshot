@@ -1,7 +1,8 @@
 """Earshot NVDA driver. PREPARED BEFORE KICKOFF (2026-09-25) as spike tooling, disclosed in the README;
 copied here with machine paths replaced by environment variables. Bob wraps it as the earshot MCP server.
 usage: python driver.py <label> <keyscript> <gap_s> [--start=<button name>] [--collapsed]
-keyscript: comma list like "ENTER,TAB*5,STAB,ESC"; tokens: TAB, STAB (Shift+Tab), ENTER, ESC.
+keyscript: comma list like "ENTER,TAB*5,STAB,ESC,TYPE=Mars"; tokens: TAB, STAB (Shift+Tab), ENTER, ESC,
+  and TYPE=<text> (types literal text via send_keys with_spaces=True; special keys are escaped).
 Keys on an absolute schedule (t0+1+i*gap);
 after each key the page's document.activeElement is sampled over CDP (no OS input) and logged;
 Audio: NVDA-process-only loopback capture via proccap.exe (no other app is recorded). Outputs go to EARSHOT_TAKES.
@@ -20,10 +21,20 @@ for a in sys.argv:
     if a.startswith('--path='): page_path = a[7:]
 FROM_TOP = start_name.strip().upper() in ('', 'TOP')  # sweep: start before the first focusable element
 KEYMAP = {'TAB': '{TAB}', 'STAB': '+{TAB}', 'ENTER': '{ENTER}', 'ESC': '{ESC}'}
+# Characters that send_keys treats specially and must be escaped with braces
+_SEND_KEYS_SPECIAL = re.compile(r'([+^%~(){}[\]])')
+
+def _escape_for_send_keys(text: str) -> str:
+    """Escape send_keys special characters in a literal text string."""
+    return _SEND_KEYS_SPECIAL.sub(r'{\1}', text)
+
 keys = []
 for tok in keyscript.split(','):
-    k, _, n = tok.partition('*'); keys += [k] * int(n or 1)
-assert all(k in KEYMAP for k in keys), keys
+    if tok.startswith('TYPE='):
+        keys.append(tok)   # TYPE=<text> kept verbatim as a single slot
+    else:
+        k, _, n = tok.partition('*'); keys += [k] * int(n or 1)
+assert all(k in KEYMAP or k.startswith('TYPE=') for k in keys), keys
 HERE = os.path.dirname(os.path.abspath(__file__))
 # Machine-specific paths come from the environment (see earshot_mcp/README.md); outputs go to EARSHOT_TAKES.
 NVDA = os.environ['EARSHOT_NVDA']                      # path to a portable nvda.exe
@@ -129,10 +140,16 @@ with sync_playwright() as p:
         fgh = user32.GetForegroundWindow()
         if fgh != hwnd:
             meta['aborted'] = f'foreground was "{title_of(fgh)}" at {time.time()-t0:.2f}s before key {i} ({k})'; break
-        send_keys(KEYMAP[k])
+        if k.startswith('TYPE='):
+            type_text = k[5:]
+            send_keys(_escape_for_send_keys(type_text), with_spaces=True, pause=0.08)
+            key_name = 'TYPE'
+        else:
+            send_keys(KEYMAP[k])
+            key_name = k
         ts = round(time.time() - t0, 2)
         while time.time() < tk + gap - 0.3: time.sleep(0.01)
-        meta['keys'].append([k, ts, page.evaluate(ACTIVE_JS)])
+        meta['keys'].append([key_name, ts, page.evaluate(ACTIVE_JS)])
     time.sleep(1.5)
     open(STOPF, 'w').close(); meta['proccap_done'] = pc.communicate(timeout=30)[0].strip()
     meta['dur_wall'] = round(time.time() - t0, 2)
