@@ -10,9 +10,9 @@
                 @mousemove="handleMouseMove"
                 @mouseleave="hideTooltip"
                 @click="handleClick"
-                @keydown="inLink ? undefined : handleKeydown"
-                @focus="inLink ? undefined : handleFocus"
-                @blur="inLink ? undefined : handleBlur"
+                @keydown="handleKeydown"
+                @focus="handleFocus"
+                @blur="handleBlur"
             />
             <span v-if="inLink" class="heartbeat-sr-only">{{ canvasAriaLabel }}</span>
         </div>
