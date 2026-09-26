@@ -301,5 +301,50 @@ var EARSHOT_DATA = [
         "TAB → Delete Buy milk, button"
       ]
     }
+  },
+  {
+    id: "F-13",
+    status: "verified",
+    wcag: "4.1.2 Name, Role, Value (A)",
+    component: "Uptime Kuma (third app, a real product): the logo is a silent Tab stop (discovered by Bob's /earshot run)",
+    script: "from the top of the dashboard: TAB ×2",
+    expected: "“Status Pages, link” on the second Tab",
+    audio: {
+      before: "../evidence/F-13/attempt1_rejected_aria_hidden_only_bob_listen.wav",
+      after:  "../evidence/F-13/after_bob_listen.wav"
+    },
+    transcript: {
+      before: [
+        "TAB → banner landmark, Uptime Kuma, same page, link, current page",
+        "TAB → (nothing: focus sits on the unnamed logo object; Bob's first fix, aria-hidden only, still sounded like this and was rejected)"
+      ],
+      after: [
+        "TAB → banner landmark, Uptime Kuma, same page, link, current page",
+        "TAB → list, with 3 items, Status Pages, link"
+      ]
+    }
+  },
+  {
+    id: "F-14",
+    status: "verified",
+    wcag: "4.1.2 Name, Role, Value (A); 2.4.3 Focus Order (A)",
+    component: "Uptime Kuma: the heartbeat chart is a second Tab stop inside every monitor link (discovered by Bob's /earshot run; guard test F-14b keeps the chart reachable where it is not in a link)",
+    script: "from the top of the dashboard: TAB ×16",
+    expected: "the Tab after “Galaxium … link” goes straight to “TodoMVC … link”",
+    audio: {
+      before: "../evidence/F-14/before_bob_earshot_sweep_listen.wav",
+      after:  "../evidence/F-14/after_bob_listen.wav"
+    },
+    transcript: {
+      before: [
+        "TAB → 100%, Galaxium, Heartbeat history: 15 checks, 15 up, 0 down, link",
+        "TAB → Heartbeat history: 15 checks, 15 up, 0 down, graphic, clickable, link",
+        "TAB → 100%, TodoMVC, Heartbeat history: 15 checks, 15 up, 0 down, link"
+      ],
+      after: [
+        "TAB → 100%, Galaxium, Heartbeat history: 30 checks, 30 up, 0 down, link",
+        "TAB → 100%, TodoMVC, Heartbeat history: 30 checks, 30 up, 0 down, link"
+      ]
+    }
   }
 ];
