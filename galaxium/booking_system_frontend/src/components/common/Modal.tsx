@@ -16,6 +16,8 @@ export const Modal = ({ isOpen, onClose, title, children, size = 'md' }: ModalPr
   const dialogRef = useRef<HTMLDivElement>(null);
   const titleId = useRef(`modal-title-${Math.random().toString(36).slice(2)}`).current;
   const returnFocusRef = useRef<HTMLElement | null>(null);
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
 
   const sizeClasses = {
     sm: 'max-w-md',
@@ -28,7 +30,7 @@ export const Modal = ({ isOpen, onClose, title, children, size = 'md' }: ModalPr
     const FOCUSABLE = 'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') { onClose(); return; }
+      if (e.key === 'Escape') { onCloseRef.current(); return; }
       if (e.key !== 'Tab') return;
 
       const el = dialogRef.current;
@@ -60,7 +62,7 @@ export const Modal = ({ isOpen, onClose, title, children, size = 'md' }: ModalPr
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'unset';
     };
-  }, [isOpen, onClose]);
+  }, [isOpen]);
 
   return (
     <AnimatePresence>

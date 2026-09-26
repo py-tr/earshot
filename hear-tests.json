@@ -80,5 +80,13 @@
     "key_script": "Tab ×7, Type \"Mars\"",
     "expect": ["Search flights, edit", "Showing 4 flights"],
     "forbid": []
+  },
+  {
+    "id": "F-09",
+    "path": "/flights",
+    "start": "Select Seat Class",
+    "key_script": "Enter, Tab, Tab, Type \"Nobody\", Tab",
+    "expect": ["Name, edit, required", "Email, edit, required"],
+    "forbid": []
   }
 ]
