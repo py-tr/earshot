@@ -1,6 +1,6 @@
 # Earshot: screen-reader tests for AI-written UI
 
-IBM Bob fixes the UI, a real screen reader (NVDA) checks every fix by ear, and a pre-commit gate blocks any change that breaks what a blind user hears.
+IBM Bob fixes the UI, a real screen reader (NVDA) checks every fix by ear, and a two-layer gate (a git hook, plus a hook inside Bob) blocks any change that breaks what a blind user hears.
 Tested on IBM's own Galaxium Travels sample app. Nothing was planted: the bugs are IBM's; the audit document is ours.
 
 **Report page:** https://py-tr.github.io/earshot/ · **Video (3 min):** [VIDEO URL]
@@ -158,7 +158,7 @@ In Bob, open `findings.md` and type `/hear F-01`, or type `/sweep /flights`.
   - the report page (task04, 09, 20, 28)
   - the gate (task10, task18, task19)
   - typing in `listen()` (task23)
-  - the Bob lifecycle hook (task29), which blocked Bob's own `git commit --no-verify` (task30c)
+  - the Bob lifecycle hook (task29), which blocked Bob's own `git commit --no-verify` (task30c). On the first try (task30a), Bob in Agent mode refused to edit IBM's code at all, citing `AGENTS.md`: the mode fences held.
   - `/sweep` and the `earshot-sweep` mode (task12, 12b, 13c)
   - page-aware `/hear` (task14)
   - the sweeps (task13a–13d on /flights, task22 on /)
