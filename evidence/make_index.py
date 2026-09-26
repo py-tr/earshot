@@ -6,11 +6,11 @@ os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))  # repo
 TASKS = {  # finding -> Bob tasks that fixed/verified it (from bob_sessions/INDEX.md)
     'F-01': ['03g'], 'F-02': ['05'], 'F-03': ['06'], 'N-01': ['07'], 'N-02': ['08', '23', '27'],
     'F-04': ['13a', '13b', '13d', '15'], 'F-05': ['13a', '16', '21'], 'F-06': ['13d', '17'],
-    'F-07': ['22', '24', '25'], 'F-08': ['22', '26'], 'F-09': ['34'], 'F-10': ['36b', '37'],
+    'F-07': ['22', '24', '25'], 'F-08': ['22', '26'], 'F-09': ['34'], 'F-10': ['36b', '37'], 'F-11': ['38'], 'F-12': ['39'],
 }
 SOURCE = {'F-01': 'audit', 'F-02': 'audit', 'F-03': 'audit', 'N-01': 'audit', 'N-02': 'audit',
           'F-04': 'bob-sweep /flights', 'F-05': 'bob-sweep /flights', 'F-06': 'bob-sweep /flights',
-          'F-07': 'bob-sweep /', 'F-08': 'bob-sweep /', 'F-09': 'regression in our own F-01 fix, found by ear while typing', 'F-10': 'bob /earshot run on /destinations/mars'}
+          'F-07': 'bob-sweep /', 'F-08': 'bob-sweep /', 'F-09': 'regression in our own F-01 fix, found by ear while typing', 'F-10': 'bob /earshot run on /destinations/mars', 'F-11': 'bob /earshot run on TodoMVC (second app)', 'F-12': 'heard by a human in the TodoMVC sweep transcript'}
 DECIDED = {'N-01': 'ear + human eye (the animation stopping is visual)'}
 
 tests = {t['id']: t for t in json.load(open('hear-tests.json', encoding='utf8'))}
@@ -49,7 +49,7 @@ for line in open('findings.md', encoding='utf8'):
 
 manifest = {
     'project': 'Earshot: screen-reader tests for AI-written UI',
-    'app': 'IBM Galaxium Travels sample app (galaxium/, Apache-2.0, upstream e4e18ae)',
+    'app': 'IBM Galaxium Travels sample app (galaxium/, Apache-2.0, upstream e4e18ae); TodoMVC React (todomvc/, MIT, upstream ff43b02)',
     'screen_reader': 'NVDA 2026.2 (real, not simulated); transcripts are verbatim from NVDA\'s log, audio is NVDA-process-only',
     'summary': {'findings': len(records), 'verified_by_ear': sum(1 for r in records if r['verified_by'].startswith('ear')),
                 'gate_tests': len(tests), 'benchmark': 'bench/RESULTS.md'},

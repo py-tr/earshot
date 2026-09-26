@@ -1,11 +1,11 @@
 {
   "project": "Earshot: screen-reader tests for AI-written UI",
-  "app": "IBM Galaxium Travels sample app (galaxium/, Apache-2.0, upstream e4e18ae)",
+  "app": "IBM Galaxium Travels sample app (galaxium/, Apache-2.0, upstream e4e18ae); TodoMVC React (todomvc/, MIT, upstream ff43b02)",
   "screen_reader": "NVDA 2026.2 (real, not simulated); transcripts are verbatim from NVDA's log, audio is NVDA-process-only",
   "summary": {
-    "findings": 12,
-    "verified_by_ear": 12,
-    "gate_tests": 11,
+    "findings": 14,
+    "verified_by_ear": 14,
+    "gate_tests": 13,
     "benchmark": "bench/RESULTS.md"
   },
   "gate_evidence": [
@@ -543,6 +543,85 @@
       "bob_screenshots": [
         "bob_sessions/pytr_task36b_earshot_run_mars_summary.png",
         "bob_sessions/pytr_task37_hear_f10_label_and_test_summary.png"
+      ]
+    },
+    {
+      "id": "F-11",
+      "wcag": "4.1.2 Name, Role, Value (A); 1.3.1 Info and Relationships (A)",
+      "component": "http://localhost:7002/ todo item checkboxes have no accessible name — NVDA reads only role without the item text (source: Bob sweep todomvc S-02, S-03, human-accepted)",
+      "source": "bob /earshot run on TodoMVC (second app)",
+      "key_script": "page http://localhost:7002/, from top: Tab, Type \"Buy milk\", Enter, Type \"Walk dog\", Enter, Tab ×3",
+      "expected": "\"Buy milk, check box, not checked\", then Tab ×3: \"Walk dog, check box, not checked\" (each checkbox names its todo item)",
+      "verified_by": "ear (NVDA transcript)",
+      "before": [
+        "evidence/F-11/before_bob_earshot_sweep_listen.txt"
+      ],
+      "rejected_attempts": [],
+      "after": [
+        "evidence/F-11/after_bob_listen.txt"
+      ],
+      "audio": [
+        "evidence/F-11/after_bob_listen.wav",
+        "evidence/F-11/before_bob_earshot_sweep_listen.wav"
+      ],
+      "fix_commits": [],
+      "gate_test": {
+        "id": "F-11",
+        "path": "http://localhost:7002/",
+        "start": "TOP",
+        "key_script": "Tab, Type \"Buy milk\", Enter, Type \"Walk dog\", Enter, Tab ×4",
+        "expect": [
+          "Buy milk, check box, not checked",
+          "Walk dog, check box, not checked"
+        ],
+        "forbid": [
+          "list, with 2 items, check box, not checked"
+        ]
+      },
+      "bob_tasks": [
+        "38"
+      ],
+      "bob_screenshots": [
+        "bob_sessions/pytr_task38_earshot_run_todomvc_summary.png"
+      ]
+    },
+    {
+      "id": "F-12",
+      "wcag": "2.1.1 Keyboard (A); 4.1.2 Name, Role, Value (A)",
+      "component": "http://localhost:7002/ each todo's Delete button is hidden (display: none) until the mouse hovers over the item, so a keyboard or screen-reader user can never reach it and cannot delete a todo; all Delete buttons are also named the same \"De",
+      "source": "heard by a human in the TodoMVC sweep transcript",
+      "key_script": "page http://localhost:7002/, from top: Tab, Type \"Buy milk\", Enter, Tab ×3",
+      "expected": "After the \"Buy milk\" checkbox, the next Tab says \"Delete Buy milk, button\" (reachable by keyboard and named after its todo), not \"All, link\"",
+      "verified_by": "ear (NVDA transcript)",
+      "before": [
+        "evidence/F-12/before_probe_listen.txt"
+      ],
+      "rejected_attempts": [],
+      "after": [
+        "evidence/F-12/after_bob_listen.txt"
+      ],
+      "audio": [
+        "evidence/F-12/after_bob_listen.wav",
+        "evidence/F-12/before_probe_listen.wav"
+      ],
+      "fix_commits": [],
+      "gate_test": {
+        "id": "F-12",
+        "path": "http://localhost:7002/",
+        "start": "TOP",
+        "key_script": "Tab, Type \"Buy milk\", Enter, Tab ×3",
+        "expect": [
+          "Delete Buy milk, button"
+        ],
+        "forbid": [
+          "All, link"
+        ]
+      },
+      "bob_tasks": [
+        "39"
+      ],
+      "bob_screenshots": [
+        "bob_sessions/pytr_task39_hear_f12_summary.png"
       ]
     }
   ]

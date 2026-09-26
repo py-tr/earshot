@@ -258,4 +258,48 @@ var EARSHOT_DATA = [
       ]
     }
   }
+  ,{
+    id: "F-11",
+    status: "verified — discovered by Bob’s /sweep, accepted by a human",
+    wcag: "4.1.2 Name, Role, Value (A); 1.3.1 Info and Relationships (A)",
+    component: "TodoMVC (second app): todo checkboxes have no name",
+    script: "type two todos, then TAB ×4",
+    expected: "“Buy milk, check box, not checked”",
+    audio: {
+      before: "../evidence/F-11/before_bob_earshot_sweep_listen.wav",
+      after:  "../evidence/F-11/after_bob_listen.wav"
+    },
+    transcript: {
+      before: [
+        "TAB → list, with 2 items, check box, not checked (which todo?)",
+        "TAB → check box, not checked"
+      ],
+      after: [
+        "TAB → list, with 2 items, Buy milk, check box, not checked",
+        "TAB → Walk dog, check box, not checked"
+      ]
+    }
+  }
+  ,{
+    id: "F-12",
+    status: "verified",
+    wcag: "2.1.1 Keyboard (A); 4.1.2 Name, Role, Value (A)",
+    component: "TodoMVC (second app): Delete buttons hidden until mouse hover, so keyboard users cannot delete (heard by a human in the sweep transcript)",
+    script: "type “Buy milk”, then TAB ×3",
+    expected: "“Delete Buy milk, button” after the checkbox",
+    audio: {
+      before: "../evidence/F-12/before_probe_listen.wav",
+      after:  "../evidence/F-12/after_bob_listen.wav"
+    },
+    transcript: {
+      before: [
+        "TAB → check box, not checked",
+        "TAB → All, link (no Delete button is ever reached)"
+      ],
+      after: [
+        "TAB → Buy milk, check box, not checked",
+        "TAB → Delete Buy milk, button"
+      ]
+    }
+  }
 ];
