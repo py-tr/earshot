@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": ".venv\Scripts\python.exe earshot_mcp\bob_hook.py",
+            "command": ".venv\\Scripts\\python.exe earshot_mcp\\bob_hook.py",
             "timeout": 0
           }
         ]
