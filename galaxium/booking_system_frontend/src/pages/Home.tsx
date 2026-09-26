@@ -162,7 +162,7 @@ export const Home = () => {
         </p>
         <Link
           to="/flights"
-          className="font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 bg-white/10 text-white hover:bg-white/20 py-4 px-8 text-lg"
+          className="font-semibold rounded-lg transition-all duration-300 inline-flex items-center justify-center gap-2 bg-white/10 text-white hover:bg-white/20 py-4 px-8 text-lg"
         >
           Book Your Flight Now
         </Link>
