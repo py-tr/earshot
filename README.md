@@ -207,6 +207,7 @@ Found or seen during the build, listed so nobody mistakes them for fixed:
   - the gate (task10, task18, task19)
   - typing in `listen()` (task23)
   - Bob writes the gate test for each verified finding itself (earshot mode, task33; first used for F-09 in task34)
+  - the `nvda-expectations` skill (task41, Bob Shell, 0.65 Bobcoins): Bob wrote it from our verbatim NVDA transcripts and two WCAG Understanding pages read through `@https://` mentions; a review corrected two of its eight sections (it had cited a focus re-read as a live region, and the end-of-page silence as a failure). The earshot and sweep rules tell Bob to use it
   - the Bob lifecycle hook (task29), which blocked Bob's own `git commit --no-verify` (task30c). On the first try (task30a), Bob in Agent mode refused to edit IBM's code at all, citing `AGENTS.md`: the mode fences held.
   - `/sweep` and the `earshot-sweep` mode (task12, 12b, 13c)
   - page-aware `/hear` (task14)

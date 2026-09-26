@@ -8,3 +8,4 @@
 - Call listen with the finding's key script and verify the expected announcement appears in the output.
 - If it does not appear, retry once; if it still fails, reply NEEDS HUMAN with the full transcript.
 - Findings marked verify "human" end as NEEDS HUMAN, never VERIFIED.
+- Use the nvda-expectations skill to state the expected announcement and to read the transcript (what a name, role, state, silence or repeat means).
