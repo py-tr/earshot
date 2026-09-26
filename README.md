@@ -86,13 +86,19 @@ What Earshot adds is not more rules but a different oracle: the speech a blind u
 
 ## How it works (60 seconds)
 
-```
-audit PDF ──► findings.md ──► /hear F-0x ──► Bob edits ──► listen() ──► NVDA speech ──► VERIFIED ──► commit
-                                   ▲                                         │                         │
-                                   └──────────── rejected by ear ◄───────────┘              pre-commit gate replays
-                                                                                            hear-tests.json with NVDA
-/sweep <page> ──► listen("Tab ×25") ──► suspicious stops ──► parallel explore subagents find file:line
-             ──► sweep/<page>.md proposals ──► human triage ──► new findings ──► /hear ──► gate
+```mermaid
+flowchart TD
+    A(["audit PDF, /sweep or /earshot"]) --> B[findings.md]
+    B --> C{human triage}
+    C -->|accepted| D["/hear → Bob fixes"]
+    D --> E["listen() → real NVDA"]
+    E --> F{transcript}
+    F -->|VERIFIED| G[Bob writes hear-test]
+    F -->|rejected| D
+    G --> H{two-layer gate}
+    H -->|PreToolUse hook blocks git commit| D
+    H -->|pre-commit hook blocks commit| D
+    H -->|passed| I([commit])
 ```
 
 1. **Audit to findings.** Bob reads the audit PDF ([`audit/earshot-audit.pdf`](audit/earshot-audit.pdf)) and writes [`findings.md`](findings.md). Each line holds the WCAG criterion, a key script such as `Enter, Tab`, and the exact announcement expected, such as "Sign In, dialog".
