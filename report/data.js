@@ -214,7 +214,7 @@ var EARSHOT_DATA = [
     id: "F-09",
     status: "verified",
     wcag: "2.1.1 Keyboard (A); 3.2.2 On Input (A)",
-    component: "Sign In dialog: a regression our own F-01 fix introduced (focus stolen on every keystroke)",
+    component: "Sign In dialog: a regression Bob's own F-01 fix introduced (focus stolen on every keystroke)",
     script: "ENTER → TAB → TAB, type “Nobody”, TAB",
     expected: "The Name field keeps focus while typing; the next Tab says “Email, edit, required”",
     audio: {
