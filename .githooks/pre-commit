@@ -1,4 +1,8 @@
 #!/bin/sh
+if [ ! -f .venv/Scripts/python.exe ] || [ ! -f earshot_mcp/local.env ]; then
+  echo "earshot gate: skipped (no local NVDA setup; see README)"
+  exit 0
+fi
 .venv/Scripts/python.exe earshot_mcp/hear_tests.py --staged
 status=$?
 if [ $status -eq 2 ]; then

@@ -1,14 +1,15 @@
 """Earshot MCP server — wraps driver.py + extract.py for NVDA-assisted accessibility testing."""
 import ast, os, sys, subprocess, time, re, threading
 
-# Load local.env into environment before anything else
+# Load local.env into environment before anything else (skip silently if absent)
 _env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "local.env")
-with open(_env_path) as _f:
-    for _line in _f:
-        _line = _line.strip()
-        if _line and not _line.startswith("#") and "=" in _line:
-            _k, _, _v = _line.partition("=")
-            os.environ.setdefault(_k.strip(), _v.strip())
+if os.path.exists(_env_path):
+    with open(_env_path) as _f:
+        for _line in _f:
+            _line = _line.strip()
+            if _line and not _line.startswith("#") and "=" in _line:
+                _k, _, _v = _line.partition("=")
+                os.environ.setdefault(_k.strip(), _v.strip())
 
 from mcp.server.mcpserver import MCPServer
 
