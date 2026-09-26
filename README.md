@@ -7,7 +7,7 @@ Tested on two real apps: IBM's own Galaxium Travels sample app, and TodoMVC's Re
 
 **Report page:** https://py-tr.github.io/earshot/ · **Video (3 min):** [VIDEO URL]
 
-![Blind people "read" websites by ear: a screen reader (real NVDA) speaks the page aloud. The problem: apps often break for screen readers. BEFORE: pressing Enter opens a Sign In window, and the screen reader says nothing. IBM Bob fixes the code, then checks it by ear with Earshot, the screen-reader testing tool we built. AFTER: the same key makes NVDA say "Sign In, dialog". 13 of 13 bugs fixed by Bob, each verified by ear with Earshot; lint and axe flagged 2½.](report/f01_before_after.gif)
+![Blind people "read" websites by ear, with a screen reader (NVDA). The problem: apps often break for screen readers. BEFORE: pressing Enter opens a Sign In window, and the screen reader says nothing. IBM Bob fixes the code, then checks it by ear with Earshot, the screen-reader testing tool we built. AFTER: the same key makes NVDA say "Sign In, dialog". 13 of 13 bugs fixed by Bob, each verified by ear with Earshot; lint and axe flagged 2½.](report/f01_before_after.gif)
 
 *Captions show what NVDA said; the [report page](https://py-tr.github.io/earshot/) has the audio and waveforms.*
 
