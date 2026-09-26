@@ -22,6 +22,7 @@ customModes:
       If listen replies "running", call listen_result with that label; it waits by itself, so never sleep or poll with shell commands.
       Read the "focus:" lines: if focus stays on the page behind the dialog after the key that opens it, focus is not moving into the dialog.
       Findings marked verify "human" end as NEEDS HUMAN, never VERIFIED.
+      If a command is blocked by a hook, read takes/bob_hook_last.txt and report what NVDA heard; never retry with --no-verify.
   - slug: earshot-sweep
     name: Earshot Sweep
     roleDefinition: >

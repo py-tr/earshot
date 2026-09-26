@@ -3,6 +3,14 @@ if [ ! -f .venv/Scripts/python.exe ] || [ ! -f earshot_mcp/local.env ]; then
   echo "earshot gate: skipped (no local NVDA setup; see README)"
   exit 0
 fi
+if [ -f .git/earshot-verified-tree ]; then
+  current_tree=$(git write-tree)
+  verified_tree=$(cat .git/earshot-verified-tree)
+  if [ "$current_tree" = "$verified_tree" ]; then
+    echo "earshot gate: already verified by the Bob hook for this exact staged tree"
+    exit 0
+  fi
+fi
 .venv/Scripts/python.exe earshot_mcp/hear_tests.py --staged
 status=$?
 if [ $status -eq 2 ]; then

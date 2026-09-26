@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "^execute_command$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".venv\Scripts\python.exe earshot_mcp\bob_hook.py",
+            "timeout": 0
+          }
+        ]
+      }
+    ]
+  }
+}
