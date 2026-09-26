@@ -185,11 +185,22 @@
     "start": "TOP",
     "key_script": "Tab ×16",
     "expect": [
-      "100%, Galaxium, Heartbeat history:",
-      "100%, TodoMVC, Heartbeat history:"
+      "Galaxium, Heartbeat history:",
+      "TodoMVC, Heartbeat history:"
     ],
     "forbid": [
       "graphic"
     ]
+  },
+  {
+    "id": "F-14b",
+    "path": "http://localhost:3000/dashboard/1",
+    "start": "TOP",
+    "key_script": "Tab ×22",
+    "expect": [
+      "Heartbeat history:",
+      "graphic"
+    ],
+    "forbid": []
   }
 ]

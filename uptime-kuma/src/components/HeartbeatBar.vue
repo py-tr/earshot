@@ -6,13 +6,15 @@
                 class="heartbeat-canvas"
                 :width="canvasWidth"
                 :height="canvasHeight"
-                aria-hidden="true"
-                tabindex="-1"
+                v-bind="inLink ? { 'aria-hidden': 'true', tabindex: '-1' } : { role: 'img', 'aria-label': canvasAriaLabel, tabindex: '0' }"
                 @mousemove="handleMouseMove"
                 @mouseleave="hideTooltip"
                 @click="handleClick"
+                @keydown="inLink ? undefined : handleKeydown"
+                @focus="inLink ? undefined : handleFocus"
+                @blur="inLink ? undefined : handleBlur"
             />
-            <span class="heartbeat-sr-only">{{ canvasAriaLabel }}</span>
+            <span v-if="inLink" class="heartbeat-sr-only">{{ canvasAriaLabel }}</span>
         </div>
         <div
             v-if="!$root.isMobile && size !== 'small' && beatList.length > 4 && $root.styleElapsedTime !== 'none'"
@@ -49,6 +51,11 @@ export default {
         size: {
             type: String,
             default: "big",
+        },
+        /** Whether HeartbeatBar is rendered inside a link (canvas should be aria-hidden) */
+        inLink: {
+            type: Boolean,
+            default: false,
         },
         /** ID of the monitor */
         monitorId: {
