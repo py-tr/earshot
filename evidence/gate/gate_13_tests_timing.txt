@@ -1,4 +1,4 @@
-Full gate run, 13 hear-tests on two apps, for commit 9362ebb (F-12), 2026-09-26.
+Full gate run, 13 hear-tests on two apps, for commit 1925110 (F-12), 2026-09-26.
 git commit started 20:44:24; each line is one NVDA take (label, page, keys, time its record was written).
 All 13 passed (PASS F-01 ... PASS F-12); the commit went through. Total: about 9 minutes.
 

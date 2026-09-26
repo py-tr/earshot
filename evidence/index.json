@@ -211,7 +211,7 @@
         "evidence/N-02/before_typing_listen.wav"
       ],
       "fix_commits": [
-        "658a4ca N-02: result count is a polite live region (Bob task27, verified by NVDA while typing); hear-test N-02"
+        "5e94cef N-02: result count is a polite live region (Bob task27, verified by NVDA while typing); hear-test N-02"
       ],
       "gate_test": {
         "id": "N-02",
@@ -305,7 +305,7 @@
         "evidence/F-05/before_probe_listen.wav"
       ],
       "fix_commits": [
-        "90a1e92 F-05: skip link moves focus into main; hear-test now checks Tab, Enter, Tab",
+        "b36a879 F-05: skip link moves focus into main; hear-test now checks Tab, Enter, Tab",
         "9f693f7 F-05: skip to main content link as the first Tab stop (verified by NVDA, take_20260926T001926)"
       ],
       "gate_test": {
@@ -399,10 +399,10 @@
         "evidence/F-07/before_bob_sweep_listen.wav"
       ],
       "fix_commits": [
-        "a260a57 F-08: footer GitHub link named 'GitHub' (Bob task26, verified by NVDA); hear-test F-08; change notices on F-07/F-08 files",
-        "87febe4 MODIFICATIONS: F-07 files; task25 screenshot",
-        "5a4663c fix(F-07): change CTA Link flex to inline-flex; remove unused tabIndex from Button",
-        "7aef65c F-07: replace Button-inside-Link with styled links to fix double tab stop (verified by NVDA)"
+        "e5c7957 F-08: footer GitHub link named 'GitHub' (Bob task26, verified by NVDA); hear-test F-08; change notices on F-07/F-08 files",
+        "d24d4dd MODIFICATIONS: F-07 files; task25 screenshot",
+        "2080a62 fix(F-07): change CTA Link flex to inline-flex; remove unused tabIndex from Button",
+        "bf1d865 F-07: replace Button-inside-Link with styled links to fix double tab stop (verified by NVDA)"
       ],
       "gate_test": {
         "id": "F-07",
@@ -450,7 +450,7 @@
         "evidence/F-08/before_bob_listen.wav"
       ],
       "fix_commits": [
-        "a260a57 F-08: footer GitHub link named 'GitHub' (Bob task26, verified by NVDA); hear-test F-08; change notices on F-07/F-08 files"
+        "e5c7957 F-08: footer GitHub link named 'GitHub' (Bob task26, verified by NVDA); hear-test F-08; change notices on F-07/F-08 files"
       ],
       "gate_test": {
         "id": "F-08",
@@ -493,8 +493,8 @@
         "evidence/F-09/before_probe_typing_listen.wav"
       ],
       "fix_commits": [
-        "a525fe4 F-09 verified (Bob task34, Bob wrote its own gate test): docs to 10 of 10, 1½ of 10 flagged, 8 of 10 only by ear; regression disclosed; report card; limitation 'tests only hear what they drive'",
-        "2b5b56d fix(F-09): remove onClose from Modal effect deps to stop focus-steal on keystroke"
+        "272f1df F-09 verified (Bob task34, Bob wrote its own gate test): docs to 10 of 10, 1½ of 10 flagged, 8 of 10 only by ear; regression disclosed; report card; limitation 'tests only hear what they drive'",
+        "ff86ddd fix(F-09): remove onClose from Modal effect deps to stop focus-steal on keystroke"
       ],
       "gate_test": {
         "id": "F-09",
@@ -540,8 +540,8 @@
         "evidence/F-10/before_bob_earshot_sweep_listen.wav"
       ],
       "fix_commits": [
-        "fefe2c1 fix(a11y): F-10 – name Book links with route and date on /destinations/mars",
-        "acecf57 F-10: add aria-label to Book links naming flight date and ID (verified by NVDA)"
+        "2416343 fix(a11y): F-10 – name Book links with route and date on /destinations/mars",
+        "3dee0d2 F-10: add aria-label to Book links naming flight date and ID (verified by NVDA)"
       ],
       "gate_test": {
         "id": "F-10",
@@ -585,7 +585,7 @@
         "evidence/F-11/before_bob_earshot_sweep_listen.wav"
       ],
       "fix_commits": [
-        "b42e1c9 F-11: add aria-label to todo item checkboxes so NVDA announces item title (verified by NVDA)"
+        "bcc3e7d F-11: add aria-label to todo item checkboxes so NVDA announces item title (verified by NVDA)"
       ],
       "gate_test": {
         "id": "F-11",
@@ -627,7 +627,7 @@
         "evidence/F-12/before_probe_listen.wav"
       ],
       "fix_commits": [
-        "9362ebb F-12: TodoMVC Delete buttons reachable by keyboard and named after their todo (Bob task39, verified by NVDA: 'Delete Buy milk, button'); hover visibility restored by Claude (Bob's opacity:0 had hidden it for mouse users)"
+        "1925110 F-12: TodoMVC Delete buttons reachable by keyboard and named after their todo (Bob task39, verified by NVDA: 'Delete Buy milk, button'); hover visibility restored in review (Bob's opacity:0 had hidden it for mouse users)"
       ],
       "gate_test": {
         "id": "F-12",
