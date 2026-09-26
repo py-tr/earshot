@@ -72,5 +72,13 @@
     "key_script": "Tab ×17",
     "expect": ["GitHub, link"],
     "forbid": ["github.com"]
+  },
+  {
+    "id": "N-02",
+    "path": "/flights",
+    "start": "TOP",
+    "key_script": "Tab ×7, Type \"Mars\"",
+    "expect": ["Search flights, edit", "Showing 4 flights"],
+    "forbid": []
   }
 ]

@@ -138,7 +138,7 @@ export const Flights = () => {
       </motion.div>
 
       {/* Results Count */}
-      <div className="text-center text-star-white/70">
+      <div className="text-center text-star-white/70" aria-live="polite" aria-atomic="true">
         Showing {displayFlights.length} flight{displayFlights.length !== 1 ? 's' : ''}
       </div>
 
