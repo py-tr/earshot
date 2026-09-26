@@ -14,7 +14,7 @@ Tested on IBM's own Galaxium Travels sample app. Nothing was planted: the bugs a
 | Audit finding N-02 (needs typing) | 0 of 1 | 0 of 1 | **1 of 1 heard, fixed and re-heard** |
 | **All nine** | **0 of 9** | **1½ of 9** | **9 of 9** |
 
-**7 of the 9 were caught only by ear.**
+**Earshot fixed and verified 9 of 9; 7 of the 9 were caught only by ear.** Four findings came from our own audit document (F-01..F-03, N-02) and five were found by Bob's `/sweep` (F-04..F-08). For every sweep finding, a human accepted the expected announcement in triage before Bob fixed against it, so the test oracle is not Bob's own claim. N-02 is a fair row but not a contest: no static checker has a rule for a missing status message, which is exactly the gap Earshot fills.
 
 - **The fix that passed axe was still silent.** Bob's first F-01 fix only added a dialog name. axe reported no dialog violation, yet in NVDA Enter was followed by silence, and Tab then read "Moon, link, heading, level 3" from the page behind the dialog. Earshot rejected that fix. ([bench/RESULTS.md](bench/RESULTS.md))
 - **9 of 9 findings resolved and verified by NVDA.** Four (F-01..F-03, N-02) came from the audit PDF. Five (F-04..F-08) were discovered by Bob's `/sweep` on two pages and accepted by a human.
@@ -24,6 +24,8 @@ Tested on IBM's own Galaxium Travels sample app. Nothing was planted: the bugs a
 - **4 of Bob's own fixes were rejected by ear before the right one landed:** F-01 (name only), F-02 (no focus trap: Tab escaped to "github.com, link"), F-04 (the `Button` component dropped the label) and F-07 (`tabIndex=-1` on the nested button: NVDA still said "button, link").
 
 Earshot does not replace axe-core. axe also found 22 colour-contrast failures that no screen reader would report. Earshot catches what only the ear catches.
+
+**Reliability and cost, counted honestly.** Over the build, `listen()` ran 117 NVDA takes. One was aborted by its safety check (another window took the foreground), and 3 early takes produced no transcript while the MCP timeout was misconfigured (fixed on day 1). The gate once blocked a commit without listening, because the app served a half-written file; since then, "could not listen" exits with its own code and never reads as a regression. Since that fix we have seen no false failures. The whole build used about 18 Bobcoins (about $9 at IBM's documented $0.50 per Bobcoin).
 
 ## Why it matters
 
@@ -120,6 +122,7 @@ In Bob, open `findings.md` and type `/hear F-01`, or type `/sweep /flights`.
 - **Windows and NVDA only.** JAWS, VoiceOver and TalkBack are not covered yet.
 - **Takes over the desktop.** `listen()` needs Chrome in the foreground and aborts if the foreground window changes. It runs one take at a time, and each test takes 30–60 s. Run it on a dedicated machine or VM, not on the machine you are typing on.
 - **Typing is basic.** `listen()` can type plain text (letters, digits, spaces, `.`, `-`, `'`), but not special keys such as arrows or Backspace.
+- **The gate is slow for a pre-commit hook.** All 9 tests take about 6½ minutes. Today it runs only when frontend files are staged; the next step is to run it on push or in CI on a dedicated listening machine (not built).
 - **Tab counts are brittle.** Tests address controls by their Tab position from the top of the page, so a change that adds or removes a Tab stop (as F-05 and F-07 did) can shift other tests. The gate then fails loudly, and a person updates the count.
 - **Some things need a person.** Whether the animation actually stopped (N-01) and whether a proposal is really a failure (7 of 14 sweep proposals were rejected or duplicates) are human calls.
 - **Not a compliance tool.** Passing Earshot does not make an app WCAG-conformant. It proves only that specific announcements happen on specific key paths.
