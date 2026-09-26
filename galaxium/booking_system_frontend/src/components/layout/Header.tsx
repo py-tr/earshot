@@ -88,8 +88,11 @@ export const Header = () => {
             ) : (
               <>
                 {location.pathname === '/' ? (
-                  <Link to="/flights">
-                    <Button size="sm">Book a Flight</Button>
+                  <Link
+                    to="/flights"
+                    className="font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 bg-cosmic-gradient text-white hover:shadow-lg hover:shadow-cosmic-purple/50 py-2 px-4 text-sm"
+                  >
+                    Book a Flight
                   </Link>
                 ) : (
                   <Button

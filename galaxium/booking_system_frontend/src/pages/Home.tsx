@@ -67,10 +67,11 @@ export const Home = () => {
           transition={{ delay: 0.6 }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <Link to="/flights">
-            <Button size="lg" className="w-full sm:w-auto">
-              Explore Flights
-            </Button>
+          <Link
+            to="/flights"
+            className="font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 bg-cosmic-gradient text-white hover:shadow-lg hover:shadow-cosmic-purple/50 py-4 px-8 text-lg w-full sm:w-auto"
+          >
+            Explore Flights
           </Link>
           <Button variant="secondary" size="lg" className="w-full sm:w-auto">
             Learn More
@@ -159,10 +160,11 @@ export const Home = () => {
           Join thousands of space travelers who have already booked their
           journey to the stars. Your adventure awaits!
         </p>
-        <Link to="/flights">
-          <Button variant="secondary" size="lg">
-            Book Your Flight Now
-          </Button>
+        <Link
+          to="/flights"
+          className="font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 bg-white/10 text-white hover:bg-white/20 py-4 px-8 text-lg"
+        >
+          Book Your Flight Now
         </Link>
       </motion.section>
     </div>

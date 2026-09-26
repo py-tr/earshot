@@ -12,6 +12,7 @@ interface ButtonProps {
   type?: 'button' | 'submit' | 'reset';
   className?: string;
   'aria-label'?: string;
+  tabIndex?: number;
 }
 
 export const Button = ({
@@ -24,6 +25,7 @@ export const Button = ({
   type = 'button',
   onClick,
   'aria-label': ariaLabel,
+  tabIndex,
 }: ButtonProps) => {
   const baseClasses = 'font-semibold rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2';
   
@@ -53,6 +55,7 @@ export const Button = ({
       type={type}
       onClick={onClick}
       aria-label={ariaLabel}
+      tabIndex={tabIndex}
     >
       {isLoading ? (
         <>
