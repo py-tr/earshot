@@ -1,3 +1,4 @@
+// Modified for Earshot (IBM Bob 2.0 Hackathon, Sept 2026): accessibility fixes; see galaxium/MODIFICATIONS.md
 import { useState, useEffect, useCallback } from 'react';
 import type { Flight, ErrorResponse } from '../types';
 import { LoadingSpinner } from '../components/common';

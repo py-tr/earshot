@@ -1,3 +1,4 @@
+// Modified for Earshot (IBM Bob 2.0 Hackathon, Sept 2026): accessibility fixes; see galaxium/MODIFICATIONS.md
 import type { Flight, SeatClass } from '../../types';
 import { Card, Button } from '../common';
 import { Plane, Clock, Users, Crown, Rocket } from 'lucide-react';

@@ -1,3 +1,4 @@
+// Modified for Earshot (IBM Bob 2.0 Hackathon, Sept 2026): accessibility fixes; see galaxium/MODIFICATIONS.md
 import { useId, type InputHTMLAttributes } from 'react';
 import clsx from 'clsx';
 

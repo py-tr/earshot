@@ -1,3 +1,4 @@
+// Modified for Earshot (IBM Bob 2.0 Hackathon, Sept 2026): accessibility fixes; see galaxium/MODIFICATIONS.md
 import type { ReactNode } from 'react';
 import { Header } from './Header';
 import { Footer } from './Footer';
