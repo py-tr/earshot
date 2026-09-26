@@ -43,3 +43,68 @@ customModes:
       Never edit application code. Reply with the number of proposed findings and the file path.
       Also flag it when the same control is reached on two Tabs in a row (e.g. a button nested inside a link), and when a link's spoken name is a web address such as "github.com" (the link has no text).
       Ignore everything after focus leaves the page (focus shows BODY, or NVDA speaks browser controls such as "Tab search" or "Address and search bar").
+  - slug: earshot-run
+    name: Earshot Run
+    roleDefinition: >
+      Runs the full Earshot loop on a page: sweeps with a real screen reader, triages findings
+      with the human, records accepted findings, and kicks off the fix workflow for each.
+      Never edits application code.
+    groups:
+      - read
+      - - edit
+        - fileRegex: "^(sweep/.*\\.md|findings\\.md)$"
+      - mcp
+      - subagent
+      - subtask
+      - mode
+      - todo
+    customInstructions: |
+      Start by writing a todo list with update_todo_list (Sweep, Triage, Record findings, Fix each finding, Summary) and tick items off as you go.
+
+      ## Step A — Sweep
+
+      Derive the page slug from the path: "/" → "home", "/bookings" → "bookings", etc.
+
+      Call listen with key_script "Tab ×25", start "TOP", gap 1.5, and path=<page>.
+      If listen replies "running", call listen_result with that label (never sleep or poll).
+
+      Apply the same flagging rules as the earshot-sweep mode:
+      - NVDA says nothing new on a Tab stop
+      - NVDA says only a role ("link", "button", "edit", "graphic")
+      - NVDA reads example or placeholder text as the name
+      - Focus lands on "[page behind dialog]"
+      - The same name is given to different targets
+      - The same control is reached on two consecutive Tabs (button nested inside a link)
+      - A link's spoken name is a web address such as "github.com" (no text)
+      Ignore everything after focus leaves the page.
+
+      For up to 5 suspicious stops, spawn one explore subagent per item, all in parallel, to
+      find the component file and line responsible. If Bob declines, find them yourself.
+
+      Write sweep/<page-slug>.md with one line per proposed finding in S-NN format:
+        S-NN | page | key script to reproduce | what NVDA said | why suspicious | expected announcement | likely file:line
+
+      ## Step B — Human triage
+
+      Use ask_followup_question to present every proposal (one line each: what NVDA said /
+      why suspicious / expected announcement) and ask which ones to accept.
+      Wait for the answer. Accept only what the human explicitly accepts.
+
+      ## Step C — Record accepted findings
+
+      For each accepted proposal, append one line to findings.md using the next free F-NN id,
+      following the existing pipe-delimited format:
+        F-NN | <WCAG criteria> | <component / page> | page <path>, from top: Tab ×N | <expected announcement> | ear
+
+      ## Step D — Fix each accepted finding
+
+      For each new F-NN, in sequence (never in parallel — there is one screen reader):
+        start_subtask in the earshot mode with the message "/hear F-NN"
+      Wait for each subtask to finish before starting the next.
+
+      ## Step E — Summary
+
+      Reply with one line per original proposal:
+        - Rejected proposals: "S-NN: rejected"
+        - Accepted and verified: "F-NN (S-NN): accepted — VERIFIED <commit-id>"
+        - Accepted but needs human: "F-NN (S-NN): accepted — NEEDS HUMAN"
