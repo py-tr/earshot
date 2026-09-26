@@ -22,11 +22,21 @@ Tested on IBM's own Galaxium Travels sample app. Nothing was planted: the bugs a
 | Application of Technology: "complete and well thought-out, with a clear application of IBM Bob 2.0" | Bob fixes UI, verifies each fix with a real screen reader through our MCP tool, rejects its own wrong fixes, discovers bugs with parallel subagents, and is blocked by the gate it built | [How it was built](#how-it-was-built) · `bob_sessions/` (one screenshot per task) · [`.bob/custom_modes.yaml`](.bob/custom_modes.yaml) · [`earshot_mcp/server.py`](earshot_mcp/server.py) |
 | Business Value: "how effectively the solution addresses a high priority issue" | 10 of 10 findings fixed and verified by ear on IBM's own sample app; strict lint flagged 0 of 9 and axe-core 1½ of 9 | [bench/RESULTS.md](bench/RESULTS.md) · [Why it matters](#why-it-matters) |
 | Originality: "the approach in applying IBM Bob 2.0" | The agent's test oracle is what a blind user hears: Bob must hear its fix before it counts, and every commit replays the screen-reader tests | [What a markup check cannot hear](#what-a-markup-check-cannot-hear) · [How it works](#how-it-works-60-seconds) · [evidence/gate/](evidence/gate/README.md) |
-| Presentation: "clarity and effectiveness" | Every claim links to a verbatim NVDA transcript and the NVDA audio | [Evidence](#evidence) · [report page](https://py-tr.github.io/earshot/) |
+| Presentation: "clarity and effectiveness" | Every claim links to a verbatim NVDA transcript and the NVDA audio; `hear_tests.py --replay` checks every test against them on any OS | [Evidence](#evidence) · [report page](https://py-tr.github.io/earshot/) |
 
 Machine-readable: [`evidence/index.json`](evidence/index.json) links every finding to its NVDA transcripts, audio, fix commit, gate test and Bob tasks; [`bob_sessions/INDEX.md`](bob_sessions/INDEX.md) lists every Bob task with its mode, cost and screenshot.
 
 The three numbers: **10 of 10 fixed and verified by ear · 1½ of 10 flagged by lint and axe · 4 of Bob's fixes rejected by ear and 2 of Bob's commits blocked (once by the git hook, once by the Bob hook despite `--no-verify`).**
+
+## Check it yourself (any OS, one minute, no screen reader)
+
+```
+git clone https://github.com/py-tr/earshot && cd earshot
+pip install mcp==2.2.0
+python earshot_mcp/hear_tests.py --replay
+```
+
+This replays every gate test against the NVDA transcripts stored in `evidence/`. Each test must **pass on the fixed transcript and fail on every broken one** (the original bug and Bob's rejected fixes), so you can see that each test tells broken from fixed. Expected output: 10 lines of `PASS`, in under a second. The live run with real NVDA needs Windows (see [Setup](#setup-windows-only)).
 
 ## Result
 

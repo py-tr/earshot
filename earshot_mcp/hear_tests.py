@@ -137,13 +137,40 @@ def _check(test: dict, output: str) -> tuple[bool, str]:
 # Main
 # ---------------------------------------------------------------------------
 
+def _replay() -> int:
+    """Offline check, any OS, no NVDA: each test must PASS on its stored 'after' transcript
+    and FAIL on its stored 'before' / rejected-fix transcripts (so it tells broken from fixed)."""
+    import glob
+    root = os.path.dirname(_TESTS_PATH)
+    ok = True
+    for test in _load_tests():
+        d = os.path.join(root, "evidence", test["id"])
+        def pick(*patterns):
+            return sorted({f for p in patterns for f in glob.glob(os.path.join(d, p))})
+        afters = pick("after*.txt", "ear_check*.txt")
+        befores = pick("before*.txt", "*rejected*.txt", "*still_silent*.txt")
+        passing = [os.path.basename(f) for f in afters if _check(test, _format_output(f, "replay"))[0]]
+        caught = [os.path.basename(f) for f in befores if not _check(test, _format_output(f, "replay"))[0]]
+        missed = [os.path.basename(f) for f in befores if os.path.basename(f) not in caught]
+        good = bool(passing) and not missed
+        ok &= good
+        print(f"{'PASS' if good else 'FAIL'} {test['id']}: fixed transcript passes: {passing or 'NONE'}"
+              f" | broken transcripts fail: {caught or '-'}" + (f" | NOT caught: {missed}" if missed else ""))
+    return 0 if ok else 1
+
+
 def main():
     parser = argparse.ArgumentParser(description="Earshot regression gate")
+    parser.add_argument("--replay", action="store_true",
+                        help="Offline, any OS: check the tests against the stored NVDA transcripts in evidence/")
     parser.add_argument("--staged", action="store_true",
                         help="Skip unless staged files include frontend source")
     parser.add_argument("--only", metavar="ID",
                         help="Run only the test with this ID")
     args = parser.parse_args()
+
+    if args.replay:
+        sys.exit(_replay())
 
     if args.staged:
         if not _staged_touches_frontend():
