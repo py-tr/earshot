@@ -56,22 +56,24 @@ def main():
         print("earshot bob-hook: skipped (no local NVDA setup)", file=sys.stderr)
         sys.exit(0)
 
-    # Check whether any staged files are under the frontend src.
+    # Frontend changes staged OR still unstaged: this hook runs before the command, so in
+    # "git add X; git commit ..." nothing is staged yet. The dev server serves the working tree,
+    # so the tests hear exactly the files about to be committed either way.
     result = subprocess.run(
-        ["git", "diff", "--cached", "--name-only"],
+        ["git", "diff", "HEAD", "--name-only"],
         capture_output=True, **UTF8
     )
-    staged = result.stdout.splitlines()
-    frontend_staged = [
-        f for f in staged
+    changed = result.stdout.splitlines()
+    frontend_changed = [
+        f for f in changed
         if f.startswith("galaxium/booking_system_frontend/src/")
     ]
-    if not frontend_staged:
+    if not frontend_changed:
         sys.exit(0)
 
-    # Run the earshot test suite against the staged tree.
+    # Run the whole earshot suite (not --staged: staging may happen inside this same command).
     proc = subprocess.run(
-        [VENV_PYTHON, HEAR_TESTS, "--staged"],
+        [VENV_PYTHON, HEAR_TESTS],
         capture_output=True, **UTF8
     )
     runner_exit = proc.returncode
