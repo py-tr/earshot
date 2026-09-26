@@ -157,17 +157,20 @@ In Bob, open `findings.md` and type `/hear F-01`, or type `/sweep /flights`.
 |---|---|
 | `audit/earshot-audit.pdf` | The input audit EAR-2026-09-001 (self-authored for the demo, not a compliance statement) |
 | `findings.md` | Findings in one-line form (written by Bob from the PDF; F-04..F-08 added after triage) |
-| `.bob/custom_modes.yaml` | Custom modes `earshot` (fixes; edits only the frontend src) and `earshot-sweep` (discovery; edits only `sweep/*.md`, subagents allowed) |
-| `.bob/commands/hear.md`, `sweep.md` | `/hear` and `/sweep` slash commands. `.bob/skills/` holds the skills Bob generated from them |
+| `.bob/custom_modes.yaml`, `.bob/rules-<mode>/` | Custom modes `earshot` (fixes; edits only app source and `hear-tests.json`), `earshot-sweep` (discovers; writes only `sweep/`) and `earshot-run` (the whole loop in one command). Each mode's rules live in its own `.bob/rules-<mode>/` folder |
+| `.bob/commands/hear.md`, `sweep.md`, `earshot.md` | `/hear`, `/sweep` and `/earshot` slash commands. `.bob/skills/` holds the skills Bob generated from them |
 | `earshot_mcp/server.py` | MCP server with `listen(key_script, start, gap, path)` and `listen_result(label)` |
 | `earshot_mcp/driver.py`, `extract.py`, `proccap/` | NVDA driver, log-to-transcript extractor, NVDA-only audio capture (prepared before kickoff, see below) |
-| `earshot_mcp/hear_tests.py`, `hear-tests.json`, `.githooks/pre-commit` | The gate |
+| `earshot_mcp/hear_tests.py`, `hear-tests.json`, `.githooks/pre-commit` | The gate (`--replay` checks it offline on any OS) |
+| `.bob/settings.json`, `earshot_mcp/bob_hook.py`, `earshot_mcp/preflight.py` | Bob lifecycle hooks: PreToolUse replays the tests before any `git commit` Bob runs; SessionStart checks that NVDA and the apps are up |
+| `.bobignore` | Keeps Bob out of recordings, dependencies and build output |
 | `evidence/` | Before/after transcripts and audio per finding, and the gate demo |
 | `sweep/` | Bob's sweep proposals and the human triage |
 | `bench/` | lint and axe benchmark: scripts, raw JSON, [RESULTS.md](bench/RESULTS.md) |
 | `report/` | Static report page; the cards are baked into `index.html` by `report/bake.py`, so it reads without JavaScript |
 | `bob_sessions/` | Screenshots of every Bob task's consumption summary (`pytr_taskNN_*`) |
 | `galaxium/` | IBM Galaxium Travels @ `e4e18ae` (Apache-2.0); only `booking_system_frontend/src` was changed |
+| `todomvc/` | TodoMVC React @ `ff43b02` (MIT), the second app; vendored unmodified, then F-11 and F-12 |
 
 ## Known issues we did not fix
 
@@ -218,6 +221,7 @@ Found or seen during the build, listed so nobody mistakes them for fixed:
   - the benchmark scripts (`bench/`)
   - driver fixes during the event (watchdog, focus labels, `--path` / `--start`)
   - tightening the Earshot mode and `/hear`, `/earshot` instructions after analysing Bob's exported task history of the first `/earshot` runs (explicit `start="TOP"`, one Tab count per finding, exact expected phrases, hear-test before commit)
+  - the SessionStart preflight hook, moving the mode rules into `.bob/rules-<mode>/`, `.bobignore`, the captioned GIF, CONTRIBUTING and NOTICE
   - the evidence manifest (`evidence/make_index.py`), the Bob task index and the `--replay` mode of the gate runner
   - review of every Bob diff, a headless visual check (it caught F-07's full-width button, which Bob then fixed in task25), gate-test updates and the evidence files
   - these write-ups
