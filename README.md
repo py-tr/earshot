@@ -13,13 +13,13 @@ Tested on two real apps: IBM's own Galaxium Travels sample app, and TodoMVC's Re
 
 **The key idea:** the AI agent's test oracle is what a real screen reader says. Bob's fix counts only when NVDA is heard saying the right thing, and every commit replays those checks.
 
-**In three lines:** IBM Bob fixes accessibility bugs in real web apps and must hear each fix through a real screen reader before it counts. On two apps, 13 of 13 findings were fixed and verified by ear, while strict lint and axe-core flagged 2½ of them. A gate replays those checks on every UI commit, locally and inside Bob; CI replays them on every push.
+**In three lines:** IBM Bob fixes accessibility bugs in real web apps and must hear each fix through a real screen reader before it counts. On two apps, 13 of 13 findings were fixed and verified by ear, while strict lint and axe-core flagged 2½ of them. A gate replays the affected checks on UI commits, locally and inside Bob; CI replays the stored transcripts on every push.
 
 ## For reviewers: where to check each claim
 
 | Judging criterion | Claim | Check it here |
 |---|---|---|
-| Application of Technology: "complete and well thought-out, with a clear application of IBM Bob 2.0" | Bob's own surfaces do the work, from custom modes and an MCP tool to parallel subagents, subtasks, lifecycle hooks and headless Bob Shell: Bob fixes UI, verifies each fix with a real screen reader, rejects its own wrong fixes, discovers bugs, writes its own tests, and is blocked by the gate it built | [Bob features used](#ibm-bob-20-features-used-and-where-to-see-each-one) · [How it was built](#how-it-was-built) · `bob_sessions/` (one screenshot per task) · [`.bob/custom_modes.yaml`](.bob/custom_modes.yaml) · [`earshot_mcp/server.py`](earshot_mcp/server.py) |
+| Application of Technology: "complete and well thought-out, with a clear application of IBM Bob 2.0" | Bob's own surfaces do the work, from custom modes and an MCP tool to parallel subagents, subtasks, lifecycle hooks and headless Bob Shell: Bob fixes UI, verifies each fix with a real screen reader, rejects its own wrong fixes, discovers bugs, writes its own tests, and is refused by the gate it built (after we fixed the hook's input handling) | [Bob features used](#ibm-bob-20-features-used-and-where-to-see-each-one) · [How it was built](#how-it-was-built) · `bob_sessions/` (one screenshot per task) · [`.bob/custom_modes.yaml`](.bob/custom_modes.yaml) · [`earshot_mcp/server.py`](earshot_mcp/server.py) |
 | Business Value: "how effectively the solution addresses a high priority issue" | 13 of 13 findings fixed and verified by ear on two real apps; strict lint flagged 0 of 13 and axe-core 2½ of 13 | [bench/RESULTS.md](bench/RESULTS.md) · [Why it matters](#why-it-matters) |
 | Originality: "the approach in applying IBM Bob 2.0" | The agent's test oracle is what a blind user hears: Bob must hear its fix before it counts, and every commit replays the screen-reader tests | [What a markup check cannot hear](#what-a-markup-check-cannot-hear) · [How it works](#how-it-works-60-seconds) · [evidence/gate/](evidence/gate/README.md) |
 | Presentation: "clarity and effectiveness" | Every claim links to a verbatim NVDA transcript and the NVDA audio; `hear_tests.py --replay` checks every test against them on any OS | [Evidence](#evidence) · [report page](https://py-tr.github.io/earshot/) |
@@ -82,8 +82,6 @@ The first command replays every gate test against the NVDA transcripts stored in
 
 Earshot does not replace axe-core. axe also found 22 colour-contrast failures that no screen reader would report. Earshot catches what only the ear catches.
 
-**Reliability and cost, counted honestly.** Over the build, `listen()` recorded 254 NVDA takes. Three were aborted by the foreground safety check (another window took focus; the third was our own terminal during a gate run), and 5 produced no transcript (3 while the MCP timeout was misconfigured on day 1, 2 hung takes). In the first two `/earshot` runs, about 20 further calls aborted before a take started, because Bob passed a start control that does not exist on that page; the instructions now require `start="TOP"`. The gate once blocked a commit without listening, because the app served a half-written file, and once reported a regression that was really "could not listen", because a window title crashed the console output; both are fixed ("could not listen" has its own exit code, and output is UTF-8). The whole build used about 32 Bobcoins (about $16 at IBM's documented $0.50 per Bobcoin).
-
 ## What a markup check cannot hear
 
 Rule scanners read the markup. Unit and end-to-end tests check what their author thought to assert. Both can pass while a blind user hears nothing, because neither listens to the speech output. Five cases from this repo:
@@ -104,7 +102,7 @@ What Earshot adds is not more rules but a different oracle: the speech a blind u
 - **NVDA is the most commonly used desktop screen reader** (65.6% of respondents, WebAIM Screen Reader Survey #10), which is why Earshot listens with it.
 - More and more UI code is written by AI assistants, and a fix can pass automated checks while a blind user still hears nothing (see F-01 below).
 
-- **What it costs.** The whole build used about 32 Bobcoins (about $16). The median Bob cost per verified fix, failed attempts included, was about 0.7 Bobcoins (about $0.35); the most expensive was F-10 at about 2.9 Bobcoins, because its `/earshot` run also swept the page ([`bob_sessions/INDEX.md`](bob_sessions/INDEX.md)). Checking the same announcements by hand took a person 60 seconds of full attention per commit for just 6 checks.
+- **What it costs.** The whole build used about 32 Bobcoins (about $16). The median Bob cost per verified fix, failed attempts included, was about 0.7 Bobcoins (about $0.35); the most expensive was F-10 at about 4.7 Bobcoins, including a failed first `/earshot` run in the wrong mode and the sweep itself ([`bob_sessions/INDEX.md`](bob_sessions/INDEX.md)). Checking the same announcements by hand took a person 60 seconds of full attention per commit for just 6 checks.
 - **How a team adopts it.** On an app Earshot had never seen (TodoMVC), one `/earshot <page>` command and one triage answer produced a verified fix and its gate test. CI runs the replay and 72 unit tests on every push ([`.github/workflows/check.yml`](.github/workflows/check.yml)); the full listening gate can run on a self-hosted Windows runner ([template](docs/ci/README.md)).
 
 ## How it works (60 seconds)
@@ -151,7 +149,7 @@ Every transcript is extracted verbatim from NVDA's own log. The `.wav` next to i
 | F-11 | TodoMVC: todo checkboxes have no name (4.1.2, 1.3.1); found by `/earshot` on a second app | "check box, not checked" (which todo?) | "Buy milk, check box, not checked" | [sweep](sweep/todomvc.md) · [before](evidence/F-11/before_bob_earshot_sweep_listen.txt) · [after](evidence/F-11/after_bob_listen.txt) |
 | F-12 | TodoMVC: Delete buttons hidden until mouse hover, so unreachable by keyboard; all named "Delete todo" (2.1.1, 4.1.2); heard by a human | after the last checkbox, Tab goes to "All, link": no Delete | "Delete Buy milk, button" | [before](evidence/F-12/before_probe_listen.txt) · [after](evidence/F-12/after_bob_listen.txt) |
 | Gate | Bob's "tidy-up" of `Modal.tsx` | F-01, F-02 and F-03 all failed: silence, then "Moon, link, heading, level 3" | commit refused, nothing committed | [README](evidence/gate/README.md) · [Bob's diff](evidence/gate/bob_refactor_blocked.diff) |
-| Sweep | Six sweeps on five pages of two apps: two on /flights, one on /, two inside `/earshot` (/destinations/mars, TodoMVC) with triage inside Bob, and one headless (/destinations/earth) | 19 proposals | a human accepted 10 as 7 findings: 3 on /flights (F-04..F-06), all 4 on / as F-07 (3 instances) and F-08, 1 on /destinations/mars (F-10), 2 on TodoMVC as F-11; rejected: 6 on /flights, a cosmetic "❯" on TodoMVC and the headless run's GitHub-name proposal; 1 duplicate | [run 1](sweep/flights.md) · [run 2](sweep/flights-run2.md) · [/flights triage](sweep/flights.triage.md) · [/ run](sweep/home.md) · [/ triage](sweep/home.triage.md) · [/destinations/mars](sweep/destinations-mars.md) · [TodoMVC](sweep/todomvc.md) · [headless /destinations/earth](sweep/destinations-earth.md) |
+| Sweep | Six sweeps that wrote proposals (three more runs hit the wrong page or mode, or could not write their file), on five pages of two apps: two on /flights, one on /, two inside `/earshot` (/destinations/mars, TodoMVC) with triage inside Bob, and one headless (/destinations/earth) | 19 proposals | a human accepted 10 as 7 findings: 3 on /flights (F-04..F-06), all 4 on / as F-07 (3 instances) and F-08, 1 on /destinations/mars (F-10), 2 on TodoMVC as F-11; rejected: 6 on /flights, a cosmetic "❯" on TodoMVC and the headless run's GitHub-name proposal; 1 duplicate | [run 1](sweep/flights.md) · [run 2](sweep/flights-run2.md) · [/flights triage](sweep/flights.triage.md) · [/ run](sweep/home.md) · [/ triage](sweep/home.triage.md) · [/destinations/mars](sweep/destinations-mars.md) · [TodoMVC](sweep/todomvc.md) · [headless /destinations/earth](sweep/destinations-earth.md) |
 
 ## Setup (Windows only)
 
@@ -202,6 +200,10 @@ In Bob, open `findings.md` and type `/hear F-01`, or type `/sweep /flights`.
 | `bob_sessions/` | Screenshots of every Bob task's consumption summary (`pytr_taskNN_*`) |
 | `galaxium/` | IBM Galaxium Travels @ `e4e18ae` (Apache-2.0); only `booking_system_frontend/src` was changed |
 | `todomvc/` | TodoMVC React @ `ff43b02` (MIT), the second app; vendored unmodified, then F-11 and F-12 |
+
+## Reliability and cost
+
+Over the build, `listen()` recorded 254 NVDA takes. Three were aborted by the foreground safety check (another window took focus; the third was our own terminal during a gate run), and 5 produced no transcript (3 while the MCP timeout was misconfigured on day 1, 2 hung takes). In the first two `/earshot` runs, about 20 further calls aborted before a take started, because Bob passed a start control that does not exist on that page; the instructions now require `start="TOP"`. The gate once blocked a commit without listening, because the app served a half-written file, and once reported a regression that was really "could not listen", because a window title crashed the console output; both are fixed ("could not listen" has its own exit code, and output is UTF-8). The whole build used about 32 Bobcoins (about $16 at IBM's documented $0.50 per Bobcoin).
 
 ## Known issues we did not fix
 
