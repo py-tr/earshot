@@ -21,7 +21,7 @@ Tested on IBM's own Galaxium Travels sample app. Nothing was planted: the bugs a
 |---|---|---|
 | Application of Technology: "complete and well thought-out, with a clear application of IBM Bob 2.0" | Bob fixes UI, verifies each fix with a real screen reader through our MCP tool, rejects its own wrong fixes, discovers bugs with parallel subagents, and is blocked by the gate it built | [How it was built](#how-it-was-built) · `bob_sessions/` (one screenshot per task) · [`.bob/custom_modes.yaml`](.bob/custom_modes.yaml) · [`earshot_mcp/server.py`](earshot_mcp/server.py) |
 | Business Value: "how effectively the solution addresses a high priority issue" | 10 of 10 findings fixed and verified by ear on IBM's own sample app; strict lint flagged 0 of 9 and axe-core 1½ of 9 | [bench/RESULTS.md](bench/RESULTS.md) · [Why it matters](#why-it-matters) |
-| Originality: "the approach in applying IBM Bob 2.0" | The agent's test oracle is what a blind user hears: Bob must hear its fix before it counts, and every commit replays the screen-reader tests | [How it works](#how-it-works-60-seconds) · [evidence/gate/](evidence/gate/README.md) |
+| Originality: "the approach in applying IBM Bob 2.0" | The agent's test oracle is what a blind user hears: Bob must hear its fix before it counts, and every commit replays the screen-reader tests | [What a markup check cannot hear](#what-a-markup-check-cannot-hear) · [How it works](#how-it-works-60-seconds) · [evidence/gate/](evidence/gate/README.md) |
 | Presentation: "clarity and effectiveness" | Every claim links to a verbatim NVDA transcript and the NVDA audio | [Evidence](#evidence) · [report page](https://py-tr.github.io/earshot/) |
 
 The three numbers: **10 of 10 fixed and verified by ear · 1½ of 10 flagged by lint and axe · 4 of Bob's fixes rejected by ear and 2 of Bob's commits blocked (once by the git hook, once by the Bob hook despite `--no-verify`).**
@@ -51,6 +51,17 @@ The three numbers: **10 of 10 fixed and verified by ear · 1½ of 10 flagged by 
 Earshot does not replace axe-core. axe also found 22 colour-contrast failures that no screen reader would report. Earshot catches what only the ear catches.
 
 **Reliability and cost, counted honestly.** Over the build, `listen()` ran 117 NVDA takes. One was aborted by its safety check (another window took the foreground), and 3 early takes produced no transcript while the MCP timeout was misconfigured (fixed on day 1). The gate once blocked a commit without listening, because the app served a half-written file; since then, "could not listen" exits with its own code and never reads as a regression. Since that fix we have seen no false failures. The whole build used about 20 Bobcoins (about $10 at IBM's documented $0.50 per Bobcoin).
+
+## What a markup check cannot hear
+
+Rule scanners read the markup. Unit and end-to-end tests check what their author thought to assert. Both can pass while a blind user hears nothing, because neither listens to the speech output. Four cases from this repo:
+
+- **F-01, a correct-looking fix that is silent.** Bob's first fix gave the dialog a proper accessible name. axe-core reported no violation, and a test asserting the dialog's role and name would pass. In NVDA, Enter was followed by silence, because focus never moved into the dialog.
+- **N-02, a correct page that says nothing.** The result count is right in the DOM and on screen, so no rule fires. In NVDA, typing in the search box produced only the typed letters, because nothing announced the change.
+- **F-07, correct elements that read twice.** Every element had a valid name and role; one link wrapped one button. axe-core on the Home page reported only an unnamed link and a region issue. NVDA read each of the three controls twice, on two Tab stops.
+- **F-09, a verified fix that broke typing.** Our own F-01 fix, guarded by 9 passing screen-reader tests, made focus leave the Name field after one typed letter. No test typed there, so nothing failed. The first take that typed inside the dialog heard it at once.
+
+What Earshot adds is not more rules but a different oracle: the speech a blind user actually gets. Where rules do find problems (22 contrast failures, F-08's unnamed link), use them too.
 
 ## Why it matters
 
