@@ -1,0 +1,33 @@
+# NVDA speech/input log for the 'listen' take (take_20260926T192218), extracted verbatim from NVDA's own log (log level: input/output).
+# Clip time 0.00 s = 19:22:35.937 local (2026-09-26). Format: [clip seconds, from NVDA log timestamp] original NVDA log line.
+# Only 'Input:' and 'Speaking' records are listed; LangChangeCommand/CancellableSpeech are NVDA-internal markers, kept verbatim.
+# Note: the timestamp is when NVDA queued the speech; audio can start slightly later if earlier speech is still playing.
+# DOM focus after each key (document.activeElement sampled over CDP ~0.3 s before the next key; not from NVDA):
+#   TAB @ 1.05s -> A "Skip to main content" [page]
+#   TAB @ 3.06s -> BUTTON "Pause animation" [page]
+#   TAB @ 5.06s -> A "Galaxium Travels" [page]
+#   TAB @ 7.06s -> A "Home" [page]
+#   TAB @ 9.05s -> A "Flights" [page]
+#   TAB @ 11.06s -> BUTTON "Login" [page]
+#   TAB @ 13.06s -> A "All Destinations" [page]
+#   TAB @ 15.05s -> A "Book Earth to Mars, Jan 01, 2099" [page]
+#   TAB @ 17.06s -> A "Book Moon to Mars, Jan 07, 2099" [page]
+
+[  1.00s] Input: kb(desktop):tab
+[  1.07s] Speaking [LangChangeCommand ('en_US'), 'clickable', 'Skip to main content', 'same page', 'link']
+[  3.01s] Input: kb(desktop):tab
+[  3.05s] Speaking [LangChangeCommand ('en_US'), 'Pause animation', 'button']
+[  5.01s] Input: kb(desktop):tab
+[  5.06s] Speaking [LangChangeCommand ('en_US'), 'banner landmark', 'Galaxium Travels', 'link']
+[  7.01s] Input: kb(desktop):tab
+[  7.05s] Speaking [LangChangeCommand ('en_US'), 'navigation landmark', 'Home', 'link']
+[  9.00s] Input: kb(desktop):tab
+[  9.05s] Speaking [LangChangeCommand ('en_US'), 'Flights', 'link']
+[ 11.01s] Input: kb(desktop):tab
+[ 11.05s] Speaking [LangChangeCommand ('en_US'), 'Login', 'button']
+[ 13.01s] Input: kb(desktop):tab
+[ 13.07s] Speaking [LangChangeCommand ('en_US'), 'main landmark', 'All Destinations', 'link']
+[ 15.00s] Input: kb(desktop):tab
+[ 15.05s] Speaking [LangChangeCommand ('en_US'), 'Book Earth to Mars, Jan 01, 2099', 'link']
+[ 17.01s] Input: kb(desktop):tab
+[ 17.04s] Speaking [LangChangeCommand ('en_US'), 'Book Moon to Mars, Jan 07, 2099', 'link']
