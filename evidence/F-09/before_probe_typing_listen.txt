@@ -1,0 +1,34 @@
+# NVDA speech/input log for the 'listen' take (take_20260926T162105), extracted verbatim from NVDA's own log (log level: input/output).
+# Clip time 0.00 s = 16:21:25.420 local (2026-09-26). Format: [clip seconds, from NVDA log timestamp] original NVDA log line.
+# Only 'Input:' and 'Speaking' records are listed; LangChangeCommand/CancellableSpeech are NVDA-internal markers, kept verbatim.
+# Note: the timestamp is when NVDA queued the speech; audio can start slightly later if earlier speech is still playing.
+# DOM focus after each key (document.activeElement sampled over CDP ~0.3 s before the next key; not from NVDA):
+#   ENTER @ 1.06s -> DIV "Sign InEnter your name and email to continueNameEm" [inside dialog]
+#   TAB @ 3.56s -> BUTTON "Close modal" [inside dialog]
+#   TAB @ 6.05s -> INPUT "John Doe" [inside dialog]
+#   TYPE @ 9.00s -> DIV "Sign InEnter your name and email to continueNameEm" [inside dialog]
+#   TAB @ 11.05s -> BUTTON "Close modal" [inside dialog]
+#   ENTER @ 13.56s -> BODY
+
+[  1.01s] Input: kb(desktop):enter
+[  1.16s] Speaking [LangChangeCommand ('en_US'), 'Sign In', 'dialog', CancellableSpeech (still valid)]
+[  1.16s] Speaking [LangChangeCommand ('en_US'), 'heading', 'level 2', 'Sign In']
+[  3.50s] Input: kb(desktop):tab
+[  3.55s] Speaking [LangChangeCommand ('en_US'), 'Close modal', 'button']
+[  6.00s] Input: kb(desktop):tab
+[  6.07s] Speaking [LangChangeCommand ('en_US'), 'form landmark', CancellableSpeech (still valid)]
+[  6.07s] Speaking [LangChangeCommand ('en_US'), 'Name', 'edit', 'required', CancellableSpeech (still valid), 'John Doe', CancellableSpeech (still valid), 'blank']
+[  8.50s] Input: kb(desktop):N
+[  8.55s] Speaking [PitchCommand(offset=30), CharacterModeCommand(True), LangChangeCommand ('en_US'), 'N', PitchCommand(), EndUtteranceCommand(), CharacterModeCommand(False)]
+[  8.56s] Speaking [LangChangeCommand ('en_US'), 'Sign In', 'dialog', CancellableSpeech (still valid)]
+[  8.59s] Input: kb(desktop):o
+[  8.67s] Input: kb(desktop):b
+[  8.75s] Input: kb(desktop):o
+[  8.83s] Input: kb(desktop):d
+[  8.91s] Input: kb(desktop):y
+[ 11.00s] Input: kb(desktop):tab
+[ 11.02s] Speaking [LangChangeCommand ('en_US'), 'Close modal', 'button']
+[ 13.51s] Input: kb(desktop):enter
+[ 13.64s] Speaking [LangChangeCommand ('en_US'), 'form landmark', CancellableSpeech (still valid)]
+[ 13.65s] Speaking [LangChangeCommand ('en_US'), 'Name', 'edit', 'required', CancellableSpeech (still valid), 'N']
+[ 13.89s] Speaking [LangChangeCommand ('en_US'), 'button', 'Select Seat Class, Earth to Mars']
