@@ -25,12 +25,21 @@ UTF8 = dict(text=True, encoding="utf-8", errors="replace",
 def main():
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
     raw = sys.stdin.buffer.read().decode("utf-8", errors="replace")
+    # Log every call (next to this script, so the working directory does not matter)
+    try:
+        import datetime
+        log = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "takes", "bob_hook_calls.log")
+        with open(log, "a", encoding="utf-8") as fh:
+            fh.write(f"{datetime.datetime.now():%H:%M:%S} cwd={os.getcwd()} stdin={raw[:600]}\n")
+    except OSError:
+        pass
     try:
         data = json.loads(raw)
     except json.JSONDecodeError:
         sys.exit(0)
 
-    inp = data.get("input") or {}
+    # Bob 2.x sends tool_name/tool_input; the lifecycle-hooks docs say tool/input. Accept both.
+    inp = data.get("tool_input") or data.get("input") or {}
     if isinstance(inp, str):  # tolerate the tool input arriving as a JSON string
         try:
             inp = json.loads(inp)
