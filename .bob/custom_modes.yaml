@@ -9,7 +9,7 @@ customModes:
     groups:
       - read
       - - edit
-        - fileRegex: "^(galaxium/booking_system_frontend/src/.*\\.(tsx|ts|css)|todomvc/src/.*\\.(jsx|js|css)|hear-tests\\.json)$"
+        - fileRegex: "^(?:.*[\\\\/])?(galaxium[\\\\/]booking_system_frontend[\\\\/]src[\\\\/].*\\.(tsx|ts|css)|todomvc[\\\\/]src[\\\\/].*\\.(jsx|js|css)|hear-tests\\.json)$"
       - mcp
       - execute
     customInstructions: |
@@ -22,7 +22,7 @@ customModes:
     groups:
       - read
       - - edit
-        - fileRegex: "^sweep/.*\\.md$"
+        - fileRegex: "^(?:.*[\\\\/])?sweep[\\\\/].*\\.md$"
       - mcp
       - subagent
     customInstructions: |
@@ -36,7 +36,7 @@ customModes:
     groups:
       - read
       - - edit
-        - fileRegex: "^(sweep/.*\\.md|findings\\.md)$"
+        - fileRegex: "^(?:.*[\\\\/])?(sweep[\\\\/].*\\.md|findings\\.md)$"
       - mcp
       - subagent
       - subtask
