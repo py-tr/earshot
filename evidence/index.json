@@ -1,0 +1,501 @@
+{
+  "project": "Earshot: screen-reader tests for AI-written UI",
+  "app": "IBM Galaxium Travels sample app (galaxium/, Apache-2.0, upstream e4e18ae)",
+  "screen_reader": "NVDA 2026.2 (real, not simulated); transcripts are verbatim from NVDA's log, audio is NVDA-process-only",
+  "summary": {
+    "findings": 11,
+    "verified_by_ear": 11,
+    "gate_tests": 10,
+    "benchmark": "bench/RESULTS.md"
+  },
+  "gate_evidence": [
+    "evidence/gate/README.md",
+    "evidence/gate/blocked_F-01.txt",
+    "evidence/gate/blocked_F-02.txt",
+    "evidence/gate/blocked_F-03.txt",
+    "evidence/gate/bob_hook_call_stdin.txt",
+    "evidence/gate/bob_hook_no_verify_blocked.txt",
+    "evidence/gate/bob_refactor_blocked.diff",
+    "evidence/gate/terminal_demo_9tests.txt",
+    "evidence/gate/terminal_demo_blocked_F-01.txt",
+    "evidence/gate/terminal_demo_blocked_F-02.txt",
+    "evidence/gate/terminal_demo_blocked_F-03.txt"
+  ],
+  "findings": [
+    {
+      "id": "F-01",
+      "wcag": "4.1.2 Name, Role, Value (A); 2.4.3 Focus Order (A)",
+      "component": "Sign In dialog",
+      "source": "audit",
+      "key_script": "Enter, Tab",
+      "expected": "\"Sign In, dialog\", then \"Close modal, button\"",
+      "verified_by": "ear (NVDA transcript)",
+      "before": [
+        "evidence/F-01/before_bob_listen.txt"
+      ],
+      "rejected_attempts": [
+        "evidence/F-01/name_only_fix_still_silent_bob_listen.txt"
+      ],
+      "after": [
+        "evidence/F-01/after_bob_listen.txt"
+      ],
+      "audio": [
+        "evidence/F-01/after_bob_listen.wav",
+        "evidence/F-01/before_bob_listen.wav",
+        "evidence/F-01/name_only_fix_still_silent_bob_listen.wav"
+      ],
+      "fix_commits": [
+        "47b9252 F-01: name the Sign In dialog and move focus into it on open (verified by NVDA, take_20260925T203712)"
+      ],
+      "gate_test": {
+        "id": "F-01",
+        "key_script": "Enter, Tab",
+        "expect": [
+          "Sign In, dialog",
+          "Close modal, button"
+        ],
+        "forbid": []
+      },
+      "bob_tasks": [
+        "03g"
+      ],
+      "bob_screenshots": [
+        "bob_sessions/pytr_task03_hear_f01_attempt7_verified_summary.png"
+      ]
+    },
+    {
+      "id": "F-02",
+      "wcag": "2.4.3 Focus Order (A)",
+      "component": "Sign In dialog",
+      "source": "audit",
+      "key_script": "Enter, Tab ×6, Shift+Tab, Escape",
+      "expected": "The Tab after the last control (\"Don't have an account? Register\") wraps to \"Close modal, button\"; Shift+Tab goes back to \"Don't have an account? Register\". After Escape: \"Select Seat Class, button\" (focus returns to the control that opened",
+      "verified_by": "ear (NVDA transcript)",
+      "before": [],
+      "rejected_attempts": [
+        "evidence/F-02/attempt1_rejected_bob_listen.txt"
+      ],
+      "after": [
+        "evidence/F-02/after_bob_listen.txt"
+      ],
+      "audio": [
+        "evidence/F-02/after_bob_listen.wav",
+        "evidence/F-02/attempt1_rejected_bob_listen.wav"
+      ],
+      "fix_commits": [
+        "72ed8ad F-04: booking buttons name their route (Button forwards aria-label; verified by NVDA, take_20260925T235752; first attempt rejected, take_20260925T235649). hear-tests F-02: after Escape, expect the opener 'Select Seat Class' by its visible label (its full name now includes the route, by design)",
+        "f080f62 F-02: trap focus inside the Sign In dialog and return focus to the opener on close (verified by NVDA, take_20260925T205534; first attempt rejected by take_20260925T205427)"
+      ],
+      "gate_test": {
+        "id": "F-02",
+        "key_script": "Enter, Tab ×6, Shift+Tab, Escape",
+        "expect": [
+          "Register, button",
+          "Close modal, button",
+          "Register",
+          "Select Seat Class"
+        ],
+        "forbid": [
+          "github.com"
+        ]
+      },
+      "bob_tasks": [
+        "05"
+      ],
+      "bob_screenshots": [
+        "bob_sessions/pytr_task05_hear_f02_verified_summary.png"
+      ]
+    },
+    {
+      "id": "F-03",
+      "wcag": "1.3.1 Info and Relationships (A); 4.1.2 Name, Role, Value (A)",
+      "component": "Sign In form fields",
+      "source": "audit",
+      "key_script": "Enter, Tab, Tab, Tab",
+      "expected": "\"Close modal, button\", then \"Name, edit\", then \"Email, edit\"",
+      "verified_by": "ear (NVDA transcript)",
+      "before": [
+        "evidence/F-03/before_bob_listen_from_F02_run.txt"
+      ],
+      "rejected_attempts": [],
+      "after": [
+        "evidence/F-03/after_bob_listen.txt"
+      ],
+      "audio": [
+        "evidence/F-03/after_bob_listen.wav",
+        "evidence/F-03/before_bob_listen_from_F02_run.wav"
+      ],
+      "fix_commits": [
+        "cc8ccff F-03: associate the shared Input's label with its input via useId (verified by NVDA, take_20260925T210032)"
+      ],
+      "gate_test": {
+        "id": "F-03",
+        "key_script": "Enter, Tab, Tab, Tab",
+        "expect": [
+          "Close modal, button",
+          "Name, edit",
+          "Email, edit"
+        ],
+        "forbid": [
+          "John Doe, edit"
+        ]
+      },
+      "bob_tasks": [
+        "06"
+      ],
+      "bob_screenshots": [
+        "bob_sessions/pytr_task06_hear_f03_verified_summary.png"
+      ]
+    },
+    {
+      "id": "N-01",
+      "wcag": "2.2.2 Pause, Stop, Hide (A)",
+      "component": "Animated starfield background, every page",
+      "source": "audit",
+      "key_script": "N/A",
+      "expected": "N/A",
+      "verified_by": "ear + human eye (the animation stopping is visual)",
+      "before": [],
+      "rejected_attempts": [],
+      "after": [
+        "evidence/N-01/ear_check_bob_listen.txt"
+      ],
+      "audio": [
+        "evidence/N-01/ear_check_bob_listen.wav"
+      ],
+      "fix_commits": [
+        "2215fec N-01: pause/resume control for the animated starfield (announced by NVDA; motion stop confirmed visually by a human)"
+      ],
+      "gate_test": null,
+      "bob_tasks": [
+        "07"
+      ],
+      "bob_screenshots": [
+        "bob_sessions/pytr_task07_hear_n01_summary.png"
+      ]
+    },
+    {
+      "id": "N-02",
+      "wcag": "4.1.3 Status Messages (AA)",
+      "component": "/flights results count is not announced while filtering (now testable by ear: listen() can type)",
+      "source": "audit",
+      "key_script": "page /flights, from top: Tab ×7, Type \"Mars\"",
+      "expected": "After typing, \"Showing 4 flights\" is announced politely, without interrupting typing, and focus stays in the search field.",
+      "verified_by": "ear (NVDA transcript)",
+      "before": [
+        "evidence/N-02/before_typing_listen.txt"
+      ],
+      "rejected_attempts": [],
+      "after": [
+        "evidence/N-02/after_bob_listen.txt"
+      ],
+      "audio": [
+        "evidence/N-02/after_bob_listen.wav",
+        "evidence/N-02/before_typing_listen.wav"
+      ],
+      "fix_commits": [
+        "658a4ca N-02: result count is a polite live region (Bob task27, verified by NVDA while typing); hear-test N-02"
+      ],
+      "gate_test": {
+        "id": "N-02",
+        "path": "/flights",
+        "start": "TOP",
+        "key_script": "Tab ×7, Type \"Mars\"",
+        "expect": [
+          "Search flights, edit",
+          "Showing 4 flights"
+        ],
+        "forbid": []
+      },
+      "bob_tasks": [
+        "08",
+        "23",
+        "27"
+      ],
+      "bob_screenshots": [
+        "bob_sessions/pytr_task08_hear_n02_needs_human_summary.png",
+        "bob_sessions/pytr_task27_hear_n02_summary.png"
+      ]
+    },
+    {
+      "id": "F-04",
+      "wcag": "2.4.6 Headings and Labels (AA); 1.3.1 Info and Relationships (A)",
+      "component": "/flights \"Select Seat Class\" buttons (source: Bob sweep S-01, human-accepted)",
+      "source": "bob-sweep /flights",
+      "key_script": "page /flights, from top: Tab ×10",
+      "expected": "\"Select Seat Class, Earth to Mars, button\" (each button names its route)",
+      "verified_by": "ear (NVDA transcript)",
+      "before": [],
+      "rejected_attempts": [
+        "evidence/F-04/attempt1_rejected_bob_listen.txt"
+      ],
+      "after": [
+        "evidence/F-04/after_bob_listen.txt"
+      ],
+      "audio": [
+        "evidence/F-04/after_bob_listen.wav",
+        "evidence/F-04/attempt1_rejected_bob_listen.wav"
+      ],
+      "fix_commits": [
+        "72ed8ad F-04: booking buttons name their route (Button forwards aria-label; verified by NVDA, take_20260925T235752; first attempt rejected, take_20260925T235649). hear-tests F-02: after Escape, expect the opener 'Select Seat Class' by its visible label (its full name now includes the route, by design)"
+      ],
+      "gate_test": {
+        "id": "F-04",
+        "path": "/flights",
+        "start": "TOP",
+        "key_script": "Tab ×10",
+        "expect": [
+          "Select Seat Class, Earth to Mars"
+        ],
+        "forbid": []
+      },
+      "bob_tasks": [
+        "13a",
+        "13b",
+        "13d",
+        "15"
+      ],
+      "bob_screenshots": [
+        "bob_sessions/pytr_task13a_sweep_wrong_page_subagents_running.png",
+        "bob_sessions/pytr_task13a_sweep_wrong_page_summary.png",
+        "bob_sessions/pytr_task13b_sweep_flights_summary.png",
+        "bob_sessions/pytr_task13d_sweep_parallel_subagents_1.png",
+        "bob_sessions/pytr_task13d_sweep_parallel_subagents_2.png",
+        "bob_sessions/pytr_task13d_sweep_parallel_subagents_3.png",
+        "bob_sessions/pytr_task13d_sweep_parallel_subagents_4.png",
+        "bob_sessions/pytr_task15_hear_f04_verified_summary.png"
+      ]
+    },
+    {
+      "id": "F-05",
+      "wcag": "2.4.1 Bypass Blocks (A)",
+      "component": "every page: no skip link (source: Bob sweep S-05, human-accepted)",
+      "source": "bob-sweep /flights",
+      "key_script": "page /flights, from top: Tab, Enter, Tab",
+      "expected": "\"Skip to main content, link\" as the first Tab stop; Enter moves focus into main (\"main landmark\"); the next Tab reaches \"Search flights, edit\"",
+      "verified_by": "ear (NVDA transcript)",
+      "before": [
+        "evidence/F-05/before_probe_listen.txt"
+      ],
+      "rejected_attempts": [],
+      "after": [
+        "evidence/F-05/after_bob_listen.txt",
+        "evidence/F-05/after_skip_focus_listen.txt"
+      ],
+      "audio": [
+        "evidence/F-05/after_bob_listen.wav",
+        "evidence/F-05/after_skip_focus_listen.wav",
+        "evidence/F-05/before_probe_listen.wav"
+      ],
+      "fix_commits": [
+        "90a1e92 F-05: skip link moves focus into main; hear-test now checks Tab, Enter, Tab",
+        "9f693f7 F-05: skip to main content link as the first Tab stop (verified by NVDA, take_20260926T001926)"
+      ],
+      "gate_test": {
+        "id": "F-05",
+        "path": "/flights",
+        "start": "TOP",
+        "key_script": "Tab, Enter, Tab",
+        "expect": [
+          "Skip to main content",
+          "main landmark",
+          "Search flights, edit"
+        ],
+        "forbid": []
+      },
+      "bob_tasks": [
+        "13a",
+        "16",
+        "21"
+      ],
+      "bob_screenshots": [
+        "bob_sessions/pytr_task13a_sweep_wrong_page_subagents_running.png",
+        "bob_sessions/pytr_task13a_sweep_wrong_page_summary.png",
+        "bob_sessions/pytr_task16_hear_f05_verified_summary.png",
+        "bob_sessions/pytr_task21_f05_skip_focus_summary.png"
+      ]
+    },
+    {
+      "id": "F-06",
+      "wcag": "1.3.1 Info and Relationships (A); 4.1.2 Name, Role, Value (A); 3.3.2 Labels or Instructions (A)",
+      "component": "/flights search field named only by its placeholder (source: Bob sweep run 2 S-02, human-accepted)",
+      "source": "bob-sweep /flights",
+      "key_script": "page /flights, from top: Tab ×7",
+      "expected": "\"Search flights, edit\" (a real label, not the placeholder)",
+      "verified_by": "ear (NVDA transcript)",
+      "before": [
+        "evidence/F-06/before_bob_sweep_listen.txt"
+      ],
+      "rejected_attempts": [],
+      "after": [
+        "evidence/F-06/after_bob_listen.txt"
+      ],
+      "audio": [
+        "evidence/F-06/after_bob_listen.wav",
+        "evidence/F-06/before_bob_sweep_listen.wav"
+      ],
+      "fix_commits": [
+        "0e2273e F-06: search field gets a real name 'Search flights' (verified by NVDA, take_20260926T002530)"
+      ],
+      "gate_test": {
+        "id": "F-06",
+        "path": "/flights",
+        "start": "TOP",
+        "key_script": "Tab ×7",
+        "expect": [
+          "Search flights, edit"
+        ],
+        "forbid": []
+      },
+      "bob_tasks": [
+        "13d",
+        "17"
+      ],
+      "bob_screenshots": [
+        "bob_sessions/pytr_task13d_sweep_parallel_subagents_1.png",
+        "bob_sessions/pytr_task13d_sweep_parallel_subagents_2.png",
+        "bob_sessions/pytr_task13d_sweep_parallel_subagents_3.png",
+        "bob_sessions/pytr_task13d_sweep_parallel_subagents_4.png",
+        "bob_sessions/pytr_task17_hear_f06_verified_summary.png"
+      ]
+    },
+    {
+      "id": "F-07",
+      "wcag": "4.1.2 Name, Role, Value (A); 2.4.3 Focus Order (A)",
+      "component": "Home page: a Button nested inside a Link gives one control two Tab stops, in 3 places: header \"Book a Flight\", hero \"Explore Flights\", footer CTA \"Book Your Flight Now\" (source: Bob sweep task22 S-01..S-03, human-accepted as one root cause)",
+      "source": "bob-sweep /",
+      "key_script": "page /, from top: Tab ×17",
+      "expected": "Each of the three is one Tab stop, announced once: \"Book a Flight\", then \"Explore Flights\", then \"Learn More\", ..., \"Book Your Flight Now\". Never \"button, link\".",
+      "verified_by": "ear (NVDA transcript)",
+      "before": [
+        "evidence/F-07/before_bob_sweep_listen.txt"
+      ],
+      "rejected_attempts": [
+        "evidence/F-07/attempt1_rejected_bob_listen.txt"
+      ],
+      "after": [
+        "evidence/F-07/after_bob_listen.txt"
+      ],
+      "audio": [
+        "evidence/F-07/after_bob_listen.wav",
+        "evidence/F-07/attempt1_rejected_bob_listen.wav",
+        "evidence/F-07/before_bob_sweep_listen.wav"
+      ],
+      "fix_commits": [
+        "a260a57 F-08: footer GitHub link named 'GitHub' (Bob task26, verified by NVDA); hear-test F-08; change notices on F-07/F-08 files",
+        "87febe4 MODIFICATIONS: F-07 files; task25 screenshot",
+        "5a4663c fix(F-07): change CTA Link flex to inline-flex; remove unused tabIndex from Button",
+        "7aef65c F-07: replace Button-inside-Link with styled links to fix double tab stop (verified by NVDA)"
+      ],
+      "gate_test": {
+        "id": "F-07",
+        "path": "/",
+        "start": "TOP",
+        "key_script": "Tab ×17",
+        "expect": [
+          "Book a Flight, link",
+          "Explore Flights, link",
+          "Learn More, button",
+          "Book Your Flight Now, link"
+        ],
+        "forbid": [
+          "button, link"
+        ]
+      },
+      "bob_tasks": [
+        "22",
+        "24",
+        "25"
+      ],
+      "bob_screenshots": [
+        "bob_sessions/pytr_task22_sweep_home_summary.png",
+        "bob_sessions/pytr_task24_hear_f07_summary.png",
+        "bob_sessions/pytr_task25_f07_visual_fix_summary.png"
+      ]
+    },
+    {
+      "id": "F-08",
+      "wcag": "2.4.4 Link Purpose (A); 1.1.1 Non-text Content (A)",
+      "component": "footer GitHub icon link has no name, so NVDA reads the raw address \"github.com, link\" (source: Bob sweep task22 S-04, human-accepted; axe-core also flags it as link-name)",
+      "source": "bob-sweep /",
+      "key_script": "page /, from top: Tab ×17 (after the F-07 fix; Tab ×20 before it)",
+      "expected": "\"GitHub, link\" (a real name, not the web address)",
+      "verified_by": "ear (NVDA transcript)",
+      "before": [
+        "evidence/F-08/before_bob_listen.txt"
+      ],
+      "rejected_attempts": [],
+      "after": [
+        "evidence/F-08/after_bob_listen.txt"
+      ],
+      "audio": [
+        "evidence/F-08/after_bob_listen.wav",
+        "evidence/F-08/before_bob_listen.wav"
+      ],
+      "fix_commits": [
+        "a260a57 F-08: footer GitHub link named 'GitHub' (Bob task26, verified by NVDA); hear-test F-08; change notices on F-07/F-08 files"
+      ],
+      "gate_test": {
+        "id": "F-08",
+        "path": "/",
+        "start": "TOP",
+        "key_script": "Tab ×17",
+        "expect": [
+          "GitHub, link"
+        ],
+        "forbid": [
+          "github.com"
+        ]
+      },
+      "bob_tasks": [
+        "22",
+        "26"
+      ],
+      "bob_screenshots": [
+        "bob_sessions/pytr_task22_sweep_home_summary.png",
+        "bob_sessions/pytr_task26_hear_f08_summary.png"
+      ]
+    },
+    {
+      "id": "F-09",
+      "wcag": "2.1.1 Keyboard (A); 3.2.2 On Input (A)",
+      "component": "Sign In dialog: after each typed letter, focus jumps out of the Name field to the dialog, so only the first letter is typed. REGRESSION introduced by our own F-01 fix (commit 47b9252: the focus-on-open effect re-runs on every render because",
+      "source": "regression in our own F-01 fix, found by ear while typing",
+      "key_script": "Enter, Tab, Tab, Type \"Nobody\", Tab",
+      "expected": "After typing, the Name field keeps focus and holds \"Nobody\"; the next Tab says \"Email, edit, required\" (not \"Close modal, button\")",
+      "verified_by": "ear (NVDA transcript)",
+      "before": [
+        "evidence/F-09/before_probe_typing_listen.txt"
+      ],
+      "rejected_attempts": [],
+      "after": [
+        "evidence/F-09/after_bob_listen.txt"
+      ],
+      "audio": [
+        "evidence/F-09/after_bob_listen.wav",
+        "evidence/F-09/before_probe_typing_listen.wav"
+      ],
+      "fix_commits": [
+        "a525fe4 F-09 verified (Bob task34, Bob wrote its own gate test): docs to 10 of 10, 1½ of 10 flagged, 8 of 10 only by ear; regression disclosed; report card; limitation 'tests only hear what they drive'",
+        "2b5b56d fix(F-09): remove onClose from Modal effect deps to stop focus-steal on keystroke"
+      ],
+      "gate_test": {
+        "id": "F-09",
+        "path": "/flights",
+        "start": "Select Seat Class",
+        "key_script": "Enter, Tab, Tab, Type \"Nobody\", Tab",
+        "expect": [
+          "Name, edit, required",
+          "Email, edit, required"
+        ],
+        "forbid": []
+      },
+      "bob_tasks": [
+        "34"
+      ],
+      "bob_screenshots": [
+        "bob_sessions/pytr_task34_hear_f09_summary.png"
+      ]
+    }
+  ]
+}
