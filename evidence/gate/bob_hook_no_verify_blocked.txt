@@ -1,0 +1,22 @@
+FAIL F-01: missing 'Sign In, dialog'
+  said: Moon, link, heading, level 3
+FAIL F-02: missing 'Register, button'
+  said: Moon, link, heading, level 3
+  said: Select Seat Class, Earth to Moon, button
+  said: Earth, link, heading, level 3
+  said: Select Seat Class, Mars to Earth, button
+  said: Earth, link, heading, level 3
+  said: Select Seat Class, Venus to Earth, button
+  said: Earth, link, heading, level 3
+FAIL F-03: missing 'Close modal, button'
+  said: Moon, link, heading, level 3
+  said: Select Seat Class, Earth to Moon, button
+  said: Earth, link, heading, level 3
+PASS F-04
+PASS F-05
+PASS F-06
+PASS F-07
+PASS F-08
+PASS N-02
+
+BLOCKED by Earshot (Bob hook): this commit breaks what a screen reader hears; details in takes/bob_hook_last.txt

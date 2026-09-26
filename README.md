@@ -14,7 +14,7 @@ Tested on IBM's own Galaxium Travels sample app. Nothing was planted: the bugs a
 | Originality: "the approach in applying IBM Bob 2.0" | The agent's test oracle is what a blind user hears: Bob must hear its fix before it counts, and every commit replays the screen-reader tests | [How it works](#how-it-works-60-seconds) · [evidence/gate/](evidence/gate/README.md) |
 | Presentation: "clarity and effectiveness" | Every claim links to a verbatim NVDA transcript and the NVDA audio | [Evidence](#evidence) · [report page](https://py-tr.github.io/earshot/) |
 
-The three numbers: **9 of 9 fixed and verified by ear · 1½ of 9 flagged by lint and axe · 4 of Bob's fixes rejected by ear and 1 commit blocked.**
+The three numbers: **9 of 9 fixed and verified by ear · 1½ of 9 flagged by lint and axe · 4 of Bob's fixes rejected by ear and 2 of Bob's commits blocked (once by the git hook, once by the Bob hook despite `--no-verify`).**
 
 ## Result
 
@@ -30,13 +30,15 @@ The three numbers: **9 of 9 fixed and verified by ear · 1½ of 9 flagged by lin
 - **The fix that passed axe was still silent.** Bob's first F-01 fix only added a dialog name. axe reported no dialog violation, yet in NVDA Enter was followed by silence, and Tab then read "Moon, link, heading, level 3" from the page behind the dialog. Earshot rejected that fix. ([bench/RESULTS.md](bench/RESULTS.md))
 - **9 of 9 findings resolved and verified by NVDA.** Four (F-01..F-03, N-02) came from the audit PDF. Five (F-04..F-08) were discovered by Bob's `/sweep` on two pages and accepted by a human.
 - **The gate works.** [`hear-tests.json`](hear-tests.json) holds 9 tests, and a full run passes 9 of 9 in about 6½ minutes. It refused Bob's own "tidy-up" of `Modal.tsx`, which removed the dialog's focus management. NVDA heard silence, so the commit was blocked. ([evidence/gate/](evidence/gate/README.md))
+- **Even `--no-verify` does not get past it.** Asked to skip the slow hook, Bob ran `git commit --no-verify`; the Bob lifecycle hook replayed the tests, NVDA heard the dialog go silent, and the command was blocked before git ran. ([evidence/gate/](evidence/gate/README.md))
+- **Bob respects the fence.** Asked in Agent mode to edit IBM's code, Bob refused, citing `AGENTS.md`: galaxium code is edited only in the Earshot mode (task30a).
 - **It costs no human attention per commit.** Checking the first 6 announcements by hand with NVDA took a person 60 seconds at full speed and full concentration, and that has to be repeated on every commit. The gate needs 0 minutes of attention (about 6½ minutes unattended for all 9), and it has already caught a regression that looked like a harmless tidy-up.
 - **A human check made the tests stricter.** During a manual NVDA check, the skip link (F-05) was announced but pressing it left focus on the page body, so NVDA said nothing. Bob made `<main>` focusable and verified by ear that Enter now says "main landmark" and the next Tab reaches "Search flights, edit". The F-05 test now checks `Tab, Enter, Tab` instead of just `Tab`.
 - **4 of Bob's own fixes were rejected by ear before the right one landed:** F-01 (name only), F-02 (no focus trap: Tab escaped to "github.com, link"), F-04 (the `Button` component dropped the label) and F-07 (`tabIndex=-1` on the nested button: NVDA still said "button, link").
 
 Earshot does not replace axe-core. axe also found 22 colour-contrast failures that no screen reader would report. Earshot catches what only the ear catches.
 
-**Reliability and cost, counted honestly.** Over the build, `listen()` ran 117 NVDA takes. One was aborted by its safety check (another window took the foreground), and 3 early takes produced no transcript while the MCP timeout was misconfigured (fixed on day 1). The gate once blocked a commit without listening, because the app served a half-written file; since then, "could not listen" exits with its own code and never reads as a regression. Since that fix we have seen no false failures. The whole build used about 18 Bobcoins (about $9 at IBM's documented $0.50 per Bobcoin).
+**Reliability and cost, counted honestly.** Over the build, `listen()` ran 117 NVDA takes. One was aborted by its safety check (another window took the foreground), and 3 early takes produced no transcript while the MCP timeout was misconfigured (fixed on day 1). The gate once blocked a commit without listening, because the app served a half-written file; since then, "could not listen" exits with its own code and never reads as a regression. Since that fix we have seen no false failures. The whole build used about 19 Bobcoins (about $9.50 at IBM's documented $0.50 per Bobcoin).
 
 ## Why it matters
 
@@ -59,7 +61,7 @@ audit PDF ──► findings.md ──► /hear F-0x ──► Bob edits ──�
 1. **Audit to findings.** Bob reads the audit PDF ([`audit/earshot-audit.pdf`](audit/earshot-audit.pdf)) and writes [`findings.md`](findings.md). Each line holds the WCAG criterion, a key script such as `Enter, Tab`, and the exact announcement expected, such as "Sign In, dialog".
 2. **`/hear F-01`.** Bob switches to the `earshot` custom mode, which may only edit `galaxium/booking_system_frontend/src/`. It states the expected announcement, makes a minimal fix, then calls the MCP tool `listen(key_script)`.
 3. **`listen()`** drives Chrome with real keystrokes (Tab, Enter, Shift+Tab, Escape, and typed text such as `Type "Mars"`) while NVDA runs. It returns only what NVDA said, plus where keyboard focus landed after each key. If the expected phrase is missing, Bob has to try again. After a second failure it replies NEEDS HUMAN.
-4. **Gate.** Every verified finding becomes a test in `hear-tests.json`. `.githooks/pre-commit` replays the tests with NVDA whenever frontend files are staged, and prints `BLOCKED by Earshot: this change breaks what a screen reader hears.` when an expected phrase is missing.
+4. **Gate, in two layers.** Every verified finding becomes a test in `hear-tests.json`. `.githooks/pre-commit` replays the tests with NVDA whenever frontend files are staged, and prints `BLOCKED by Earshot: this change breaks what a screen reader hears.` when an expected phrase is missing. Because `git commit --no-verify` skips git hooks, a Bob lifecycle hook (`.bob/settings.json`, `PreToolUse` on `execute_command` → `earshot_mcp/bob_hook.py`) replays the same tests before any `git commit` Bob runs and blocks it with exit code 2. When it passes, it records the staged tree, so the git hook does not listen twice.
 5. **`/sweep <page>`.** Bob switches to the `earshot-sweep` mode, which can only write `sweep/*.md`. It Tabs through the page 25 times, flags suspicious stops and asks for one explore subagent per item, in parallel, to find the responsible file and line. A human accepts or rejects each proposal.
 
 ## Evidence
@@ -141,13 +143,14 @@ In Bob, open `findings.md` and type `/hear F-01`, or type `/sweep /flights`.
 
 ## How it was built
 
-- **Built by IBM Bob during the event.** Every task's consumption summary is screenshotted in `bob_sessions/` (`pytr_taskNN_*`). The hackathon-provisioned account (`ibm-coding-challenge-uat`) was never received, so all tasks ran on an IBM Bob **trial account** (50 Bobcoins; about 18 used). Main pieces:
+- **Built by IBM Bob during the event.** Every task's consumption summary is screenshotted in `bob_sessions/` (`pytr_taskNN_*`). The hackathon-provisioned account (`ibm-coding-challenge-uat`) was never received, so all tasks ran on an IBM Bob **trial account** (50 Bobcoins; about 19 used). Main pieces:
   - `findings.md` from the PDF (task01)
   - the MCP server, the `earshot` mode and `/hear` (task02, 02b–02i)
   - all UI fixes: F-01 task03 attempt 7, F-02 task05, F-03 task06, N-01 task07, F-04 task15, F-05 task16 and task21, F-06 task17, F-07 task24 and task25, F-08 task26, N-02 task27
   - the report page (task04, 09, 20, 28)
   - the gate (task10, task18, task19)
   - typing in `listen()` (task23)
+  - the Bob lifecycle hook (task29), which blocked Bob's own `git commit --no-verify` (task30c)
   - `/sweep` and the `earshot-sweep` mode (task12, 12b, 13c)
   - page-aware `/hear` (task14)
   - the sweeps (task13a–13d on /flights, task22 on /)

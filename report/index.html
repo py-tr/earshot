@@ -29,8 +29,8 @@
           <span class="scoreboard-caption">flagged by strict React lint and axe-core</span>
         </div>
         <div class="scoreboard-tile">
-          <span class="scoreboard-number">4 + 1</span>
-          <span class="scoreboard-caption">of Bob's own fixes rejected by ear · commit blocked by the gate</span>
+          <span class="scoreboard-number">4 + 2</span>
+          <span class="scoreboard-caption">of Bob's own fixes rejected by ear · Bob commits blocked (one with --no-verify)</span>
         </div>
       </div>
     </section>
@@ -89,6 +89,7 @@ PASS F-08
 PASS N-02
 BLOCKED by Earshot: this change breaks what a screen reader hears.</code></pre>
 <p class="note">Verbatim terminal output (trimmed where marked with ...); run 2026-09-26 with all 9 tests; the full output is <code>evidence/gate/terminal_demo_9tests.txt</code>. Without the focus handling, focus never entered the dialog, so all three dialog tests heard the page behind it.</p>
+<p class="note">A second layer runs inside Bob: a lifecycle hook (<code>.bob/settings.json</code>, PreToolUse on <code>execute_command</code>) replays the same tests before any <code>git commit</code> Bob runs. When Bob was asked to skip the slow hook with <code>git commit --no-verify</code>, NVDA heard F-01 to F-03 fail and the hook blocked the command before git ran (<code>evidence/gate/bob_hook_no_verify_blocked.txt</code>).</p>
 <p class="note">Checking the first 6 announcements by hand with NVDA took a person 60 seconds at full speed, on every commit. The gate needs no attention: all 9 tests run unattended in about 6½ minutes.</p>
       </section>
     </main>
