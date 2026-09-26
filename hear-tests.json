@@ -88,5 +88,16 @@
     "key_script": "Enter, Tab, Tab, Type \"Nobody\", Tab",
     "expect": ["Name, edit, required", "Email, edit, required"],
     "forbid": []
+  },
+  {
+    "id": "F-10",
+    "path": "/destinations/mars",
+    "start": "TOP",
+    "key_script": "Tab ×9",
+    "expect": [
+      "Book Earth to Mars, Jan 01, 2099, link",
+      "Book Moon to Mars, Jan 07, 2099, link"
+    ],
+    "forbid": ["Book, link"]
   }
 ]
