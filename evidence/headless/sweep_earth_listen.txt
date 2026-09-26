@@ -1,0 +1,85 @@
+# NVDA speech/input log for the 'listen' take (take_20260926T214019), extracted verbatim from NVDA's own log (log level: input/output).
+# Clip time 0.00 s = 21:40:35.887 local (2026-09-26). Format: [clip seconds, from NVDA log timestamp] original NVDA log line.
+# Only 'Input:' and 'Speaking' records are listed; LangChangeCommand/CancellableSpeech are NVDA-internal markers, kept verbatim.
+# Note: the timestamp is when NVDA queued the speech; audio can start slightly later if earlier speech is still playing.
+# DOM focus after each key (document.activeElement sampled over CDP ~0.3 s before the next key; not from NVDA):
+#   TAB @ 1.06s -> A "Skip to main content" [page]
+#   TAB @ 2.56s -> BUTTON "Pause animation" [page]
+#   TAB @ 4.06s -> A "Galaxium Travels" [page]
+#   TAB @ 5.55s -> A "Home" [page]
+#   TAB @ 7.06s -> A "Flights" [page]
+#   TAB @ 8.56s -> BUTTON "Login" [page]
+#   TAB @ 10.05s -> A "All Destinations" [page]
+#   TAB @ 11.56s -> A "Book Mars to Earth, Jan 03, 2099" [page]
+#   TAB @ 13.06s -> A "Book Venus to Earth, Jan 04, 2099" [page]
+#   TAB @ 14.55s -> A "Book Europa to Earth, Jan 09, 2099" [page]
+#   TAB @ 16.06s -> A "GitHub" [page]
+#   TAB @ 17.56s -> BODY
+#   TAB @ 19.05s -> BODY
+#   TAB @ 20.56s -> BODY
+#   TAB @ 22.06s -> BODY
+#   TAB @ 23.56s -> A "Skip to main content" [page]
+#   TAB @ 25.05s -> BUTTON "Pause animation" [page]
+#   TAB @ 26.56s -> A "Galaxium Travels" [page]
+#   TAB @ 28.06s -> A "Home" [page]
+#   TAB @ 29.55s -> A "Flights" [page]
+#   TAB @ 31.05s -> BUTTON "Login" [page]
+#   TAB @ 32.55s -> A "All Destinations" [page]
+#   TAB @ 34.06s -> A "Book Mars to Earth, Jan 03, 2099" [page]
+#   TAB @ 35.56s -> A "Book Venus to Earth, Jan 04, 2099" [page]
+#   TAB @ 37.05s -> A "Book Europa to Earth, Jan 09, 2099" [page]
+
+[  1.01s] Input: kb(desktop):tab
+[  1.08s] Speaking [LangChangeCommand ('en_US'), 'clickable', 'Skip to main content', 'same page', 'link']
+[  2.50s] Input: kb(desktop):tab
+[  2.54s] Speaking [LangChangeCommand ('en_US'), 'Pause animation', 'button']
+[  4.01s] Input: kb(desktop):tab
+[  4.07s] Speaking [LangChangeCommand ('en_US'), 'banner landmark', 'Galaxium Travels', 'link']
+[  5.50s] Input: kb(desktop):tab
+[  5.54s] Speaking [LangChangeCommand ('en_US'), 'navigation landmark', 'Home', 'link']
+[  7.01s] Input: kb(desktop):tab
+[  7.06s] Speaking [LangChangeCommand ('en_US'), 'Flights', 'link']
+[  8.50s] Input: kb(desktop):tab
+[  8.54s] Speaking [LangChangeCommand ('en_US'), 'Login', 'button']
+[ 10.00s] Input: kb(desktop):tab
+[ 10.06s] Speaking [LangChangeCommand ('en_US'), 'main landmark', 'All Destinations', 'link']
+[ 11.51s] Input: kb(desktop):tab
+[ 11.56s] Speaking [LangChangeCommand ('en_US'), 'Book Mars to Earth, Jan 03, 2099', 'link']
+[ 13.00s] Input: kb(desktop):tab
+[ 13.03s] Speaking [LangChangeCommand ('en_US'), 'Book Venus to Earth, Jan 04, 2099', 'link']
+[ 14.50s] Input: kb(desktop):tab
+[ 14.54s] Speaking [LangChangeCommand ('en_US'), 'Book Europa to Earth, Jan 09, 2099', 'link']
+[ 16.01s] Input: kb(desktop):tab
+[ 16.06s] Speaking [LangChangeCommand ('en_US'), 'content info landmark', 'GitHub', 'link']
+[ 17.50s] Input: kb(desktop):tab
+[ 17.54s] Speaking [LangChangeCommand ('en_US'), 'booking_system_frontend - Google Chrome', 'region', CancellableSpeech (still valid)]
+[ 17.55s] Speaking [LangChangeCommand ('en_US'), 'Tab search', 'button', 'collapsed', CancellableSpeech (still valid)]
+[ 19.00s] Input: kb(desktop):tab
+[ 19.02s] Speaking [LangChangeCommand ('en_US'), 'tool bar', CancellableSpeech (still valid)]
+[ 19.03s] Speaking [LangChangeCommand ('en_US'), 'View site information', 'button', CancellableSpeech (still valid)]
+[ 20.50s] Input: kb(desktop):tab
+[ 20.53s] Speaking [LangChangeCommand ('en_US'), 'Address and search bar', 'edit', 'Search Google or type a URL', 'Ctrl+', CharacterModeCommand(True), 'L', CharacterModeCommand(False), CancellableSpeech (still valid), 'selected localhost:5173/destinations/earth']
+[ 22.01s] Input: kb(desktop):tab
+[ 22.02s] Speaking [LangChangeCommand ('en_US'), 'Bookmark this tab', 'button', CancellableSpeech (still valid)]
+[ 23.51s] Input: kb(desktop):tab
+[ 23.55s] Speaking [LangChangeCommand ('en_US'), 'booking_system_frontend', 'document', CancellableSpeech (still valid)]
+[ 23.55s] Speaking [LangChangeCommand ('en_US'), 'link', 'GitHub']
+[ 23.58s] Speaking [LangChangeCommand ('en_US'), 'Skip to main content', 'same page', 'link']
+[ 25.00s] Input: kb(desktop):tab
+[ 25.04s] Speaking [LangChangeCommand ('en_US'), 'Pause animation', 'button']
+[ 26.51s] Input: kb(desktop):tab
+[ 26.56s] Speaking [LangChangeCommand ('en_US'), 'banner landmark', 'Galaxium Travels', 'link']
+[ 28.01s] Input: kb(desktop):tab
+[ 28.06s] Speaking [LangChangeCommand ('en_US'), 'navigation landmark', 'Home', 'link']
+[ 29.50s] Input: kb(desktop):tab
+[ 29.54s] Speaking [LangChangeCommand ('en_US'), 'Flights', 'link']
+[ 31.00s] Input: kb(desktop):tab
+[ 31.04s] Speaking [LangChangeCommand ('en_US'), 'Login', 'button']
+[ 32.50s] Input: kb(desktop):tab
+[ 32.56s] Speaking [LangChangeCommand ('en_US'), 'main landmark', 'All Destinations', 'link']
+[ 34.01s] Input: kb(desktop):tab
+[ 34.06s] Speaking [LangChangeCommand ('en_US'), 'Book Mars to Earth, Jan 03, 2099', 'link']
+[ 35.51s] Input: kb(desktop):tab
+[ 35.55s] Speaking [LangChangeCommand ('en_US'), 'Book Venus to Earth, Jan 04, 2099', 'link']
+[ 37.00s] Input: kb(desktop):tab
+[ 37.04s] Speaking [LangChangeCommand ('en_US'), 'Book Europa to Earth, Jan 09, 2099', 'link']
