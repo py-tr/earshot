@@ -570,10 +570,12 @@
       },
       "guard_tests": [],
       "bob_tasks": [
+        "36a",
         "36b",
         "37"
       ],
       "bob_screenshots": [
+        "bob_sessions/pytr_task36a_earshot_ran_in_agent_mode_summary.png",
         "bob_sessions/pytr_task36b_earshot_run_mars_summary.png",
         "bob_sessions/pytr_task37_hear_f10_label_and_test_summary.png"
       ]
@@ -583,8 +585,8 @@
       "wcag": "4.1.2 Name, Role, Value (A); 1.3.1 Info and Relationships (A)",
       "component": "http://localhost:7002/ todo item checkboxes have no accessible name — NVDA reads only role without the item text (source: Bob sweep todomvc S-02, S-03, human-accepted)",
       "source": "bob /earshot run on TodoMVC (second app)",
-      "key_script": "page http://localhost:7002/, from top: Tab, Type \"Buy milk\", Enter, Type \"Walk dog\", Enter, Tab ×3",
-      "expected": "\"Buy milk, check box, not checked\", then Tab ×3: \"Walk dog, check box, not checked\" (each checkbox names its todo item)",
+      "key_script": "page http://localhost:7002/, from top: Tab, Type \"Buy milk\", Enter, Type \"Walk dog\", Enter, Tab ×4",
+      "expected": "\"Buy milk, check box, not checked\", then (after the Delete button F-12 added) \"Walk dog, check box, not checked\" (each checkbox names its todo item)",
       "verified_by": "ear (NVDA transcript)",
       "before": [
         "evidence/F-11/before_bob_earshot_sweep_listen.txt"
@@ -669,7 +671,7 @@
       "component": "Uptime Kuma dashboard: SVG logo <object> element has no accessible name and is a silent focusable tab stop (source: Bob sweep uptime-kuma S-01, human-accepted)",
       "source": "bob /earshot run on Uptime Kuma (third app)",
       "key_script": "page http://localhost:3000/dashboard, from top: Tab ×2",
-      "expected": "The logo object element is skipped or has aria-hidden=\"true\" so Tab ×2 reaches the next meaningful control (\"Status Pages, link\") with no silent stop",
+      "expected": "The logo is no longer a Tab stop, so Tab ×2 reaches the next control (\"Status Pages, link\") with no silent stop (aria-hidden alone was not enough: rejected by ear)",
       "verified_by": "ear (NVDA transcript)",
       "before": [],
       "rejected_attempts": [
