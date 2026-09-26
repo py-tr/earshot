@@ -234,7 +234,7 @@ var EARSHOT_DATA = [
   }
   ,{
     id: "F-10",
-    status: "verified — discovered by Bob’s /sweep, accepted by a human",
+    status: "verified — discovered by Bob’s /earshot run, accepted by a human",
     wcag: "2.4.4 Link Purpose (A); 2.4.6 Headings and Labels (AA)",
     component: "/destinations/mars: two flight links both named “Book” (found by the one-command /earshot run)",
     script: "TAB ×9 from top of /destinations/mars",
@@ -260,7 +260,7 @@ var EARSHOT_DATA = [
   }
   ,{
     id: "F-11",
-    status: "verified — discovered by Bob’s /sweep, accepted by a human",
+    status: "verified — discovered by Bob’s /earshot run, accepted by a human",
     wcag: "4.1.2 Name, Role, Value (A); 1.3.1 Info and Relationships (A)",
     component: "TodoMVC (second app): todo checkboxes have no name",
     script: "type two todos, then TAB ×4",
