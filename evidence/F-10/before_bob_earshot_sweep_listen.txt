@@ -1,0 +1,86 @@
+# NVDA speech/input log for the 'listen' take (take_20260926T185514), extracted verbatim from NVDA's own log (log level: input/output).
+# Clip time 0.00 s = 18:55:31.294 local (2026-09-26). Format: [clip seconds, from NVDA log timestamp] original NVDA log line.
+# Only 'Input:' and 'Speaking' records are listed; LangChangeCommand/CancellableSpeech are NVDA-internal markers, kept verbatim.
+# Note: the timestamp is when NVDA queued the speech; audio can start slightly later if earlier speech is still playing.
+# DOM focus after each key (document.activeElement sampled over CDP ~0.3 s before the next key; not from NVDA):
+#   TAB @ 1.05s -> A "Skip to main content" [page]
+#   TAB @ 2.56s -> BUTTON "Pause animation" [page]
+#   TAB @ 4.05s -> A "Galaxium Travels" [page]
+#   TAB @ 5.56s -> A "Home" [page]
+#   TAB @ 7.06s -> A "Flights" [page]
+#   TAB @ 8.56s -> BUTTON "Login" [page]
+#   TAB @ 10.06s -> A "All Destinations" [page]
+#   TAB @ 11.56s -> A "Book" [page]
+#   TAB @ 13.06s -> A "Book" [page]
+#   TAB @ 14.56s -> A "GitHub" [page]
+#   TAB @ 16.06s -> BODY
+#   TAB @ 17.56s -> BODY
+#   TAB @ 19.06s -> BODY
+#   TAB @ 20.56s -> BODY
+#   TAB @ 22.06s -> A "Skip to main content" [page]
+#   TAB @ 23.56s -> BUTTON "Pause animation" [page]
+#   TAB @ 25.06s -> A "Galaxium Travels" [page]
+#   TAB @ 26.55s -> A "Home" [page]
+#   TAB @ 28.06s -> A "Flights" [page]
+#   TAB @ 29.56s -> BUTTON "Login" [page]
+#   TAB @ 31.05s -> A "All Destinations" [page]
+#   TAB @ 32.56s -> A "Book" [page]
+#   TAB @ 34.06s -> A "Book" [page]
+#   TAB @ 35.56s -> A "GitHub" [page]
+#   TAB @ 37.06s -> BODY
+
+[  1.00s] Input: kb(desktop):tab
+[  1.07s] Speaking [LangChangeCommand ('en_US'), 'clickable', 'Skip to main content', 'same page', 'link']
+[  2.51s] Input: kb(desktop):tab
+[  2.55s] Speaking [LangChangeCommand ('en_US'), 'Pause animation', 'button']
+[  4.00s] Input: kb(desktop):tab
+[  4.05s] Speaking [LangChangeCommand ('en_US'), 'banner landmark', 'Galaxium Travels', 'link']
+[  5.50s] Input: kb(desktop):tab
+[  5.56s] Speaking [LangChangeCommand ('en_US'), 'navigation landmark', 'Home', 'link']
+[  7.01s] Input: kb(desktop):tab
+[  7.05s] Speaking [LangChangeCommand ('en_US'), 'Flights', 'link']
+[  8.51s] Input: kb(desktop):tab
+[  8.55s] Speaking [LangChangeCommand ('en_US'), 'Login', 'button']
+[ 10.00s] Input: kb(desktop):tab
+[ 10.06s] Speaking [LangChangeCommand ('en_US'), 'main landmark', 'All Destinations', 'link']
+[ 11.50s] Input: kb(desktop):tab
+[ 11.55s] Speaking [LangChangeCommand ('en_US'), 'Book', 'link']
+[ 13.01s] Input: kb(desktop):tab
+[ 13.05s] Speaking [LangChangeCommand ('en_US'), 'Book', 'link']
+[ 14.50s] Input: kb(desktop):tab
+[ 14.56s] Speaking [LangChangeCommand ('en_US'), 'content info landmark', 'GitHub', 'link']
+[ 16.00s] Input: kb(desktop):tab
+[ 16.03s] Speaking [LangChangeCommand ('en_US'), 'booking_system_frontend - Google Chrome', 'region', CancellableSpeech (still valid)]
+[ 16.05s] Speaking [LangChangeCommand ('en_US'), 'Tab search', 'button', 'collapsed', CancellableSpeech (still valid)]
+[ 17.50s] Input: kb(desktop):tab
+[ 17.53s] Speaking [LangChangeCommand ('en_US'), 'tool bar', CancellableSpeech (still valid)]
+[ 17.54s] Speaking [LangChangeCommand ('en_US'), 'View site information', 'button', CancellableSpeech (still valid)]
+[ 19.00s] Input: kb(desktop):tab
+[ 19.02s] Speaking [LangChangeCommand ('en_US'), 'Address and search bar', 'edit', 'Press tab then enter to ask AI Mode', 'Ctrl+', CharacterModeCommand(True), 'L', CharacterModeCommand(False), CancellableSpeech (still valid), 'selected localhost:5173/destinations/mars']
+[ 20.51s] Input: kb(desktop):tab
+[ 20.53s] Speaking [LangChangeCommand ('en_US'), 'Bookmark this tab', 'button', CancellableSpeech (still valid)]
+[ 22.01s] Input: kb(desktop):tab
+[ 22.06s] Speaking [LangChangeCommand ('en_US'), 'booking_system_frontend', 'document', CancellableSpeech (still valid)]
+[ 22.06s] Speaking [LangChangeCommand ('en_US'), 'link', 'GitHub']
+[ 22.10s] Speaking [LangChangeCommand ('en_US'), 'Skip to main content', 'same page', 'link']
+[ 23.51s] Input: kb(desktop):tab
+[ 23.54s] Speaking [LangChangeCommand ('en_US'), 'Pause animation', 'button']
+[ 25.00s] Input: kb(desktop):tab
+[ 25.06s] Speaking [LangChangeCommand ('en_US'), 'banner landmark', 'Galaxium Travels', 'link']
+[ 26.50s] Input: kb(desktop):tab
+[ 26.55s] Speaking [LangChangeCommand ('en_US'), 'navigation landmark', 'Home', 'link']
+[ 28.01s] Input: kb(desktop):tab
+[ 28.05s] Speaking [LangChangeCommand ('en_US'), 'Flights', 'link']
+[ 29.51s] Input: kb(desktop):tab
+[ 29.55s] Speaking [LangChangeCommand ('en_US'), 'Login', 'button']
+[ 31.00s] Input: kb(desktop):tab
+[ 31.06s] Speaking [LangChangeCommand ('en_US'), 'main landmark', 'All Destinations', 'link']
+[ 32.51s] Input: kb(desktop):tab
+[ 32.55s] Speaking [LangChangeCommand ('en_US'), 'Book', 'link']
+[ 34.00s] Input: kb(desktop):tab
+[ 34.04s] Speaking [LangChangeCommand ('en_US'), 'Book', 'link']
+[ 35.51s] Input: kb(desktop):tab
+[ 35.55s] Speaking [LangChangeCommand ('en_US'), 'content info landmark', 'GitHub', 'link']
+[ 37.01s] Input: kb(desktop):tab
+[ 37.03s] Speaking [LangChangeCommand ('en_US'), 'booking_system_frontend - Google Chrome', 'region', CancellableSpeech (still valid)]
+[ 37.05s] Speaking [LangChangeCommand ('en_US'), 'Tab search', 'button', 'collapsed', CancellableSpeech (still valid)]

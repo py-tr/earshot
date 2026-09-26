@@ -1,0 +1,61 @@
+# NVDA speech/input log for the 'listen' take (take_20260926T190328), extracted verbatim from NVDA's own log (log level: input/output).
+# Clip time 0.00 s = 19:03:44.863 local (2026-09-26). Format: [clip seconds, from NVDA log timestamp] original NVDA log line.
+# Only 'Input:' and 'Speaking' records are listed; LangChangeCommand/CancellableSpeech are NVDA-internal markers, kept verbatim.
+# Note: the timestamp is when NVDA queued the speech; audio can start slightly later if earlier speech is still playing.
+# DOM focus after each key (document.activeElement sampled over CDP ~0.3 s before the next key; not from NVDA):
+#   TAB @ 1.06s -> A "Skip to main content" [page]
+#   TAB @ 3.05s -> BUTTON "Pause animation" [page]
+#   TAB @ 5.05s -> A "Galaxium Travels" [page]
+#   TAB @ 7.06s -> A "Home" [page]
+#   TAB @ 9.05s -> A "Flights" [page]
+#   TAB @ 11.05s -> BUTTON "Login" [page]
+#   TAB @ 13.06s -> A "All Destinations" [page]
+#   TAB @ 15.06s -> A "Book flight Jan 01, 2099 1" [page]
+#   TAB @ 17.05s -> A "Book flight Jan 07, 2099 7" [page]
+#   TAB @ 19.06s -> A "GitHub" [page]
+#   TAB @ 21.06s -> BODY
+#   TAB @ 23.06s -> BODY
+#   TAB @ 25.05s -> BODY
+#   TAB @ 27.06s -> BODY
+#   TAB @ 29.05s -> A "Skip to main content" [page]
+#   TAB @ 31.05s -> BUTTON "Pause animation" [page]
+#   TAB @ 33.05s -> A "Galaxium Travels" [page]
+
+[  1.01s] Input: kb(desktop):tab
+[  1.09s] Speaking [LangChangeCommand ('en_US'), 'clickable', 'Skip to main content', 'same page', 'link']
+[  3.00s] Input: kb(desktop):tab
+[  3.03s] Speaking [LangChangeCommand ('en_US'), 'Pause animation', 'button']
+[  5.00s] Input: kb(desktop):tab
+[  5.05s] Speaking [LangChangeCommand ('en_US'), 'banner landmark', 'Galaxium Travels', 'link']
+[  7.01s] Input: kb(desktop):tab
+[  7.05s] Speaking [LangChangeCommand ('en_US'), 'navigation landmark', 'Home', 'link']
+[  9.00s] Input: kb(desktop):tab
+[  9.05s] Speaking [LangChangeCommand ('en_US'), 'Flights', 'link']
+[ 11.00s] Input: kb(desktop):tab
+[ 11.04s] Speaking [LangChangeCommand ('en_US'), 'Login', 'button']
+[ 13.01s] Input: kb(desktop):tab
+[ 13.07s] Speaking [LangChangeCommand ('en_US'), 'main landmark', 'All Destinations', 'link']
+[ 15.01s] Input: kb(desktop):tab
+[ 15.06s] Speaking [LangChangeCommand ('en_US'), 'Book flight Jan 01, 2099 1', 'link']
+[ 17.00s] Input: kb(desktop):tab
+[ 17.04s] Speaking [LangChangeCommand ('en_US'), 'Book flight Jan 07, 2099 7', 'link']
+[ 19.00s] Input: kb(desktop):tab
+[ 19.05s] Speaking [LangChangeCommand ('en_US'), 'content info landmark', 'GitHub', 'link']
+[ 21.01s] Input: kb(desktop):tab
+[ 21.05s] Speaking [LangChangeCommand ('en_US'), 'booking_system_frontend - Google Chrome', 'region', CancellableSpeech (still valid)]
+[ 21.06s] Speaking [LangChangeCommand ('en_US'), 'Tab search', 'button', 'collapsed', CancellableSpeech (still valid)]
+[ 23.00s] Input: kb(desktop):tab
+[ 23.03s] Speaking [LangChangeCommand ('en_US'), 'tool bar', CancellableSpeech (still valid)]
+[ 23.04s] Speaking [LangChangeCommand ('en_US'), 'View site information', 'button', CancellableSpeech (still valid)]
+[ 25.00s] Input: kb(desktop):tab
+[ 25.02s] Speaking [LangChangeCommand ('en_US'), 'Address and search bar', 'edit', 'Press tab then enter to ask AI Mode', 'Ctrl+', CharacterModeCommand(True), 'L', CharacterModeCommand(False), CancellableSpeech (still valid), 'selected localhost:5173/destinations/mars']
+[ 27.01s] Input: kb(desktop):tab
+[ 27.03s] Speaking [LangChangeCommand ('en_US'), 'Bookmark this tab', 'button', CancellableSpeech (still valid)]
+[ 29.00s] Input: kb(desktop):tab
+[ 29.05s] Speaking [LangChangeCommand ('en_US'), 'booking_system_frontend', 'document', CancellableSpeech (still valid)]
+[ 29.05s] Speaking [LangChangeCommand ('en_US'), 'link', 'GitHub']
+[ 29.09s] Speaking [LangChangeCommand ('en_US'), 'Skip to main content', 'same page', 'link']
+[ 31.00s] Input: kb(desktop):tab
+[ 31.03s] Speaking [LangChangeCommand ('en_US'), 'Pause animation', 'button']
+[ 33.00s] Input: kb(desktop):tab
+[ 33.05s] Speaking [LangChangeCommand ('en_US'), 'banner landmark', 'Galaxium Travels', 'link']
