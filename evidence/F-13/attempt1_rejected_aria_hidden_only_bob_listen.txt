@@ -1,0 +1,11 @@
+# NVDA speech/input log for the 'listen' take (take_20260926T235740), extracted verbatim from NVDA's own log (log level: input/output).
+# Clip time 0.00 s = 23:57:56.873 local (2026-09-26). Format: [clip seconds, from NVDA log timestamp] original NVDA log line.
+# Only 'Input:' and 'Speaking' records are listed; LangChangeCommand/CancellableSpeech are NVDA-internal markers, kept verbatim.
+# Note: the timestamp is when NVDA queued the speech; audio can start slightly later if earlier speech is still playing.
+# DOM focus after each key (document.activeElement sampled over CDP ~0.3 s before the next key; not from NVDA):
+#   TAB @ 1.06s -> A "Uptime Kuma" [page]
+#   TAB @ 3.06s -> OBJECT "" [page]
+
+[  1.01s] Input: kb(desktop):tab
+[  1.09s] Speaking [LangChangeCommand ('en_US'), 'banner landmark', 'Uptime Kuma', 'same page', 'link', 'current page']
+[  3.01s] Input: kb(desktop):tab
