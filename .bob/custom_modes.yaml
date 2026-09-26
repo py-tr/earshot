@@ -18,12 +18,13 @@ customModes:
       Make the minimal diff required to produce that announcement.
       Call listen with the finding's key script and verify the expected announcement appears in the output.
       If it does not appear, retry once; if it still fails, reply NEEDS HUMAN with the full transcript.
-      If the key script starts with "page <path>, from top:", call listen with path=<path>, start="TOP" and only the keys after the colon; otherwise use listen's default start and path.
+      Every listen call passes path and start explicitly. If the key script starts with "page <path>, from top:", use path=<path>, start="TOP" and only the keys after the colon; otherwise use start="Select Seat Class" and path="/flights". If listen aborts with "start control not found", retry once with start="TOP" and the finding's path; never guess other start values.
+      The expected announcement is the exact phrase from the finding, or, if the finding gives a pattern, a concrete phrase you state before editing. Choose names a listener can use (for example route and date), never bare database ids.
+      Before committing, add one test for the finding to hear-tests.json, unless a test with that id already exists: id; path and start as used in the verifying listen call ("TOP" when you started from the top); key_script in findings.md format; expect = the exact phrases you heard that prove the fix, in order; forbid = phrases that would mean the bug is back, if any. Keep the file valid JSON and the existing tests unchanged. Then stage the frontend change and hear-tests.json together and commit, so the gate replays the new test too.
       If listen replies "running", call listen_result with that label; it waits by itself, so never sleep or poll with shell commands.
       Read the "focus:" lines: if focus stays on the page behind the dialog after the key that opens it, focus is not moving into the dialog.
       Findings marked verify "human" end as NEEDS HUMAN, never VERIFIED.
       If a command is blocked by a hook, read takes/bob_hook_last.txt and report what NVDA heard; never retry with --no-verify.
-      After a finding is VERIFIED, add one test for it to hear-tests.json, unless a test with that id already exists: id; path and start as used in the verifying listen call ("TOP" when you started from the top); key_script in findings.md format; expect = the exact phrases you heard that prove the fix, in order; forbid = phrases that would mean the bug is back, if any. Keep the file valid JSON and the existing tests unchanged. Then stage the frontend change and hear-tests.json together and commit, so the gate replays the new test too.
   - slug: earshot-sweep
     name: Earshot Sweep
     roleDefinition: >
@@ -40,6 +41,7 @@ customModes:
       Flag a Tab as suspicious when NVDA says nothing new, says only a role ("link", "button", "edit", "graphic"), reads example or placeholder text as the name, lands on "[page behind dialog]", or gives the same name to different targets.
       For up to 5 suspicious items, ask for one explore subagent per item, all at once in parallel, to find the component file and line responsible. If Bob declines to spawn them, find them yourself.
       Write sweep/<page-slug>.md with one line per proposed finding: S-NN | page | key script to reproduce | what NVDA said | why suspicious | expected announcement | likely file:line.
+      The key script is ONE token "Tab ×N" (N = Tabs from the top to the last stop involved); the expected announcement is an exact phrase in quotes, never a [placeholder] pattern.
       Never edit application code. Reply with the number of proposed findings and the file path.
       Also flag it when the same control is reached on two Tabs in a row (e.g. a button nested inside a link), and when a link's spoken name is a web address such as "github.com" (the link has no text).
       Ignore everything after focus leaves the page (focus shows BODY, or NVDA speaks browser controls such as "Tab search" or "Address and search bar").
@@ -95,11 +97,12 @@ customModes:
       For each accepted proposal, append one line to findings.md using the next free F-NN id,
       following the existing pipe-delimited format:
         F-NN | <WCAG criteria> | <component / page> | page <path>, from top: Tab ×N | <expected announcement> | ear
+      The key script is ONE token "Tab ×N", where N is the number of Tabs from the top to the last stop involved ("Tab ×8, Tab ×9" would mean 17 Tabs; write "Tab ×9"). The expected announcement is the exact phrase(s) NVDA should say, in quotes, with no [placeholders]; name things a listener can use (route, date), never bare ids.
 
       ## Step D — Fix each accepted finding
 
       For each new F-NN, in sequence (never in parallel — there is one screen reader):
-        start_subtask in the earshot mode with the message "/hear F-NN"
+        call start_subtask with mode "earshot" and the message exactly `/hear F-NN` (no title or other text)
       Wait for each subtask to finish before starting the next.
 
       ## Step E — Summary
@@ -108,3 +111,4 @@ customModes:
         - Rejected proposals: "S-NN: rejected"
         - Accepted and verified: "F-NN (S-NN): accepted — VERIFIED <commit-id>"
         - Accepted but needs human: "F-NN (S-NN): accepted — NEEDS HUMAN"
+      Before the summary, confirm each VERIFIED id has a test in hear-tests.json; otherwise report it as NEEDS HUMAN. Finish the task when the summary is written.

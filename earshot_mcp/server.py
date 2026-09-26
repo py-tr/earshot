@@ -200,7 +200,7 @@ def _run_take(label: str, keys: str, start: str, gap: float, path: str = "/fligh
         elif meta.get("aborted"):
             aborted_text = meta["aborted"]
             if "not found" in aborted_text:
-                result = "aborted: start control not found (use the default start)"
+                result = "aborted: start control not found (on pages other than /flights, use start=\"TOP\" with the page's path)"
             else:
                 n_m = re.search(r"before key (\d+)", aborted_text)
                 if n_m:
@@ -229,6 +229,8 @@ def _run_take(label: str, keys: str, start: str, gap: float, path: str = "/fligh
 @server.tool(structured_output=False)
 def listen(key_script: str, start: str = "Select Seat Class", gap: float = 2.0, path: str = "/flights") -> str:
     """key_script uses findings.md format e.g. "Tab ×5, Type \"Mars\""; path is the page URL path to load.
+    start is the name of the control to focus first, or "TOP" to begin before the first focusable element of the page;
+    the default "Select Seat Class" exists only on /flights, so pass start="TOP" on any other page.
     Supported tokens (comma-separated, each optionally ×N): Enter, Tab, Shift+Tab, Escape, Type "<text>".
     Returns what NVDA said, one line per key and per phrase."""
     global _current_label

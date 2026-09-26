@@ -201,6 +201,7 @@ In Bob, open `findings.md` and type `/hear F-01`, or type `/sweep /flights`.
   - the draft of the self-authored audit PDF
   - the benchmark scripts (`bench/`)
   - driver fixes during the event (watchdog, focus labels, `--path` / `--start`)
+  - tightening the Earshot mode and `/hear`, `/earshot` instructions after analysing Bob's exported task history of the first `/earshot` runs (explicit `start="TOP"`, one Tab count per finding, exact expected phrases, hear-test before commit)
   - the evidence manifest (`evidence/make_index.py`), the Bob task index and the `--replay` mode of the gate runner
   - review of every Bob diff, a headless visual check (it caught F-07's full-width button, which Bob then fixed in task25), gate-test updates and the evidence files
   - these write-ups
