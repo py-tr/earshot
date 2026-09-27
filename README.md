@@ -21,7 +21,7 @@ I tried it on three apps I didn't write: IBM's own Galaxium Travels sample app, 
 - **6 of Bob's own fixes were rejected by ear**, because NVDA still didn't say the right thing, and **a prompted regression was refused twice** at commit, by the git hook and then by the Bob hook even with `--no-verify` (below).
 - **About $0.50 per verified fix** (median about 1 Bobcoin). Checking just 6 announcements by hand took a person a minute of full attention per commit; the gate replays the affected tests unattended in about 2½ minutes.
 
-**Report page (with audio):** https://py-tr.github.io/earshot/ · **Video (3 min):** [VIDEO URL] · **Judges:** [where to check each claim](#for-judges-where-to-check-each-claim)
+**Report page (with audio):** https://py-tr.github.io/earshot/ · **Video (3 min, narrated):** [watch](https://storage.googleapis.com/lablab-video-submissions/submissions/r6uuuu4dyzy1nbpi681549y2/e6ti00a6303rs9u08bnx6wgv/video/video_y2kifu8bdiplrv6xy8j2zhrg.mp4) · **Judges:** [where to check each claim](#for-judges-where-to-check-each-claim)
 
 ## Try it in one minute (no screen reader needed)
 
