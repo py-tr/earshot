@@ -20,7 +20,6 @@ I tried it on three apps I didn't write: IBM's own Galaxium Travels sample app, 
 - **3½ of 15** flagged by automated checkers (strict React lint: 0 of the 13 on the two React apps; axe-core: 3½). 11 of the 15 were caught only by ear.
 - **6 of Bob's own fixes were rejected by ear**, because NVDA still didn't say the right thing, and **a prompted regression was refused twice** at commit, by the git hook and then by the Bob hook even with `--no-verify` (below).
 - **About $0.50 per verified fix** (median about 1 Bobcoin). Checking just 6 announcements by hand took a person a minute of full attention per commit; the gate replays the affected tests unattended in about 2½ minutes.
-- The regressions: I asked Bob to delete the dialog's focus code as a "tidy-up". The git hook refused the commit, and the Bob hook refused it again even with `--no-verify`. (The gate also once refused one of Bob's own over-strict tests, in task34; that was a bad test, not a regression.)
 
 **Report page (with audio):** https://py-tr.github.io/earshot/ · **Video (3 min):** [VIDEO URL] · **Judges:** [where to check each claim](#for-judges-where-to-check-each-claim)
 
