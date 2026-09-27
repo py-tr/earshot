@@ -1,6 +1,6 @@
 # Earshot: screen-reader tests for AI-written UI
 
-![15 of 15 verified by NVDA](https://img.shields.io/badge/verified%20by%20NVDA-15%20of%2015-2ea44f) ![3.5 of 15 flagged by lint and axe](https://img.shields.io/badge/flagged%20by%20lint%20%2B%20axe-3.5%20of%2015-orange) ![gate refused a prompted regression twice](https://img.shields.io/badge/gate-refused%20a%20prompted%20regression%202%C3%97-blue) ![CI: replay + 98 unit tests](https://img.shields.io/badge/CI-replay%20%2B%2098%20unit%20tests-lightgrey)
+![15 of 15 verified by NVDA](https://img.shields.io/badge/verified%20by%20NVDA-15%20of%2015-2ea44f) ![3.5 of 15 flagged by lint and axe](https://img.shields.io/badge/flagged%20by%20lint%20%2B%20axe-3.5%20of%2015-orange) ![gate refused a prompted regression twice](https://img.shields.io/badge/gate-refused%20a%20prompted%20regression%202%C3%97-blue) [![CI: replay + 98 unit tests](https://github.com/py-tr/earshot/actions/workflows/check.yml/badge.svg)](https://github.com/py-tr/earshot/actions/workflows/check.yml)
 
 Blind people use websites by listening to a screen reader. More and more UI code is written by AI coding agents, and those agents can't hear what they build: a fix can pass every automated check while the screen reader says nothing at all.
 
