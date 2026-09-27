@@ -30,7 +30,7 @@ class TestHeadlineDrift(unittest.TestCase):
         self.assertIn(f"**{self.n} of {self.n}**", self.readme)
         self.assertIn(f"**3½ of {self.n}**", self.readme)
         self.assertIn("**6 of Bob's own fixes were rejected by ear**", self.readme)
-        self.assertIn("2 prompted regressions were refused", self.readme)
+        self.assertIn("a prompted regression was refused twice", self.readme)
 
     def test_report_states_headline(self):
         self.assertIn(f"{self.n} / {self.n}", self.report)

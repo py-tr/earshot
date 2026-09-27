@@ -53,7 +53,7 @@
       if (finding.audio && finding.transcript) {
         var blocks = [];
         if (finding.audio.before)   blocks.push(renderAudioBlock("Before",          finding.audio.before,   finding.transcript.before));
-        if (finding.audio.rejected) blocks.push(renderAudioBlock("Rejected first fix", finding.audio.rejected, finding.transcript.rejected));
+        if (finding.audio.rejected) blocks.push(renderAudioBlock(finding.rejectedLabel || "Rejected first fix", finding.audio.rejected, finding.transcript.rejected));
         if (finding.audio.after)    blocks.push(renderAudioBlock("After",           finding.audio.after,    finding.transcript.after));
         if (finding.audio.ear)      blocks.push(renderAudioBlock("By ear",          finding.audio.ear,      finding.transcript.ear));
         audioHtml = "<div class=\"audio-section\">" + blocks.join("") + "</div>";

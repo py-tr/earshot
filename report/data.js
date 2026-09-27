@@ -234,6 +234,7 @@ var EARSHOT_DATA = [
   }
   ,{
     id: "F-10",
+    rejectedLabel: "First label, re-specified by a human (not an ear rejection)",
     status: "verified — discovered by Bob’s /earshot run, accepted by a human",
     wcag: "2.4.4 Link Purpose (A); 2.4.6 Headings and Labels (AA)",
     component: "/destinations/mars: two flight links both named “Book” (found by the one-command /earshot run)",
